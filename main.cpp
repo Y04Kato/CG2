@@ -1,4 +1,4 @@
-#include "Win.h"
+#include "WinApp.h"
 
 const wchar_t kWindowTitle[] = { L"CG2" };
 

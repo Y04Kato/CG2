@@ -1,4 +1,4 @@
-#include "Win.h"
+#include "WinApp.h"
 
 //ウィンドウプロシージャ
 LRESULT CALLBACK winClear::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
