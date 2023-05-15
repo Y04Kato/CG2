@@ -1,6 +1,6 @@
 #include "Win.h"
 
-const wchar_t kWindowTitle[] = { L"CG21" };
+const wchar_t kWindowTitle[] = { L"CG2" };
 
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
