@@ -10,7 +10,7 @@ public:
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	static void CreateWindowView();
+	static void CreateWindowView(const wchar_t* title = L"CG2");
 
 private:
 	static inline	WNDCLASS wc{};// ウィンドウクラス

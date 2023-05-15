@@ -1,12 +1,12 @@
 #include "Win.h"
 
-const char kWindowTitle[] = "CG2";
+const wchar_t kWindowTitle[] = { L"CG21" };
 
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//初期化
-	winClear::CreateWindowView();
+	winClear::CreateWindowView(kWindowTitle);
 
 	MSG msg{};
 	//ウィンドウのxが押されるまでループ

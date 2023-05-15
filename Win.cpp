@@ -15,7 +15,7 @@ LRESULT CALLBACK winClear::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void winClear::CreateWindowView() {
+void winClear::CreateWindowView(const wchar_t* title) {
 	//ウィンドウプロシージャ
 	wc.lpfnWndProc = WindowProc;
 	//クラス名
@@ -37,7 +37,7 @@ void winClear::CreateWindowView() {
 	//ウィンドウの生成
 	hwnd = CreateWindow(
 		wc.lpszClassName,//クラス名
-		L"CG2",//タイトルバーの名前
+		title,//タイトルバーの名前
 		WS_OVERLAPPEDWINDOW,//ウィンドウスタイル
 		CW_USEDEFAULT,//表示X座標
 		CW_USEDEFAULT,//表示Y座標
