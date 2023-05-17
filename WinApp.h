@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <cstdint>
 
-class winClear {
+class WinApp {
 public:
 	//クライアント領域サイズ
 	static const int32_t kClientWidth = 1280;
@@ -10,9 +10,11 @@ public:
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	static void CreateWindowView(const wchar_t* title = L"CG2");
+	HWND GetHwnd() const { return hwnd_; }
+
+	static void CreateWindowView(const wchar_t* title);
 
 private:
-	static inline	WNDCLASS wc{};// ウィンドウクラス
-	static	HWND hwnd;
+	static inline	WNDCLASS wc_{};// ウィンドウクラス
+	static	HWND hwnd_;
 };

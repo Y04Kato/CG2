@@ -1,7 +1,7 @@
 #include "WinApp.h"
 
 //ウィンドウプロシージャ
-LRESULT CALLBACK winClear::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+LRESULT CALLBACK WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	//メッセージに応じてゲーム固有の処理を行う
 	switch (msg) {
 		//ウィンドウが破棄された
@@ -15,18 +15,18 @@ LRESULT CALLBACK winClear::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void winClear::CreateWindowView(const wchar_t* title) {
+void WinApp::CreateWindowView(const wchar_t* title) {
 	//ウィンドウプロシージャ
-	wc.lpfnWndProc = WindowProc;
+	wc_.lpfnWndProc = WindowProc;
 	//クラス名
-	wc.lpszClassName = L"CG2WindowClass";
+	wc_.lpszClassName = L"CG2WindowClass";
 	//インスタンスハンドル
-	wc.hInstance = GetModuleHandle(nullptr);
+	wc_.hInstance = GetModuleHandle(nullptr);
 	//カーソル
-	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
 	//ウィンドウクラス登録
-	RegisterClass(&wc);
+	RegisterClass(&wc_);
 
 	//ウィンドウサイズの構造体にクライアント領域を入れる
 	RECT wrc = { 0,0,kClientWidth,kClientHeight };
@@ -35,8 +35,8 @@ void winClear::CreateWindowView(const wchar_t* title) {
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 
 	//ウィンドウの生成
-	hwnd = CreateWindow(
-		wc.lpszClassName,//クラス名
+	hwnd_ = CreateWindow(
+		wc_.lpszClassName,//クラス名
 		title,//タイトルバーの名前
 		WS_OVERLAPPEDWINDOW,//ウィンドウスタイル
 		CW_USEDEFAULT,//表示X座標
@@ -45,11 +45,13 @@ void winClear::CreateWindowView(const wchar_t* title) {
 		wrc.bottom - wrc.top,//ウィンドウ縦幅
 		nullptr,//親ウィンドウハンドル
 		nullptr,//メニューハンドル
-		wc.hInstance,//インスタンスハンドル
+		wc_.hInstance,//インスタンスハンドル
 		nullptr//オプション
 	);
 
+
+
 	//ウィンドウ表示
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(hwnd_, SW_SHOW);
 }
-HWND winClear::hwnd;
+HWND WinApp::hwnd_;

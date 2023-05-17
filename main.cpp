@@ -1,4 +1,5 @@
 #include "WinApp.h"
+#include "DirectXCommon.h"
 
 const wchar_t kWindowTitle[] = { L"CG2" };
 
@@ -6,7 +7,8 @@ const wchar_t kWindowTitle[] = { L"CG2" };
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//初期化
-	winClear::CreateWindowView(kWindowTitle);
+	WinApp::CreateWindowView(kWindowTitle);
+	DirectXCommon::DirectXInitialization();
 
 	MSG msg{};
 	//ウィンドウのxが押されるまでループ
@@ -22,6 +24,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 	}
+
+	DirectXCommon::Release();
 
 	return 0;
 }
