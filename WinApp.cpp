@@ -15,7 +15,7 @@ LRESULT CALLBACK WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void WinApp::CreateWindowView(const wchar_t* title) {
+void WinApp::CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight) {
 	//ウィンドウプロシージャ
 	wc_.lpfnWndProc = WindowProc;
 	//クラス名
@@ -49,7 +49,15 @@ void WinApp::CreateWindowView(const wchar_t* title) {
 		nullptr//オプション
 	);
 
-
+#ifdef _DEBUG//デバッグレイヤー
+	debugController_ = nullptr;
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_)))) {
+		//デバッグレイヤーを有効化
+		debugController_->EnableDebugLayer();
+		//GPU側でもチェックを行う
+		debugController_->SetEnableGPUBasedValidation(TRUE);
+	}
+#endif // _DEBUG
 
 	//ウィンドウ表示
 	ShowWindow(hwnd_, SW_SHOW);

@@ -80,8 +80,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConvertString.cpp" />
     <ClCompile Include="DirectXCommon.cpp" />
+    <ClCompile Include="DrawTriangle.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +102,11 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConvertString.h" />
     <ClInclude Include="DirectXCommon.h" />
+    <ClInclude Include="DrawTriangle.h" />
+    <ClInclude Include="MyEngine.h" />
+    <ClInclude Include="Vector4.h" />
     <ClInclude Include="WinApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
