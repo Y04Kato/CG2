@@ -256,11 +256,28 @@ void DirectXCommon::PostDraw() {
 	//GPUがここまで辿り着いた時、Fenceの値を指定した値に代入するようにsignalを送る
 	commandQueue_->Signal(fence_, fenceValue_);
 
+	if (fence_->GetCompletedValue() < fenceValue_) {
+		//指定したSignalにたどり着いていないので、たどり着くまで待つようにイベントを設定する
+		fence_->SetEventOnCompletion(fenceValue_, fenceEvent_);
+		//イベント待つ
+		WaitForSingleObject(fenceEvent_, INFINITE);
+	}
+
 	//次のフレーム用のコマンドリストを準備
 	result = commandAllocator_->Reset();
 	assert(SUCCEEDED(result));
 	result = commandList_->Reset(commandAllocator_, nullptr);
 	assert(SUCCEEDED(result));
+}
+
+void DirectXCommon::ClearRenderTarget(){
+	UINT backBufferIndex = swapChain_->GetCurrentBackBufferIndex();
+	//描画先のRTVを設定する
+	commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex], false, nullptr);
+	//指定した色で画面全体をクリアする
+	float clearcolor[] = { 0.1f,0.25f,0.5f,1.0f };//青っぽい色
+	commandList_->ClearRenderTargetView(rtvHandles_[backBufferIndex], clearcolor, 0, nullptr);
+
 }
 
 void DirectXCommon::Release() {
@@ -330,4 +347,4 @@ HANDLE fenceEvent_;
 int32_t backBufferWidth_;
 int32_t backBufferHeight_;
 
-static HRESULT hr_;
+HRESULT hr_;
