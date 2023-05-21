@@ -7,13 +7,13 @@
 
 class DirectXCommon {
 public:
-	void Initialization(WinApp* win, const wchar_t* title, int32_t backBufferWidth = WinApp::kClientWidth,int32_t backBufferHeight = WinApp::kClientHeight);
+	void Initialization(WinApp* win, const wchar_t* title, int32_t backBufferWidth = WinApp::kClientWidth, int32_t backBufferHeight = WinApp::kClientHeight);
 
 	void PreDraw();
 	void PostDraw();
 
 	static inline void ClearRenderTarget();
-	static void Release();
+	static void Finalize();
 
 	HRESULT GetHr() { return  hr_; }
 	void SetHr(HRESULT a) { this->hr_ = a; }
@@ -66,10 +66,10 @@ private:
 	void InitializeDXGIDevice();
 
 	void CreateSwapChain();
-	
+
 	void InitializeCommand();
-	
+
 	void CreateFinalRenderTargets();
-	
+
 	void CreateFence();
 };

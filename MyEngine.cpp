@@ -4,7 +4,7 @@
 
 
 
-IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler){
+IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler) {
 	//これからシェーダーをコンパイルする旨をログに出す
 	Log(ConvertString(std::format(L"Begin CompileShader, path:{},profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
@@ -45,6 +45,7 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 		//警告・エラーダメ絶対
 		assert(false);
 	}
+
 	//コンパイル結果から実行用のバイナリ部分を取得
 	IDxcBlob* shaderBlob = nullptr;
 	direct_->SetHr(shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr));
@@ -97,7 +98,6 @@ void MyEngine::CreateRootSignature() {
 }
 
 void MyEngine::CreateInputlayOut() {
-	//inputElementDescsをメンバ変数にすると治った
 	inputElementDescs_[0].SemanticName = "POSITION";
 	inputElementDescs_[0].SemanticIndex = 0;
 	inputElementDescs_[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -108,14 +108,12 @@ void MyEngine::CreateInputlayOut() {
 }
 
 void MyEngine::BlendState() {
-
 	//すべての色要素を書き込む
 	blendDesc_.RenderTarget[0].RenderTargetWriteMask =
 		D3D12_COLOR_WRITE_ENABLE_ALL;
 }
 
 void MyEngine::RasterizerState() {
-
 	//裏面（時計回り）を表示しない
 	rasterizerDesc_.CullMode = D3D12_CULL_MODE_BACK;
 	//三角形の中を塗りつぶす
@@ -220,14 +218,42 @@ void MyEngine::variableInitialize()
 	data2[2] = { -0.15f,-0.3f,0.0f,1.0f };
 	data3[2] = { -0.1f,-0.5f,0.0f,1.0f };
 
+	data1[3] = { -0.2f,-0.7f,0.0f,1.0f };
+	data2[3] = { -0.15f,-0.5f,0.0f,1.0f };
+	data3[3] = { -0.1f,-0.7f,0.0f,1.0f };
+
+	data1[4] = { -0.2f,-0.9f,0.0f,1.0f };
+	data2[4] = { -0.15f,-0.7f,0.0f,1.0f };
+	data3[4] = { -0.1f,-0.9f,0.0f,1.0f };
+
+	data1[5] = { -0.2f,0.7f,0.0f,1.0f };
+	data2[5] = { -0.15f,0.9f,0.0f,1.0f };
+	data3[5] = { -0.1f,0.7f,0.0f,1.0f };
+
+	data1[6] = { -0.2f,0.5f,0.0f,1.0f };
+	data2[6] = { -0.15f,0.7f,0.0f,1.0f };
+	data3[6] = { -0.1f,0.5f,0.0f,1.0f };
+
+	data1[7] = { -0.2f,0.3f,0.0f,1.0f };
+	data2[7] = { -0.15f,0.5f,0.0f,1.0f };
+	data3[7] = { -0.1f,0.3f,0.0f,1.0f };
+
+	data1[8] = { -0.2f,0.1f,0.0f,1.0f };
+	data2[8] = { -0.15f,0.3f,0.0f,1.0f };
+	data3[8] = { -0.1f,0.1f,0.0f,1.0f };
+
+	data1[9] = { -0.5f,-0.5f,0.0f,1.0f };
+	data2[9] = { -0.4f,-0.3f,0.0f,1.0f };
+	data3[9] = { -0.3f,-0.5f,0.0f,1.0f };
+
 	for (int i = 0; i < 10; i++) {
 		triangle[i] = new DrawTriangle();
 		triangle[i]->Initialize(direct_);
 	}
 
 }
-void MyEngine::Initialization(WinApp* win, const wchar_t* title,int32_t width, int32_t height) {
-	direct_->Initialization(win,title, win->kClientWidth, win->kClientHeight);
+void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
+	direct_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
 
 	InitializeDxcCompiler();
 
@@ -255,15 +281,15 @@ void MyEngine::BeginFrame() {
 	direct_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
 	direct_->GetCommandList()->SetPipelineState(graphicsPipelineState_);//PS0を設定
 }
+
 void MyEngine::EndFrame() {
 	direct_->PostDraw();
 
 }
 
-void MyEngine::Finalize()
-{
+void MyEngine::Finalize() {
 	for (int i = 0; i < 10; i++) {
-		triangle[i]->Release();
+		triangle[i]->Finalize();
 	}
 	graphicsPipelineState_->Release();
 	signatureBlob_->Release();
@@ -273,17 +299,17 @@ void MyEngine::Finalize()
 	rootSignature_->Release();
 	pixelShaderBlob_->Release();
 	vertexShaderBlob_->Release();
-	direct_->Release();
+	direct_->Finalize();
 
 
 
 }
-void MyEngine::Update()
-{
+
+void MyEngine::Update() {
 
 }
-void MyEngine::Draw()
-{
+
+void MyEngine::Draw() {
 	for (int i = 0; i < 10; i++) {
 		triangle[i]->Draw(data1[i], data2[i], data3[i]);
 	}

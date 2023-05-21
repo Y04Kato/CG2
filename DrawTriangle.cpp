@@ -2,13 +2,13 @@
 #include<assert.h>
 #include"MyEngine.h"
 
-void DrawTriangle::Initialize(DirectXCommon* direct){
+void DrawTriangle::Initialize(DirectXCommon* direct) {
 	direct_ = direct;
 	SettingVertex();
 
 }
 
-void DrawTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c){
+void DrawTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c) {
 	//左下
 	vertexData_[0] = a;
 	//上
@@ -22,7 +22,7 @@ void DrawTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c){
 	direct_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
 }
-void DrawTriangle::Release(){
+void DrawTriangle::Finalize() {
 	vertexResource_->Release();
 }
 void DrawTriangle::SettingVertex() {

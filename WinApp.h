@@ -21,16 +21,16 @@ public:
 
 	static inline HWND GetHwnd() { return hwnd_; }
 
-	static void CreateWindowView(const wchar_t* title,int32_t clientWidth, int32_t clientheight);
+	static void CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight);
 
 private:
 	static	UINT windowStyle_;
-	
+
 	static ID3D12Debug1* debugController_;
-	
+
 	static	inline 	RECT wrc_ = { 0,0,kClientWidth,kClientHeight };
-	
+
 	static inline	WNDCLASS wc_{};// ウィンドウクラス
-	
+
 	static	HWND hwnd_;
 };

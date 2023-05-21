@@ -1,7 +1,7 @@
 #include "MyEngine.h"
 #include "DrawTriangle.h"
 
-const wchar_t kWindowTitle[] = { L"CG2" };
+const wchar_t kWindowTitle[] = { L"CG2_カトウ" };
 
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -9,7 +9,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//初期化
 	WinApp* win_ = nullptr;
 	MyEngine* Engine = new MyEngine;
-	Engine->Initialization(win_, kWindowTitle,1280,720);
+	Engine->Initialization(win_, kWindowTitle, 1280, 720);
 
 	Engine->variableInitialize();
 
@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 
-	DirectXCommon::Release();
+	Engine->Finalize();
 
 	return 0;
 }

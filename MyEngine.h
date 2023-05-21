@@ -9,7 +9,7 @@ class MyEngine {
 public:
 	void variableInitialize();
 
-	void Initialization(WinApp* win, const wchar_t* title,int32_t width, int32_t height);
+	void Initialization(WinApp* win, const wchar_t* title, int32_t width, int32_t height);
 
 	void BeginFrame();
 
@@ -24,7 +24,7 @@ public:
 private:
 	static WinApp* win_;
 	static	DirectXCommon* direct_;
-	
+
 	DrawTriangle* triangle[10];
 
 	IDxcUtils* dxcUtils_;
