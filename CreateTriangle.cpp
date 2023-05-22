@@ -1,32 +1,35 @@
-#include "DrawTriangle.h"
+#include "CreateTriangle.h"
 #include<assert.h>
 #include"MyEngine.h"
 
-void DrawTriangle::Initialize(DirectXCommon* direct) {
-	direct_ = direct;
+void CreateTriangle::Initialize(DirectXCommon* dxCommon) {
+	dxCommon_ = dxCommon;
 	SettingVertex();
 
 }
 
-void DrawTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c) {
+void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c) {
 	//左下
 	vertexData_[0] = a;
 	//上
 	vertexData_[1] = b;
 	//右下
 	vertexData_[2] = c;
-	direct_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);//VBVを設定
-	//形状を設定。PS0にせっていしているものとはまた別。同じものを設定すると考えておく
-	direct_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//描画！(DrawCall/ドローコール)・3頂点で1つのインスタンス。インスタンスについては今後
-	direct_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
+	
+	//VBVを設定
+	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
+	//形状を設定。PS0にせっていしているものとはまた別。同じものを設定する
+	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//描画
+	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
 }
-void DrawTriangle::Finalize() {
+
+void CreateTriangle::Finalize() {
 	vertexResource_->Release();
 }
-void DrawTriangle::SettingVertex() {
 
+void CreateTriangle::SettingVertex() {
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
 	uplodeHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;//UploadHeapを使う
@@ -45,7 +48,7 @@ void DrawTriangle::SettingVertex() {
 	HRESULT hr;
 
 	//実際に頂点リソースを作る
-	hr = direct_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
+	hr = dxCommon_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
 		&vertexResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&vertexResource_));
 	assert(SUCCEEDED(hr));

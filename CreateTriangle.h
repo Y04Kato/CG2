@@ -4,9 +4,9 @@
 
 class MyEngine;
 
-class DrawTriangle {
+class CreateTriangle {
 public:
-	void Initialize(DirectXCommon* direct);
+	void Initialize(DirectXCommon* dxCommon);
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
 
@@ -18,7 +18,7 @@ private:
 private:
 	MyEngine* Engine;
 
-	DirectXCommon* direct_;
+	DirectXCommon* dxCommon_;
 
 	Vector4* vertexData_;
 

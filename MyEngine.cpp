@@ -9,9 +9,9 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 	Log(ConvertString(std::format(L"Begin CompileShader, path:{},profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
 	IDxcBlobEncoding* shaderSource = nullptr;
-	direct_->SetHr(dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource));
+	dxCommon_->SetHr(dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource));
 	//嫁なかったら決める
-	assert(SUCCEEDED(direct_->GetHr()));
+	assert(SUCCEEDED(dxCommon_->GetHr()));
 	//読み込んだファイルの内容を設定する
 	DxcBuffer shaderSourceBuffer;
 	shaderSourceBuffer.Ptr = shaderSource->GetBufferPointer();
@@ -27,7 +27,7 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 	};
 	//実際にShaderをコンパイルする
 	IDxcResult* shaderResult = nullptr;
-	direct_->SetHr(dxcCompiler->Compile(
+	dxCommon_->SetHr(dxcCompiler->Compile(
 		&shaderSourceBuffer,//読み込んだファイル
 		arguments,//コンパイルオプション
 		_countof(arguments),//コンパイルオプションの数
@@ -35,7 +35,7 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 		IID_PPV_ARGS(&shaderResult)//コンパイル結果
 	));
 	//コンパイルエラーではなくdxcが起動できないなど致命的な状況
-	assert(SUCCEEDED(direct_->GetHr()));
+	assert(SUCCEEDED(dxCommon_->GetHr()));
 
 	//警告・エラーが出たらログに出して止める
 	IDxcBlobUtf8* shaderError = nullptr;
@@ -48,8 +48,8 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 
 	//コンパイル結果から実行用のバイナリ部分を取得
 	IDxcBlob* shaderBlob = nullptr;
-	direct_->SetHr(shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr));
-	assert(SUCCEEDED(direct_->GetHr()));
+	dxCommon_->SetHr(shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr));
+	assert(SUCCEEDED(dxCommon_->GetHr()));
 	//成功したログを出す
 	Log(ConvertString(std::format(L"Compile Succeeded, path:{},profile:{}\n", filePath, profile)));
 	//もう使わないリソースを開放
@@ -86,13 +86,13 @@ void MyEngine::CreateRootSignature() {
 	HRESULT hr;
 	hr = D3D12SerializeRootSignature(&descriptionRootSignature,
 		D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob_, &errorBlob_);
-	if (FAILED(direct_->GetHr())) {
+	if (FAILED(dxCommon_->GetHr())) {
 		Log(reinterpret_cast<char*>(errorBlob_->GetBufferPointer()));
 		assert(false);
 	}
 	//バイナリを元に生成
 	rootSignature_ = nullptr;
-	hr = direct_->GetDevice()->CreateRootSignature(0, signatureBlob_->GetBufferPointer(),
+	hr = dxCommon_->GetDevice()->CreateRootSignature(0, signatureBlob_->GetBufferPointer(),
 		signatureBlob_->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
@@ -151,10 +151,11 @@ void MyEngine::InitializePSO() {
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 	//実際に生成
 	graphicsPipelineState_ = nullptr;
-	HRESULT hr = direct_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = dxCommon_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&graphicsPipelineState_));
 	assert(SUCCEEDED(hr));
 }
+
 void MyEngine::VertexResource() {
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
@@ -174,7 +175,7 @@ void MyEngine::VertexResource() {
 	HRESULT hr;
 
 	//実際に頂点リソースを作る
-	hr = direct_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
+	hr = dxCommon_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
 		&vertexResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&vertexResource_));
 	assert(SUCCEEDED(hr));
@@ -188,6 +189,7 @@ void MyEngine::VertexResource() {
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 
 }
+
 void MyEngine::ViewPort() {
 	//クライアント領域のサイズと一緒にして画面全体に表示
 	viewport_.Width = WinApp::kClientWidth;
@@ -197,6 +199,7 @@ void MyEngine::ViewPort() {
 	viewport_.MinDepth = 0.0f;
 	viewport_.MaxDepth = 1.0f;
 }
+
 void MyEngine::ScissorRect() {
 	//シザー短形
 	scissorRect_.left = 0;
@@ -204,28 +207,16 @@ void MyEngine::ScissorRect() {
 	scissorRect_.top = 0;
 	scissorRect_.bottom = WinApp::kClientHeight;
 }
-void MyEngine::variableInitialize()
-{
-	data1[0] = { -0.2f,-0.2f,0.0f,1.0f };
-	data2[0] = { 0.0f,0.2f,0.0f,1.0f };
-	data3[0] = { 0.2f,-0.2f,0.0f,1.0f };
 
-	data1[1] = { -0.8f,-0.8f,0.0f,1.0f };
-	data2[1] = { -0.6f,-0.4f,0.0f,1.0f };
-	data3[1] = { -0.4f,-0.8f,0.0f,1.0f };
-
-	data1[2] = { 0.4f,-0.8f,0.0f,1.0f };
-	data2[2] = { 0.6f,-0.4f,0.0f,1.0f };
-	data3[2] = { 0.8f,-0.8f,0.0f,1.0f };
-
+void MyEngine::Initialize() {
 	for (int i = 0; i < 10; i++) {
-		triangle[i] = new DrawTriangle();
-		triangle[i]->Initialize(direct_);
+		triangle_[i] = new CreateTriangle();
+		triangle_[i]->Initialize(dxCommon_);
 	}
-
 }
+
 void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
-	direct_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
+	dxCommon_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
 
 	InitializeDxcCompiler();
 
@@ -246,22 +237,24 @@ void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, 
 
 
 void MyEngine::BeginFrame() {
-	direct_->PreDraw();
-	direct_->GetCommandList()->RSSetViewports(1, &viewport_);//viewportを設定
-	direct_->GetCommandList()->RSSetScissorRects(1, &scissorRect_);//scirssorを設定
-	//RootSignatureを設定。PS0に設定しているけど別途設定が必要
-	direct_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
-	direct_->GetCommandList()->SetPipelineState(graphicsPipelineState_);//PS0を設定
+	dxCommon_->PreDraw();
+	//viewportを設定
+	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport_);
+	//scirssorを設定
+	dxCommon_->GetCommandList()->RSSetScissorRects(1, &scissorRect_);
+	//RootSignatureを設定。PS0とは別途設定が必要
+	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
+	//PS0を設定
+	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_);
 }
 
 void MyEngine::EndFrame() {
-	direct_->PostDraw();
-
+	dxCommon_->PostDraw();
 }
 
 void MyEngine::Finalize() {
 	for (int i = 0; i < 10; i++) {
-		triangle[i]->Finalize();
+		triangle_[i]->Finalize();
 	}
 	graphicsPipelineState_->Release();
 	signatureBlob_->Release();
@@ -271,22 +264,20 @@ void MyEngine::Finalize() {
 	rootSignature_->Release();
 	pixelShaderBlob_->Release();
 	vertexShaderBlob_->Release();
-	direct_->Finalize();
-
-
-
+	dxCommon_->Finalize();
 }
 
 void MyEngine::Update() {
 
 }
 
-void MyEngine::Draw() {
-	for (int i = 0; i < 10; i++) {
-		triangle[i]->Draw(data1[i], data2[i], data3[i]);
+void MyEngine::DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c) {
+	triangleCount_++;
+	triangle_[triangleCount_]->Draw(a, b, c);
+	if (triangleCount_ >= 9) {
+		triangleCount_ = 0;
 	}
-
 }
 
 WinApp* MyEngine::win_;
-DirectXCommon* MyEngine::direct_;
+DirectXCommon* MyEngine::dxCommon_;

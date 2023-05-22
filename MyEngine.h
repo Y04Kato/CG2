@@ -2,12 +2,12 @@
 #include "DirectXCommon.h"
 #include <dxcapi.h>
 #include"Vector4.h"
-#include "DrawTriangle.h"
+#include "CreateTriangle.h"
 #pragma comment(lib,"dxcompiler.lib")
 
 class MyEngine {
 public:
-	void variableInitialize();
+	void Initialize();
 
 	void Initialization(WinApp* win, const wchar_t* title, int32_t width, int32_t height);
 
@@ -19,13 +19,15 @@ public:
 
 	void Update();
 
-	void Draw();
+	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c);
 
 private:
 	static WinApp* win_;
-	static	DirectXCommon* direct_;
+	static	DirectXCommon* dxCommon_;
 
-	DrawTriangle* triangle[10];
+	CreateTriangle* triangle_[10];
+
+	int triangleCount_;
 
 	IDxcUtils* dxcUtils_;
 	IDxcCompiler3* dxcCompiler_;
@@ -58,10 +60,9 @@ private:
 
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
-
-	Vector4 data1[10];
-	Vector4 data2[10];
-	Vector4 data3[10];
+	Vector4 leftBottom[10];
+	Vector4 top[10];
+	Vector4 rightBottom[10];
 
 	IDxcBlob* CompileShader(
 		//CompileShaderするShaderファイルへのパス

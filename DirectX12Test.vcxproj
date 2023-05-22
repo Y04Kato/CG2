@@ -84,7 +84,7 @@
   <ItemGroup>
     <ClCompile Include="ConvertString.cpp" />
     <ClCompile Include="DirectXCommon.cpp" />
-    <ClCompile Include="DrawTriangle.cpp" />
+    <ClCompile Include="CreateTriangle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="WinApp.cpp" />
@@ -106,7 +106,7 @@
   <ItemGroup>
     <ClInclude Include="ConvertString.h" />
     <ClInclude Include="DirectXCommon.h" />
-    <ClInclude Include="DrawTriangle.h" />
+    <ClInclude Include="CreateTriangle.h" />
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="Vector4.h" />
     <ClInclude Include="WinApp.h" />
