@@ -46,11 +46,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			Engine->DrawTriangle(data7, data8, data9);
 
-
+			
 			Engine->EndFrame();
 		}
 	}
 
+	//解放処理
 	Engine->Finalize();
 
 	return 0;
