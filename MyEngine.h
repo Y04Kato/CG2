@@ -19,7 +19,7 @@ public:
 
 	void Update();
 
-	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c);
+	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material);
 
 private:
 	static WinApp* win_;
@@ -81,7 +81,6 @@ private:
 	void BlendState();
 	void RasterizerState();
 	void InitializePSO();
-	void VertexResource();
 	void ViewPort();
 	void ScissorRect();
 
