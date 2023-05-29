@@ -211,6 +211,7 @@ void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, 
 
 
 void MyEngine::BeginFrame() {
+	triangleCount_ = 0;
 	dxCommon_->PreDraw();
 	//viewportを設定
 	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport_);
@@ -227,7 +228,7 @@ void MyEngine::EndFrame() {
 }
 
 void MyEngine::Finalize() {
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < triangleCount_; i++) {
 		triangle_[i]->Finalize();
 	}
 	graphicsPipelineState_->Release();
@@ -248,9 +249,6 @@ void MyEngine::Update() {
 void MyEngine::DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material) {
 	triangleCount_++;
 	triangle_[triangleCount_]->Draw(a, b, c,material);
-	if (triangleCount_ >= 9) {
-		triangleCount_ = 0;
-	}
 }
 
 WinApp* MyEngine::win_;

@@ -19,7 +19,7 @@ void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, 
 	*materialData_ = material;
 	//VBVを設定
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
-	//形状を設定。PS0にせっていしているものとはまた別。同じものを設定する
+	//形状を設定。PS0に設定しているものとはまた別。同じものを設定する
 	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
@@ -29,8 +29,8 @@ void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, 
 }
 
 void CreateTriangle::Finalize() {
-	vertexResource_->Release();
 	materialResource_->Release();
+	vertexResource_->Release();
 }
 
 void CreateTriangle::SettingVertex() {
@@ -49,8 +49,6 @@ void CreateTriangle::SettingVertex() {
 void CreateTriangle::SettingColor() {
 	//マテリアル用のリソースを作る　今回はcolor1つ分
 	materialResource_ = CreateBufferResource(dxCommon_->GetDevice(), sizeof(Vector4));
-	//マテリアルにデータを書き込む
-	materialData_ = nullptr;
 	//書き込むためのアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }

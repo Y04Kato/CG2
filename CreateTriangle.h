@@ -18,7 +18,7 @@ private:
 	void SettingColor();
 
 private:
-	MyEngine* Engine;
+	MyEngine* Engine_;
 
 	DirectXCommon* dxCommon_;
 
