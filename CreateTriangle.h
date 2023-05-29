@@ -24,11 +24,11 @@ private:
 
 	Vector4* vertexData_;
 
+	Vector4* materialData_;
+
 	ID3D12Resource* vertexResource_;
 
 	ID3D12Resource* materialResource_;
-
-	Vector4* materialData_;
 
 	ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
 
