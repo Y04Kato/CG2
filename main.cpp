@@ -38,9 +38,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		else {
 			//ゲームの処理
-			Engine->Update();
 			Engine->BeginFrame();
 
+			Engine->Update();
 
 			//三角形描画
 			Engine->DrawTriangle(data1 ,data2, data3,material1);

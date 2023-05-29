@@ -50,7 +50,6 @@ private:
 
 	ID3D12PipelineState* graphicsPipelineState_;
 
-	ID3D12Resource* vertexResource_;
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 
 	D3D12_VIEWPORT viewport_{};
@@ -60,9 +59,6 @@ private:
 
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
-	Vector4 leftBottom[10];
-	Vector4 top[10];
-	Vector4 rightBottom[10];
 
 	IDxcBlob* CompileShader(
 		//CompileShaderするShaderファイルへのパス
@@ -83,5 +79,4 @@ private:
 	void InitializePSO();
 	void ViewPort();
 	void ScissorRect();
-
 };

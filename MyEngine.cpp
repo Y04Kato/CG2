@@ -224,7 +224,7 @@ void MyEngine::EndFrame() {
 }
 
 void MyEngine::Finalize() {
-	for (int i = 0; i < triangleCount_; i++) {
+	for (int i = 0; i < 10; i++) {
 		triangle_[i]->Finalize();
 	}
 	graphicsPipelineState_->Release();
