@@ -86,6 +86,7 @@
     <ClCompile Include="DirectXCommon.cpp" />
     <ClCompile Include="CreateTriangle.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatrixCalculation.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="WinApp.cpp" />
   </ItemGroup>
@@ -107,8 +108,10 @@
     <ClInclude Include="ConvertString.h" />
     <ClInclude Include="DirectXCommon.h" />
     <ClInclude Include="CreateTriangle.h" />
+    <ClInclude Include="Matrix4x4.h" />
+    <ClInclude Include="MatrixCalculation.h" />
     <ClInclude Include="MyEngine.h" />
-    <ClInclude Include="Vector4.h" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="WinApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
