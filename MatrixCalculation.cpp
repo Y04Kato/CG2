@@ -359,6 +359,10 @@ Matrix4x4 MakeIdentity4x4() {
 	};
 }
 
+float contangent(float b, float a) {
+	return(b / tan(a));
+}
+
 //透視投影行列
 Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRadio, float nearClip, float farClip) {
 	Matrix4x4 result;
