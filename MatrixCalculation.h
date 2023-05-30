@@ -11,10 +11,6 @@ struct Transform
 	Vector3 translate;
 };
 
-float contangent(float b, float a) {
-	return(b / tan(a));
-}
-
 //X軸回転行列
 Matrix4x4 MakeRotateXmatrix(float radian);
 
