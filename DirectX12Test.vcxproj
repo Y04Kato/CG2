@@ -43,6 +43,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -82,13 +88,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConvertString.cpp" />
-    <ClCompile Include="DirectXCommon.cpp" />
-    <ClCompile Include="CreateTriangle.cpp" />
+    <ClCompile Include="base\ConvertString.cpp" />
+    <ClCompile Include="base\DirectXCommon.cpp" />
+    <ClCompile Include="base\CreateTriangle.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MatrixCalculation.cpp" />
-    <ClCompile Include="MyEngine.cpp" />
-    <ClCompile Include="WinApp.cpp" />
+    <ClCompile Include="math\MatrixCalculation.cpp" />
+    <ClCompile Include="base\MyEngine.cpp" />
+    <ClCompile Include="base\WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -105,14 +111,18 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConvertString.h" />
-    <ClInclude Include="DirectXCommon.h" />
-    <ClInclude Include="CreateTriangle.h" />
-    <ClInclude Include="Matrix4x4.h" />
-    <ClInclude Include="MatrixCalculation.h" />
-    <ClInclude Include="MyEngine.h" />
-    <ClInclude Include="Vector.h" />
-    <ClInclude Include="WinApp.h" />
+    <ClInclude Include="base\ConvertString.h" />
+    <ClInclude Include="base\DirectXCommon.h" />
+    <ClInclude Include="base\CreateTriangle.h" />
+    <ClInclude Include="math\Matrix4x4.h" />
+    <ClInclude Include="math\MatrixCalculation.h">
+      <DeploymentContent>false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="base\MyEngine.h" />
+    <ClInclude Include="math\Vector.h">
+      <DeploymentContent>false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="base\WinApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
