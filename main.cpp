@@ -28,15 +28,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector4 data9 = { 0.8f,-0.8f,0.0f,1.0f };
 	Vector4 material3 = { 0.0f,0.0f,1.0f,1.0f };
 
-	MSG msg{};
-	//ウィンドウのxが押されるまでループ
-	while (msg.message != WM_QUIT) {
+	while (true) {
 		//windowのメッセージを最優先で処理させる
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+		if (win_->Procesmessage()) {
+			break;
 		}
-		else {
 			//ゲームの処理
 			Engine->BeginFrame();
 
@@ -51,7 +47,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			
 			Engine->EndFrame();
-		}
 	}
 
 	//解放処理

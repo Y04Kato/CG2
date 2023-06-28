@@ -207,6 +207,8 @@ void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, 
 	ViewPort();
 
 	ScissorRect();
+
+	dxCommon_->ImGuiInitialize();
 }
 
 
@@ -221,9 +223,14 @@ void MyEngine::BeginFrame() {
 	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
 	//PS0を設定
 	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_);
+	//開発用UIの処理
+	ImGui::ShowDemoWindow();
 }
 
 void MyEngine::EndFrame() {
+	//内部コマンドを生成する
+	ImGui::Render();
+
 	dxCommon_->PostDraw();
 }
 

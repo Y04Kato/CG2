@@ -44,10 +44,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -91,6 +91,13 @@
     <ClCompile Include="base\ConvertString.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\CreateTriangle.cpp" />
+    <ClCompile Include="externals\imgui\imgui.cpp" />
+    <ClCompile Include="externals\imgui\imgui_demo.cpp" />
+    <ClCompile Include="externals\imgui\imgui_draw.cpp" />
+    <ClCompile Include="externals\imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="externals\imgui\imgui_tables.cpp" />
+    <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\MatrixCalculation.cpp" />
     <ClCompile Include="base\MyEngine.cpp" />
@@ -114,6 +121,14 @@
     <ClInclude Include="base\ConvertString.h" />
     <ClInclude Include="base\DirectXCommon.h" />
     <ClInclude Include="base\CreateTriangle.h" />
+    <ClInclude Include="externals\imgui\imconfig.h" />
+    <ClInclude Include="externals\imgui\imgui.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="externals\imgui\imgui_internal.h" />
+    <ClInclude Include="externals\imgui\imstb_rectpack.h" />
+    <ClInclude Include="externals\imgui\imstb_textedit.h" />
+    <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\MatrixCalculation.h">
       <DeploymentContent>false</DeploymentContent>
@@ -123,6 +138,9 @@
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="base\WinApp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="externals\imgui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
