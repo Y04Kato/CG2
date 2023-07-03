@@ -208,7 +208,7 @@ void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, 
 
 	ScissorRect();
 
-	dxCommon_->ImGuiInitialize();
+	//dxCommon_->ImGuiInitialize();
 }
 
 

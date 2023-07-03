@@ -15,7 +15,7 @@ void DirectXCommon::Initialization(WinApp* win, const wchar_t* title, int32_t ba
 	winApp_ = win;
 	backBufferWidth_ = backBufferWidth;
 	backBufferHeight_ = backBufferHeight;
-
+	
 	winApp_->CreateWindowView(title, 1280, 720);
 
 	// DXGIデバイス初期化
@@ -32,6 +32,8 @@ void DirectXCommon::Initialization(WinApp* win, const wchar_t* title, int32_t ba
 
 	// フェンス生成
 	CreateFence();
+
+	ImGuiInitialize();
 }
 
 void DirectXCommon::ImGuiInitialize() {
@@ -167,9 +169,6 @@ void DirectXCommon::CreateSwapChain() {
 	//RTV用ディスクリプタヒープの生成
 	rtvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 
-	//SRV用ディスクリプタヒープの生成
-	srvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
-
 	//SwapChainからResourceを引っ張ってくる
 	swapChainResources_[0] = { nullptr };
 	swapChainResources_[1] = { nullptr };
@@ -179,19 +178,22 @@ void DirectXCommon::CreateSwapChain() {
 
 	hr_ = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResources_[1]));
 	assert(SUCCEEDED(hr_));
+
+	//SRV用ディスクリプタヒープの生成
+	srvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
 }
 
 ID3D12DescriptorHeap* DirectXCommon::CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {
 	//ディスクリプタヒープの生成
-	ID3D12DescriptorHeap* DescriptorHeap = nullptr;
-	D3D12_DESCRIPTOR_HEAP_DESC DescriptorHeapDesc{};
-	DescriptorHeapDesc.Type = heapType;//レンダーターゲットビュー用
-	DescriptorHeapDesc.NumDescriptors = numDescriptors;//ダブルバッファ用に２つ　多くても構わない
-	DescriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	HRESULT hr = device->CreateDescriptorHeap(&DescriptorHeapDesc, IID_PPV_ARGS(&DescriptorHeap));
+	ID3D12DescriptorHeap* descriptorHeap = nullptr;
+	D3D12_DESCRIPTOR_HEAP_DESC descriptionHeapDesc{};
+	descriptionHeapDesc.Type = heapType;//レンダーターゲットビュー用
+	descriptionHeapDesc.NumDescriptors = numDescriptors;//ダブルバッファ用に二つ。多くても別にかまわない
+	descriptionHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+	HRESULT hr = device_->CreateDescriptorHeap(&descriptionHeapDesc, IID_PPV_ARGS(&descriptorHeap));
 	//ディスクリプタヒープが生成失敗の為、起動しない
 	assert(SUCCEEDED(hr));
-	return DescriptorHeap;
+	return descriptorHeap;
 }
 
 void DirectXCommon::CreateFinalRenderTargets() {
@@ -302,7 +304,9 @@ void DirectXCommon::ClearRenderTarget() {
 void DirectXCommon::Finalize() {
 	CloseHandle(fenceEvent_);
 	fence_->Release();
-
+	ImGui_ImplDX12_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
 	rtvDescriptorHeap_->Release();
 	srvDescriptorHeap_->Release();
 	swapChainResources_[0]->Release();
