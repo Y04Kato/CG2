@@ -4,6 +4,7 @@
 #include <dxgi1_6.h>
 #include "WinApp.h"
 #include "ConvertString.h"
+#include <DirectXTex/DirectXTex.h>
 
 class DirectXCommon {
 public:
@@ -21,6 +22,7 @@ public:
 	void SetHr(HRESULT a) { this->hr_ = a; }
 	ID3D12Device* GetDevice() { return device_; }
 	ID3D12GraphicsCommandList* GetCommandList() { return commandList_; }
+	ID3D12DescriptorHeap* GetSrvDescriptiorHeap() { return srvDescriptorHeap_; }
 
 private:
 	static WinApp* winApp_;

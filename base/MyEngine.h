@@ -22,7 +22,13 @@ public:
 
 	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material);
 
+	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVHandleGPU() { return textureSrvHandleGPU_; }
+
 private:
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
+	ID3D12Resource* textureResource;
+
 	static WinApp* win_;
 	static	DirectXCommon* dxCommon_;
 
@@ -83,4 +89,9 @@ private:
 	void InitializePSO();
 	void ViewPort();
 	void ScissorRect();
+
+	DirectX::ScratchImage LoadTexture(const std::string& filePath);
+	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
+	void UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
+	void SettingTexture(const std::string& filePath);
 };
