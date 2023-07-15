@@ -80,8 +80,7 @@ bool WinApp::Procesmessage() {
 	return false;
 }
 
-void WinApp::Finalize()
-{
+void WinApp::Finalize(){
 	debugController_->Release();
 }
 

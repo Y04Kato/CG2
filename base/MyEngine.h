@@ -25,10 +25,6 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVHandleGPU() { return textureSrvHandleGPU_; }
 
 private:
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
-	ID3D12Resource* textureResource;
-
 	static WinApp* win_;
 	static	DirectXCommon* dxCommon_;
 
@@ -62,13 +58,17 @@ private:
 	D3D12_VIEWPORT viewport_{};
 	D3D12_RECT scissorRect_{};
 
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[1];
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[2];
 
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
 
 	Transform transform_;
 	Matrix4x4 worldMatrix_;
+
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
+	ID3D12Resource* textureResource;
 
 	IDxcBlob* CompileShader(
 		//CompileShaderするShaderファイルへのパス

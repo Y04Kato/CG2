@@ -3,12 +3,16 @@
 #include"Vector.h"
 #include "MatrixCalculation.h"
 
+struct VertexData {
+	Vector4 position;
+	Vector2 texcoord;
+};
 
 class MyEngine;
 
 class CreateTriangle {
 public:
-	void Initialize(DirectXCommon* dxCommon);
+	void Initialize(DirectXCommon* dxCommon, MyEngine* engine);
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata);
 
@@ -22,11 +26,11 @@ private:
 	void MoveMatrix();
 
 private:
-	MyEngine* Engine_;
+	MyEngine* engine_;
 
 	DirectXCommon* dxCommon_;
 
-	Vector4* vertexData_;
+	VertexData* vertexData_;
 
 	Vector4* materialData_;
 
