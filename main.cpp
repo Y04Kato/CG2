@@ -10,10 +10,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//初期化
 	WinApp* win_ = nullptr;
-	MyEngine* Engine = new MyEngine;
-	Engine->Initialization(win_, kWindowTitle, 1280, 720);
+	MyEngine* myEngine = new MyEngine;
+	myEngine->Initialization(win_, kWindowTitle, 1280, 720);
 
-	Engine->Initialize();
+	myEngine->Initialize();
 
 	Vector4 data1 = { -0.2f,-0.2f,0.0f,1.0f };
 	Vector4 data2 = { 0.0f,0.2f,0.0f,1.0f };
@@ -36,23 +36,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 			//ゲームの処理
-			Engine->BeginFrame();
+			myEngine->BeginFrame();
 
-			Engine->Update();
+			myEngine->Update();
 
 			//三角形描画
-			Engine->DrawTriangle(data1 ,data2, data3,material1);
+			myEngine->DrawTriangle(data1 ,data2, data3,material1);
 
-			Engine->DrawTriangle(data4, data5, data6, material2);
+			myEngine->DrawTriangle(data4, data5, data6, material2);
 
-			Engine->DrawTriangle(data7, data8, data9, material3);
+			myEngine->DrawTriangle(data7, data8, data9, material3);
 
 			
-			Engine->EndFrame();
+			myEngine->EndFrame();
 	}
 
 	//解放処理
-	Engine->Finalize();
+	myEngine->Finalize();
 	CoUninitialize();
 	return 0;
 }

@@ -12,10 +12,7 @@ struct Vector3 {
 };
 
 struct Vector4 {
-	float x;
-	float y;
-	float z;
-	float w;
+	float vector[4];
 };
 
 struct VertexData {
