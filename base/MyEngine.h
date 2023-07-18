@@ -70,7 +70,9 @@ private:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
-	ID3D12Resource* textureResource;
+	ID3D12Resource* textureResource_;
+
+	D3D12_DEPTH_STENCIL_DESC depthStencilDesc_{};
 
 	IDxcBlob* CompileShader(
 		//CompileShaderするShaderファイルへのパス
@@ -91,6 +93,7 @@ private:
 	void InitializePSO();
 	void ViewPort();
 	void ScissorRect();
+	void SettingDepth();
 
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);

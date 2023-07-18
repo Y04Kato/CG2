@@ -185,6 +185,8 @@ void MyEngine::InitializePSO() {
 	//どのように画面に色を打ち込むのかの設定（気にしなく良い）
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc_;
+	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	//実際に生成
 	graphicsPipelineState_ = nullptr;
 	HRESULT hr = dxCommon_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
@@ -208,6 +210,13 @@ void MyEngine::ScissorRect() {
 	scissorRect_.right = WinApp::kClientWidth;
 	scissorRect_.top = 0;
 	scissorRect_.bottom = WinApp::kClientHeight;
+}
+
+void MyEngine::SettingDepth(){
+	//DepthStencilStateの設定
+	depthStencilDesc_.DepthEnable = true;//有効化
+	depthStencilDesc_.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;//書き込み
+	depthStencilDesc_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;//比較関数、近ければ描画される
 }
 
 void MyEngine::Initialize() {
@@ -234,6 +243,8 @@ void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, 
 	BlendState();
 
 	RasterizerState();
+
+	SettingDepth();
 
 	InitializePSO();
 
@@ -270,7 +281,7 @@ void MyEngine::Finalize() {
 		triangle_[i]->Finalize();
 	}
 
-	textureResource->Release();
+	textureResource_->Release();
 	graphicsPipelineState_->Release();
 	signatureBlob_->Release();
 	if (errorBlob_) {
@@ -283,7 +294,7 @@ void MyEngine::Finalize() {
 }
 
 void MyEngine::Update() {
-	transform_.rotate.y += 0.03f;
+	transform_.rotate.y += 0.01f;
 	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 }
 
@@ -359,8 +370,8 @@ void MyEngine::UploadtextureData(ID3D12Resource* texture, const DirectX::Scratch
 void MyEngine::SettingTexture(const std::string& filePath) {
 	DirectX::ScratchImage mipImage = LoadTexture(filePath);
 	const DirectX::TexMetadata& metadata = mipImage.GetMetadata();
-	textureResource = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-	UploadtextureData(textureResource, mipImage);
+	textureResource_ = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+	UploadtextureData(textureResource_, mipImage);
 
 	//metaDataを基にSRVの設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
@@ -378,7 +389,7 @@ void MyEngine::SettingTexture(const std::string& filePath) {
 	textureSrvHandleGPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	
 	//SRVの生成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource, &srvDesc, textureSrvHandleCPU_);
+	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_, &srvDesc, textureSrvHandleCPU_);
 }
 
 WinApp* MyEngine::win_;

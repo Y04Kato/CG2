@@ -33,6 +33,8 @@ void DirectXCommon::Initialization(WinApp* win, const wchar_t* title, int32_t ba
 	// フェンス生成
 	CreateFence();
 
+	CreateDepthStensil();
+
 	ImGuiInitialize();
 }
 
@@ -251,6 +253,10 @@ void DirectXCommon::PreDraw() {
 	//描画用のDescriptorHeapの設定
 	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescriptorHeap_ };
 	commandList_->SetDescriptorHeaps(1, descriptorHeaps);
+
+	dsvhandle_ = dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
+	commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex], false, &dsvhandle_);
+	commandList_->ClearDepthStencilView(dsvhandle_, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void DirectXCommon::PostDraw() {
@@ -300,6 +306,53 @@ void DirectXCommon::ClearRenderTarget() {
 
 }
 
+ID3D12Resource* DirectXCommon::CreateDepthStenciltextureResource(ID3D12Device* device, int32_t width, int32_t height) {
+	//生成するresourceの設定
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Width = width;//textureの幅
+	resourceDesc.Height = height;//textureの高さ
+	resourceDesc.MipLevels = 1;//mipmapの数
+	resourceDesc.DepthOrArraySize = 1;//奥行きor配列textureの配列数
+	resourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;//DepthStencilとして利用可能なフォーマット
+	resourceDesc.SampleDesc.Count = 1;//サンプリングカウント、1固定
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;//2次元
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;//DepthStencilとして使う通知
+
+	//利用するHeapの設定
+	D3D12_HEAP_PROPERTIES heapProperties{};
+	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;//VRAM上に作る
+
+	//深度値のクリア設定
+	D3D12_CLEAR_VALUE depthClearValue{};
+	depthClearValue.DepthStencil.Depth = 1.0f;//1.0f(最大値)でクリア
+	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+	//resourceの設定
+	ID3D12Resource* resource = nullptr;
+	HRESULT hr = device->CreateCommittedResource(
+		&heapProperties,//Heapの設定
+		D3D12_HEAP_FLAG_NONE,//Heapの特殊な設定、特になし
+		&resourceDesc,//resourceの設定
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,//深度値を書き込める状態にしておく
+		&depthClearValue,//Clear最適値
+		IID_PPV_ARGS(&resource));//作成するresourceポインタへのポインタ
+	assert(SUCCEEDED(hr));
+	return resource;
+}
+
+void DirectXCommon::CreateDepthStensil() {
+	depthStencilResource_ = CreateDepthStenciltextureResource(device_, WinApp::kClientWidth, WinApp::kClientHeight);
+	dsvDescriptorHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvdesc{};
+	dsvdesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;//Format、基本的にresourceに合わせる
+	dsvdesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;//2dTexture
+
+	device_->CreateDepthStencilView(depthStencilResource_,
+		&dsvdesc, 
+		dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
+}
+
 void DirectXCommon::Finalize() {
 	CloseHandle(fenceEvent_);
 	fence_->Release();
@@ -317,6 +370,8 @@ void DirectXCommon::Finalize() {
 	device_->Release();
 	useAdapter_->Release();
 	dxgiFactory_->Release();
+	depthStencilResource_->Release();
+	dsvDescriptorHeap_->Release();
 #ifdef DEBUG
 	winApp_->GetdebugController()->Release();
 #endif // DEBUG

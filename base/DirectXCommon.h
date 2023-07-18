@@ -74,6 +74,10 @@ private:
 
 	HRESULT hr_;
 
+	ID3D12Resource* depthStencilResource_;
+	ID3D12DescriptorHeap* dsvDescriptorHeap_;
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvhandle_;
+
 private:
 	void InitializeDXGIDevice();
 
@@ -84,4 +88,8 @@ private:
 	void CreateFinalRenderTargets();
 
 	void CreateFence();
+
+	ID3D12Resource* CreateDepthStenciltextureResource(ID3D12Device* device, int32_t width, int32_t height);
+	
+	void CreateDepthStensil();
 };

@@ -15,7 +15,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	myEngine->Initialize();
 
-	Vector4 data1 = { -0.2f,-0.2f,0.0f,1.0f };
+	Vector4 data1 = { -0.5f,-0.5f,0.0f,1.0f };
+	Vector4 data2 = { 0.0f,0.5f,0.0f,1.0f };
+	Vector4 data3 = { 0.5f,-0.5f,0.0f,1.0f };
+	Vector4 material1 = { 1.0f,0.0f,0.0f,1.0f };
+
+	Vector4 data4 = { -0.5f,-0.5f,0.5f,1.0f };
+	Vector4 data5 = { 0.0f,0.0f,0.0f,1.0f };
+	Vector4 data6 = { 0.5f,-0.5f,-0.5f,1.0f };
+	Vector4 material2 = { 0.0f,1.0f,0.0f,1.0f };
+
+	/*Vector4 data1 = { -0.2f,-0.2f,0.0f,1.0f };
 	Vector4 data2 = { 0.0f,0.2f,0.0f,1.0f };
 	Vector4 data3 = { 0.2f,-0.2f,0.0f,1.0f };
 	Vector4 material1 = { 1.0f,0.0f,0.0f,1.0f };
@@ -28,7 +38,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector4 data7 = { 0.4f,-0.8f,0.0f,1.0f };
 	Vector4 data8 = { 0.6f,-0.4f,0.0f,1.0f };
 	Vector4 data9 = { 0.8f,-0.8f,0.0f,1.0f };
-	Vector4 material3 = { 0.0f,0.0f,1.0f,1.0f };
+	Vector4 material3 = { 0.0f,0.0f,1.0f,1.0f };*/
 
 	while (true) {
 		//windowのメッセージを最優先で処理させる
@@ -45,7 +55,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			myEngine->DrawTriangle(data4, data5, data6, material2);
 
-			myEngine->DrawTriangle(data7, data8, data9, material3);
+			//myEngine->DrawTriangle(data7, data8, data9, material3);
 
 			
 			myEngine->EndFrame();
