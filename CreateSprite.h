@@ -1,11 +1,11 @@
 #pragma once
 #include "DirectXCommon.h"
 #include "Vector.h"
-#include "MyEngine.h"
+#include "CJEngine.h"
 
 class Sprite{
 public:
-	void Initialize(DirectXCommon* dxCommon, MyEngine* engine);
+	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
 
 	void Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material);
 	void Finalize();
@@ -19,7 +19,7 @@ private:
 	Matrix4x4* transformationMatrixdata_;
 	ID3D12Resource* materialResource_;
 	Vector4* materialData_;
-	MyEngine* myEngine_;
+	CitrusJunosEngine* CJEngine_;
 
 private:
 	void CreateVartexData();

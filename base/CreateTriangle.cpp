@@ -1,10 +1,10 @@
 #include "CreateTriangle.h"
 #include<assert.h>
-#include"MyEngine.h"
+#include"CJEngine.h"
 
-void CreateTriangle::Initialize(DirectXCommon* dxCommon, MyEngine* engine) {
+void CreateTriangle::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine) {
 	dxCommon_ = dxCommon;
-	engine_ =  engine;
+	CJEngine_ =  engine;
 	SettingVertex();
 	SettingColor();
 	MoveMatrix();
@@ -38,7 +38,7 @@ void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, 
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]のこと
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, engine_->GetSRVHandleGPU());
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->GetSRVHandleGPU());
 
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);

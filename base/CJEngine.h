@@ -6,7 +6,7 @@
 #include "MatrixCalculation.h"
 #pragma comment(lib,"dxcompiler.lib")
 
-class MyEngine {
+class CitrusJunosEngine {
 public:
 	void Initialize(WinApp* win, const wchar_t* title, int32_t width, int32_t height);
 

@@ -3,11 +3,11 @@
 #include"Vector.h"
 #include "MatrixCalculation.h"
 
-class MyEngine;
+class CitrusJunosEngine;
 
 class CreateTriangle {
 public:
-	void Initialize(DirectXCommon* dxCommon, MyEngine* engine);
+	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
 
 	void Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata);
 
@@ -21,7 +21,7 @@ private:
 	void MoveMatrix();
 
 private:
-	MyEngine* engine_;
+	CitrusJunosEngine* CJEngine_;
 
 	DirectXCommon* dxCommon_;
 

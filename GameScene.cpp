@@ -1,7 +1,7 @@
 #include "gameScene.h"
 
-void GameScene::Initialize(MyEngine* engine, DirectXCommon* direct) {
-	myEngine_ = engine;
+void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* direct) {
+	CJEngine_ = engine;
 	dxCommon_ = direct;
 
 	data1_[0] = { -0.5f,-0.5f,0.0f,1.0f };
@@ -24,16 +24,16 @@ void GameScene::Initialize(MyEngine* engine, DirectXCommon* direct) {
 
 	spriteTransform_[0] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
-	myEngine_->SettingTexture("resources/uvChecker.png");
+	CJEngine_->SettingTexture("resources/uvChecker.png");
 
 	for (int i = 0; i < 2; i++) {
 		triangle_[i] = new CreateTriangle();
-		triangle_[i]->Initialize(dxCommon_, myEngine_);
+		triangle_[i]->Initialize(dxCommon_, CJEngine_);
 	}
 
 	for (int i = 0; i < 2; i++) {
 		sprite_[i] = new Sprite();
-		sprite_[i]->Initialize(dxCommon_, myEngine_);
+		sprite_[i]->Initialize(dxCommon_, CJEngine_);
 	}
 
 }

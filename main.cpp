@@ -1,4 +1,4 @@
-#include "MyEngine.h"
+#include "CJEngine.h"
 #include "GameScene.h"
 
 const wchar_t kWindowTitle[] = { L"CG2_カトウ" };
@@ -10,29 +10,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//初期化
 	WinApp* win_ = nullptr;
-	MyEngine* myEngine = new MyEngine;
-	myEngine->Initialize(win_, kWindowTitle, 1280, 720);
+	CitrusJunosEngine* CJEngine = new CitrusJunosEngine;
+	CJEngine->Initialize(win_, kWindowTitle, 1280, 720);
 
 	GameScene* gameScene = new GameScene();
-	gameScene->Initialize(myEngine, myEngine->GetDirectXCommon());
+	gameScene->Initialize(CJEngine, CJEngine->GetDirectXCommon());
 	while (true) {
 		//windowのメッセージを最優先で処理させる
 		if (win_->Procesmessage()) {
 			break;
 		}
 			//ゲームの処理
-			myEngine->BeginFrame();
+			CJEngine->BeginFrame();
 
 			gameScene->Update();
 
 			gameScene->Draw();
 			
-			myEngine->EndFrame();
+			CJEngine->EndFrame();
 	}
 
 	//解放処理
 	gameScene->Finalize();
-	myEngine->Finalize();
+	CJEngine->Finalize();
 	CoUninitialize();
 	return 0;
 }

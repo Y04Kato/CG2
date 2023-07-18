@@ -2,17 +2,17 @@
 #include "Vector.h"
 #include "CreateTriangle.h"
 #include "CreateSprite.h"
-#include "MyEngine.h"
+#include "CJEngine.h"
 
 class GameScene{
 public:
-	void Initialize(MyEngine* engine, DirectXCommon* direct);
+	void Initialize(CitrusJunosEngine* engine, DirectXCommon* direct);
 	void Update();
 	void Draw();
 	void Finalize();
 
 private:
-	MyEngine* myEngine_;
+	CitrusJunosEngine* CJEngine_;
 	DirectXCommon* dxCommon_;
 
 	CreateTriangle* triangle_[2];

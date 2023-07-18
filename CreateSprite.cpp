@@ -1,8 +1,8 @@
 #include "CreateSprite.h"
 
-void Sprite::Initialize(DirectXCommon* dxCommon, MyEngine* engine){
+void Sprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine){
 	dxCommon_ = dxCommon;
-	myEngine_ = engine;
+	CJEngine_ = engine;
 	CreateVartexData();
 	SetColor();
 	CreateTransform();

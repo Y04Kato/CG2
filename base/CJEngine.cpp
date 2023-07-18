@@ -1,8 +1,8 @@
-#include "MyEngine.h"
+#include "CJEngine.h"
 #include <assert.h>
 
 
-IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler) {
+IDxcBlob* CitrusJunosEngine::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler) {
 	//これからシェーダーをコンパイルする旨をログに出す
 	Log(ConvertString(std::format(L"Begin CompileShader, path:{},profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
@@ -57,7 +57,7 @@ IDxcBlob* MyEngine::CompileShader(const std::wstring& filePath, const wchar_t* p
 	return shaderBlob;
 }
 
-void MyEngine::InitializeDxcCompiler(){
+void CitrusJunosEngine::InitializeDxcCompiler(){
 	HRESULT hr;
 	dxcUtils_ = nullptr;
 	dxcCompiler_ = nullptr;
@@ -71,7 +71,7 @@ void MyEngine::InitializeDxcCompiler(){
 	assert(SUCCEEDED(hr));
 }
 
-void MyEngine::CreateRootSignature() {
+void CitrusJunosEngine::CreateRootSignature() {
 	//RootSignature作成
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags =
@@ -128,7 +128,7 @@ void MyEngine::CreateRootSignature() {
 	assert(SUCCEEDED(hr));
 }
 
-void MyEngine::CreateInputlayOut() {
+void CitrusJunosEngine::CreateInputlayOut() {
 	inputElementDescs_[0].SemanticName = "POSITION";
 	inputElementDescs_[0].SemanticIndex = 0;
 	inputElementDescs_[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -143,13 +143,13 @@ void MyEngine::CreateInputlayOut() {
 	inputLayoutDesc_.NumElements = _countof(inputElementDescs_);
 }
 
-void MyEngine::BlendState() {
+void CitrusJunosEngine::BlendState() {
 	//すべての色要素を書き込む
 	blendDesc_.RenderTarget[0].RenderTargetWriteMask =
 		D3D12_COLOR_WRITE_ENABLE_ALL;
 }
 
-void MyEngine::RasterizerState() {
+void CitrusJunosEngine::RasterizerState() {
 	//裏面（時計回り）を表示しない
 	rasterizerDesc_.CullMode = D3D12_CULL_MODE_BACK;
 	//三角形の中を塗りつぶす
@@ -166,7 +166,7 @@ void MyEngine::RasterizerState() {
 	assert(pixelShaderBlob_ != nullptr);
 }
 
-void MyEngine::InitializePSO() {
+void CitrusJunosEngine::InitializePSO() {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	graphicsPipelineStateDesc.pRootSignature = rootSignature_;//RootSignature
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc_;//Inputlayout
@@ -194,7 +194,7 @@ void MyEngine::InitializePSO() {
 	assert(SUCCEEDED(hr));
 }
 
-void MyEngine::ViewPort() {
+void CitrusJunosEngine::ViewPort() {
 	//クライアント領域のサイズと一緒にして画面全体に表示
 	viewport_.Width = WinApp::kClientWidth;
 	viewport_.Height = WinApp::kClientHeight;
@@ -204,7 +204,7 @@ void MyEngine::ViewPort() {
 	viewport_.MaxDepth = 1.0f;
 }
 
-void MyEngine::ScissorRect() {
+void CitrusJunosEngine::ScissorRect() {
 	//シザー短形
 	scissorRect_.left = 0;
 	scissorRect_.right = WinApp::kClientWidth;
@@ -212,14 +212,14 @@ void MyEngine::ScissorRect() {
 	scissorRect_.bottom = WinApp::kClientHeight;
 }
 
-void MyEngine::SettingDepth(){
+void CitrusJunosEngine::SettingDepth(){
 	//DepthStencilStateの設定
 	depthStencilDesc_.DepthEnable = true;//有効化
 	depthStencilDesc_.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;//書き込み
 	depthStencilDesc_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;//比較関数、近ければ描画される
 }
 
-void MyEngine::Initialize(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
+void CitrusJunosEngine::Initialize(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
 	win_ = win;
 	win_ = new WinApp();
 	dxCommon_ = new DirectXCommon();
@@ -245,7 +245,7 @@ void MyEngine::Initialize(WinApp* win, const wchar_t* title, int32_t width, int3
 }
 
 
-void MyEngine::BeginFrame() {
+void CitrusJunosEngine::BeginFrame() {
 	dxCommon_->PreDraw();
 	//viewportを設定
 	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport_);
@@ -259,14 +259,14 @@ void MyEngine::BeginFrame() {
 	ImGui::ShowDemoWindow();
 }
 
-void MyEngine::EndFrame() {
+void CitrusJunosEngine::EndFrame() {
 	//内部コマンドを生成する
 	ImGui::Render();
 
 	dxCommon_->PostDraw();
 }
 
-void MyEngine::Finalize() {
+void CitrusJunosEngine::Finalize() {
 	textureResource_->Release();
 	graphicsPipelineState_->Release();
 	signatureBlob_->Release();
@@ -279,11 +279,11 @@ void MyEngine::Finalize() {
 	dxCommon_->Finalize();
 }
 
-void MyEngine::Update() {
+void CitrusJunosEngine::Update() {
 	
 }
 
-DirectX::ScratchImage MyEngine::LoadTexture(const std::string& filePath) {
+DirectX::ScratchImage CitrusJunosEngine::LoadTexture(const std::string& filePath) {
 	//テクスチャファイルを読んでプログラムで扱えるようにする
 	DirectX::ScratchImage image{};
 	std::wstring filePathW = ConvertString(filePath);
@@ -299,7 +299,7 @@ DirectX::ScratchImage MyEngine::LoadTexture(const std::string& filePath) {
 	return mipImages;
 }
 
-ID3D12Resource* MyEngine::CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata){
+ID3D12Resource* CitrusJunosEngine::CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata){
 	//metadataをもとにResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = UINT(metadata.width);//texturの幅
@@ -330,7 +330,7 @@ ID3D12Resource* MyEngine::CreateTextureResource(ID3D12Device* device, const Dire
 	return resource;
 }
 
-void MyEngine::UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages) {
+void CitrusJunosEngine::UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages) {
 	//meta情報を取得
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	for (size_t miplevel = 0; miplevel < metadata.mipLevels; ++miplevel) {
@@ -347,7 +347,7 @@ void MyEngine::UploadtextureData(ID3D12Resource* texture, const DirectX::Scratch
 	}
 }
 
-void MyEngine::SettingTexture(const std::string& filePath) {
+void CitrusJunosEngine::SettingTexture(const std::string& filePath) {
 	DirectX::ScratchImage mipImage = LoadTexture(filePath);
 	const DirectX::TexMetadata& metadata = mipImage.GetMetadata();
 	textureResource_ = CreateTextureResource(dxCommon_->GetDevice(), metadata);
@@ -372,5 +372,5 @@ void MyEngine::SettingTexture(const std::string& filePath) {
 	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_, &srvDesc, textureSrvHandleCPU_);
 }
 
-WinApp* MyEngine::win_;
-DirectXCommon* MyEngine::dxCommon_;
+WinApp* CitrusJunosEngine::win_;
+DirectXCommon* CitrusJunosEngine::dxCommon_;

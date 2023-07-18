@@ -103,7 +103,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\MatrixCalculation.cpp" />
-    <ClCompile Include="base\MyEngine.cpp" />
+    <ClCompile Include="base\CJEngine.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +138,7 @@
     <ClInclude Include="math\MatrixCalculation.h">
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
-    <ClInclude Include="base\MyEngine.h" />
+    <ClInclude Include="base\CJEngine.h" />
     <ClInclude Include="math\Vector.h">
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
