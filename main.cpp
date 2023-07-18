@@ -1,5 +1,5 @@
 #include "MyEngine.h"
-#include "CreateTriangle.h"
+#include "GameScene.h"
 
 const wchar_t kWindowTitle[] = { L"CG2_カトウ" };
 
@@ -11,35 +11,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//初期化
 	WinApp* win_ = nullptr;
 	MyEngine* myEngine = new MyEngine;
-	myEngine->Initialization(win_, kWindowTitle, 1280, 720);
+	myEngine->Initialize(win_, kWindowTitle, 1280, 720);
 
-	myEngine->Initialize();
-
-	Vector4 data1 = { -0.5f,-0.5f,0.0f,1.0f };
-	Vector4 data2 = { 0.0f,0.5f,0.0f,1.0f };
-	Vector4 data3 = { 0.5f,-0.5f,0.0f,1.0f };
-	Vector4 material1 = { 1.0f,0.0f,0.0f,1.0f };
-
-	Vector4 data4 = { -0.5f,-0.5f,0.5f,1.0f };
-	Vector4 data5 = { 0.0f,0.0f,0.0f,1.0f };
-	Vector4 data6 = { 0.5f,-0.5f,-0.5f,1.0f };
-	Vector4 material2 = { 0.0f,1.0f,0.0f,1.0f };
-
-	/*Vector4 data1 = { -0.2f,-0.2f,0.0f,1.0f };
-	Vector4 data2 = { 0.0f,0.2f,0.0f,1.0f };
-	Vector4 data3 = { 0.2f,-0.2f,0.0f,1.0f };
-	Vector4 material1 = { 1.0f,0.0f,0.0f,1.0f };
-
-	Vector4 data4 = { -0.8f,-0.8f,0.0f,1.0f };
-	Vector4 data5 = { -0.6f,-0.4f,0.0f,1.0f };
-	Vector4 data6 = { -0.4f,-0.8f,0.0f,1.0f };
-	Vector4 material2 = { 0.0f,1.0f,0.0f,1.0f };
-
-	Vector4 data7 = { 0.4f,-0.8f,0.0f,1.0f };
-	Vector4 data8 = { 0.6f,-0.4f,0.0f,1.0f };
-	Vector4 data9 = { 0.8f,-0.8f,0.0f,1.0f };
-	Vector4 material3 = { 0.0f,0.0f,1.0f,1.0f };*/
-
+	GameScene* gameScene = new GameScene();
+	gameScene->Initialize(myEngine, myEngine->GetDirectXCommon());
 	while (true) {
 		//windowのメッセージを最優先で処理させる
 		if (win_->Procesmessage()) {
@@ -48,20 +23,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//ゲームの処理
 			myEngine->BeginFrame();
 
-			myEngine->Update();
+			gameScene->Update();
 
-			//三角形描画
-			myEngine->DrawTriangle(data1 ,data2, data3,material1);
-
-			myEngine->DrawTriangle(data4, data5, data6, material2);
-
-			//myEngine->DrawTriangle(data7, data8, data9, material3);
-
+			gameScene->Draw();
 			
 			myEngine->EndFrame();
 	}
 
 	//解放処理
+	gameScene->Finalize();
 	myEngine->Finalize();
 	CoUninitialize();
 	return 0;

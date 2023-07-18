@@ -18,6 +18,8 @@ public:
 	void ClearRenderTarget();
 	void Finalize();
 
+	static ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
+
 	WinApp* GetWin() { return winApp_; }
 
 	HRESULT GetHr() { return  hr_; }

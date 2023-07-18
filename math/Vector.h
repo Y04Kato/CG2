@@ -1,18 +1,15 @@
 #pragma once
 
 struct Vector2 {
-	float x;
-	float y;
+	float num[2];
 };
 
 struct Vector3 {
-	float x;
-	float y;
-	float z;
+	float num[3];
 };
 
 struct Vector4 {
-	float vector[4];
+	float num[4];
 };
 
 struct VertexData {

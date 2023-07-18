@@ -8,9 +8,7 @@
 
 class MyEngine {
 public:
-	void Initialize();
-
-	void Initialization(WinApp* win, const wchar_t* title, int32_t width, int32_t height);
+	void Initialize(WinApp* win, const wchar_t* title, int32_t width, int32_t height);
 
 	void BeginFrame();
 
@@ -20,19 +18,16 @@ public:
 
 	void Update();
 
-	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material);
+	void SettingTexture(const std::string& filePath);
 
 	DirectXCommon* GetDirectXCommon() { return dxCommon_; }
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVHandleGPU() { return textureSrvHandleGPU_; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU() { return textureSrvHandleGPU_; }
 
 private:
 	static WinApp* win_;
 	static	DirectXCommon* dxCommon_;
-
-	CreateTriangle* triangle_[10];
-
-	int triangleCount_;
 
 	IDxcUtils* dxcUtils_;
 	IDxcCompiler3* dxcCompiler_;
@@ -65,9 +60,6 @@ private:
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
 
-	Transform transform_;
-	Matrix4x4 worldMatrix_;
-
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 	ID3D12Resource* textureResource_;
@@ -98,5 +90,4 @@ private:
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
 	void UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
-	void SettingTexture(const std::string& filePath);
 };

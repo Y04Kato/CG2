@@ -219,16 +219,7 @@ void MyEngine::SettingDepth(){
 	depthStencilDesc_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;//比較関数、近ければ描画される
 }
 
-void MyEngine::Initialize() {
-	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	for (int i = 0; i < 10; i++) {
-		triangle_[i] = new CreateTriangle();
-		triangle_[i]->Initialize(dxCommon_,this);
-	}
-	SettingTexture("resources/uvChecker.png");
-}
-
-void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
+void MyEngine::Initialize(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
 	win_ = win;
 	win_ = new WinApp();
 	dxCommon_ = new DirectXCommon();
@@ -255,7 +246,6 @@ void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, 
 
 
 void MyEngine::BeginFrame() {
-	triangleCount_ = 0;
 	dxCommon_->PreDraw();
 	//viewportを設定
 	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport_);
@@ -277,10 +267,6 @@ void MyEngine::EndFrame() {
 }
 
 void MyEngine::Finalize() {
-	for (int i = 0; i < 10; i++) {
-		triangle_[i]->Finalize();
-	}
-
 	textureResource_->Release();
 	graphicsPipelineState_->Release();
 	signatureBlob_->Release();
@@ -294,13 +280,7 @@ void MyEngine::Finalize() {
 }
 
 void MyEngine::Update() {
-	transform_.rotate.y += 0.01f;
-	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
-}
-
-void MyEngine::DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material) {
-	triangleCount_++;
-	triangle_[triangleCount_]->Draw(a, b, c,material,worldMatrix_);
+	
 }
 
 DirectX::ScratchImage MyEngine::LoadTexture(const std::string& filePath) {
