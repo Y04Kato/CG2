@@ -1,7 +1,7 @@
 #include "WinApp.h"
 
 //ウィンドウプロシージャ
-LRESULT CALLBACK WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
 		return true;
 	}
@@ -84,7 +84,5 @@ void WinApp::Finalize(){
 	debugController_->Release();
 }
 
-
 HWND WinApp::hwnd_;
-UINT WinApp::windowStyle_;
 ID3D12Debug1* WinApp::debugController_;

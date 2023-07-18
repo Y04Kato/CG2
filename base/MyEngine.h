@@ -22,6 +22,8 @@ public:
 
 	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material);
 
+	DirectXCommon* GetDirectXCommon() { return dxCommon_; }
+
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVHandleGPU() { return textureSrvHandleGPU_; }
 
 private:

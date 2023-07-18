@@ -3,11 +3,6 @@
 #include"Vector.h"
 #include "MatrixCalculation.h"
 
-struct VertexData {
-	Vector4 position;
-	Vector2 texcoord;
-};
-
 class MyEngine;
 
 class CreateTriangle {

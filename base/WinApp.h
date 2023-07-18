@@ -16,27 +16,23 @@ public:
 	static const int32_t kClientWidth = 1280;
 	static const int32_t kClientHeight = 720;
 
-	HINSTANCE GetHInstance()const { return wc_.hInstance; }
+	bool Procesmessage();
+	void Finalize();
 
-	static	bool Procesmessage();
-	static void Finalize();
+	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	ID3D12Debug1* GetdebugController() { return debugController_; }
 
-	static ID3D12Debug1* GetdebugController() { return debugController_; }
+	inline HWND GetHwnd() { return hwnd_; }
 
-	static inline HWND GetHwnd() { return hwnd_; }
-
-	static void CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight);
+	void CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight);
 
 private:
-	static	UINT windowStyle_;
+	UINT windowStyle_;
 
 	static ID3D12Debug1* debugController_;
 
-	static	inline 	RECT wrc_ = { 0,0,kClientWidth,kClientHeight };
+	static inline WNDCLASS wc_{};//ウィンドウクラス
 
-	static inline	WNDCLASS wc_{};// ウィンドウクラス
-
-	static	HWND hwnd_;
+	static HWND hwnd_;
 };

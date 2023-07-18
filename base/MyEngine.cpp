@@ -220,6 +220,9 @@ void MyEngine::Initialize() {
 }
 
 void MyEngine::Initialization(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
+	win_ = win;
+	win_ = new WinApp();
+	dxCommon_ = new DirectXCommon();
 	dxCommon_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
 
 	InitializeDxcCompiler();

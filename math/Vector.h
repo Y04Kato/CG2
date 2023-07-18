@@ -17,3 +17,8 @@ struct Vector4 {
 	float z;
 	float w;
 };
+
+struct VertexData {
+	Vector4 position;
+	Vector2 texcoord;
+};
