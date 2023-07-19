@@ -1,13 +1,13 @@
 #include "CreateTriangle.h"
-#include<assert.h>
-#include"CJEngine.h"
+#include <assert.h>
+#include "CJEngine.h"
 
 void CreateTriangle::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine) {
 	dxCommon_ = dxCommon;
 	CJEngine_ =  engine;
 	SettingVertex();
 	SettingColor();
-	MoveMatrix();
+	TransformMatrix();
 }
 
 void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata) {
@@ -38,7 +38,7 @@ void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, 
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]のこと
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->GetSRVHandleGPU());
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_);
 
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
@@ -62,15 +62,15 @@ void CreateTriangle::SettingVertex() {
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
 
+void CreateTriangle::TransformMatrix() {
+	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
+	*wvpData_ = MakeIdentity4x4();
+}
+
 void CreateTriangle::SettingColor() {
 	//マテリアル用のリソースを作る　今回はcolor1つ分
 	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Vector4));
 	//書き込むためのアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-}
-
-void CreateTriangle::MoveMatrix() {
-	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
-	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
-	*wvpData_ = MakeIdentity4x4();
 }

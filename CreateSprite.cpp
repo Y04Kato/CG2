@@ -3,12 +3,12 @@
 void Sprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine){
 	dxCommon_ = dxCommon;
 	CJEngine_ = engine;
-	CreateVartexData();
-	SetColor();
-	CreateTransform();
+	SettingVartex();
+	SettingColor();
+	TransformMatrix();
 }
 
-void Sprite::SetColor() {
+void Sprite::SettingColor() {
 	materialResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
 
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
@@ -53,7 +53,7 @@ void Sprite::Finalize(){
 	transformationMatrixResource_->Release();
 }
 
-void Sprite::CreateVartexData(){
+void Sprite::SettingVartex(){
 	//Sprite用のリソースを作る
 	vertexResourceSprite_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * 6);
 
@@ -69,7 +69,7 @@ void Sprite::CreateVartexData(){
 	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
 
-void Sprite::CreateTransform(){
+void Sprite::TransformMatrix(){
 	//Sprite用のTransformationMatrix用のリソースを作る Matrix4x41つ分を用意する
 	transformationMatrixResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
 	transformationMatrixdata_ = nullptr;//書き込む

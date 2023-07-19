@@ -2,6 +2,7 @@
 #include "Vector.h"
 #include "CreateTriangle.h"
 #include "CreateSprite.h"
+#include "CreateSphere.h"
 #include "CJEngine.h"
 
 class GameScene{
@@ -27,6 +28,11 @@ private:
 	Vector4 spriteDataLeftTop_[2];
 	Vector4 spriteDataRightDown_[2];
 	Transform spriteTransform_[1];
-	Vector4 spriteMaterial[2];
+	Vector4 spriteMaterial_[2];
 	
+	CreateSphere* sphere_;
+	Transform sphereTransform_;
+	Vector4 sphereMaterial_;
+	Matrix4x4 sphereMatrix_;
+
 };

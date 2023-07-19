@@ -22,7 +22,7 @@ private:
 	CitrusJunosEngine* CJEngine_;
 
 private:
-	void CreateVartexData();
-	void CreateTransform();
-	void SetColor();
+	void SettingVartex();
+	void TransformMatrix();
+	void SettingColor();
 };

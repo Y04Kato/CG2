@@ -22,8 +22,11 @@ public:
 
 	DirectXCommon* GetDirectXCommon() { return dxCommon_; }
 
-	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVHandleGPU() { return textureSrvHandleGPU_; }
-	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU() { return textureSrvHandleGPU_; }
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
+
+	D3D12_CPU_DESCRIPTOR_HANDLE GettextureSrvHandleCPU(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
+	D3D12_GPU_DESCRIPTOR_HANDLE GettextureSrvHandleGPU(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
 
 private:
 	static WinApp* win_;
@@ -60,8 +63,6 @@ private:
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
 
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 	ID3D12Resource* textureResource_;
 
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc_{};

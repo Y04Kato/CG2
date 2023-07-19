@@ -18,7 +18,7 @@ private:
 
 	void SettingColor();
 
-	void MoveMatrix();
+	void TransformMatrix();
 
 private:
 	CitrusJunosEngine* CJEngine_;
