@@ -6,8 +6,8 @@ void CreateSphere::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine
 	CJEngine_ = engine;
 	kSubDivision = 16;
 	vertexCount = kSubDivision * kSubDivision * 6;
-	CreateVartexData();
-	SetColor();
+	SettingVertex();
+	SettingColor();
 	TransformMatrix();
 }
 
@@ -70,7 +70,7 @@ void CreateSphere::Finalize() {
 	wvpResource_->Release();
 }
 
-void CreateSphere::CreateVartexData() {
+void CreateSphere::SettingVertex() {
 	vertexResource = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * vertexCount);
 
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -88,7 +88,7 @@ void CreateSphere::TransformMatrix(){
 	*wvpData_ = MakeIdentity4x4();
 }
 
-void CreateSphere::SetColor() {
+void CreateSphere::SettingColor() {
 	materialResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
 
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));

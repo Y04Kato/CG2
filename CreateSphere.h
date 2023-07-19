@@ -9,6 +9,12 @@ public:
 
 	void Draw(const Vector4& material, const Matrix4x4& wvpdata);
 	void Finalize();
+
+private:
+	void SettingVertex();
+	void SettingColor();
+	void TransformMatrix();
+
 private:
 	DirectXCommon* dxCommon_;
 	CitrusJunosEngine* CJEngine_;
@@ -26,9 +32,4 @@ private:
 	const float pi = 3.1415f;
 	uint32_t kSubDivision;
 	uint32_t vertexCount;
-
-private:
-	void CreateVartexData();
-	void SetColor();
-	void TransformMatrix();
 };
