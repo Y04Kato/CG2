@@ -46,8 +46,8 @@ void GameScene::Update() {
 	transform_.rotate.num[1] += 0.01f;
 	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	
-	Matrix4x4 sphereAffine = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 	sphereTransform_.rotate.num[1] += 0.05f;
+	Matrix4x4 sphereAffine = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 
 	ImGui::Begin("test");
 	ImGui::DragFloat3("TransformSprite", spriteTransform_[0].translate.num, 0.5f);
