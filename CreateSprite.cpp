@@ -1,6 +1,6 @@
 #include "CreateSprite.h"
 
-void Sprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine){
+void CreateSprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine){
 	dxCommon_ = dxCommon;
 	CJEngine_ = engine;
 	SettingVartex();
@@ -8,13 +8,13 @@ void Sprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine){
 	TransformMatrix();
 }
 
-void Sprite::SettingColor() {
+void CreateSprite::SettingColor() {
 	materialResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
 
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }
 
-void Sprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material){
+void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material){
 	//座標の設定
 	vertexData_[0].position = { a.num[0],b.num[1],0.0f,1.0f};
 	vertexData_[1].position = { a.num[0],a.num[1],0.0f,1.0f };
@@ -47,13 +47,13 @@ void Sprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform
 
 }
 
-void Sprite::Finalize(){
+void CreateSprite::Finalize(){
 	vertexResourceSprite_->Release();
 	materialResource_->Release();
 	transformationMatrixResource_->Release();
 }
 
-void Sprite::SettingVartex(){
+void CreateSprite::SettingVartex(){
 	//Sprite用のリソースを作る
 	vertexResourceSprite_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * 6);
 
@@ -69,7 +69,7 @@ void Sprite::SettingVartex(){
 	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
 
-void Sprite::TransformMatrix(){
+void CreateSprite::TransformMatrix(){
 	//Sprite用のTransformationMatrix用のリソースを作る Matrix4x41つ分を用意する
 	transformationMatrixResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
 	transformationMatrixdata_ = nullptr;//書き込む

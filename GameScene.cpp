@@ -1,8 +1,8 @@
 #include "gameScene.h"
 
-void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* direct) {
+void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	CJEngine_ = engine;
-	dxCommon_ = direct;
+	dxCommon_ = dxCommon;
 
 	data1_[0] = { -0.5f,-0.5f,0.5f,1.0f };
 	data2_[0] = { 0.0f,0.0f,0.0f,1.0f };
@@ -23,10 +23,8 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* direct) {
 	spriteMaterial_[0] = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_[0] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
-	sphereTransform_ = { {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	sphereTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	sphereMaterial_ = { 0.0f,0.0f,1.0f,1.0f };
-
-	CJEngine_->SettingTexture("resources/uvChecker.png");
 
 	for (int i = 0; i < 2; i++) {
 		triangle_[i] = new CreateTriangle();
@@ -34,13 +32,14 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* direct) {
 	}
 
 	for (int i = 0; i < 2; i++) {
-		sprite_[i] = new Sprite();
+		sprite_[i] = new CreateSprite();
 		sprite_[i]->Initialize(dxCommon_, CJEngine_);
 	}
 
 	sphere_ = new CreateSphere();
 	sphere_->Initialize(dxCommon_, CJEngine_);
 
+	CJEngine_->SettingTexture("resources/uvChecker.png");
 }
 
 void GameScene::Update() {
@@ -48,7 +47,7 @@ void GameScene::Update() {
 	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	
 	Matrix4x4 sphereAffine = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
-
+	sphereTransform_.rotate.num[1] += 0.05f;
 
 	ImGui::Begin("test");
 	ImGui::DragFloat3("TransformSprite", spriteTransform_[0].translate.num, 0.5f);
@@ -58,13 +57,15 @@ void GameScene::Update() {
 	ImGui::End();
 }
 
-void GameScene::Draw() {
-	sphere_->Draw(sphereMaterial_, sphereMatrix_);
-
+void GameScene::Draw3D() {
 	for (int i = 0; i < 2; i++) {//Triangle描画
-		triangle_[i]->Draw(data1_[i], data2_[i], data3_[i], material_[i], worldMatrix_);
+		//triangle_[i]->Draw(data1_[i], data2_[i], data3_[i], material_[i], worldMatrix_);
 	}
 
+	sphere_->Draw(sphereMaterial_, sphereMatrix_);
+}
+
+void GameScene::Draw2D() {
 	for (int i = 0; i < 1; i++) {//Sprite描画
 		sprite_[i]->Draw(spriteDataLeftTop_[i], spriteDataRightDown_[i], spriteTransform_[i], spriteMaterial_[0]);
 	}

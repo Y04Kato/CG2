@@ -25,7 +25,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			gameScene->Update();
 
-			gameScene->Draw();
+			gameScene->Draw3D();
+			gameScene->Draw2D();
 			
 			CJEngine->EndFrame();
 	}

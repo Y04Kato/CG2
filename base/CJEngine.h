@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectXCommon.h"
 #include <dxcapi.h>
-#include"Vector.h"
+#include "Vector.h"
 #include "CreateTriangle.h"
 #include "MatrixCalculation.h"
 #pragma comment(lib,"dxcompiler.lib")

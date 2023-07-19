@@ -24,7 +24,7 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata) {
 			uint32_t start = (latIndex * kSubDivision + lonIndex) * 6;
 			float lon = lonIndex * kLonEvery;
 			//頂点にデータを入力する　基準点a
-			vertexData_[start].position = {cos(lat) * cos(lon),sin(lat),cos(lat) * sin(lon),1.0f};
+			vertexData_[start].position = { cos(lat) * cos(lon),sin(lat),cos(lat) * sin(lon),1.0f };
 			vertexData_[start].texcoord = { float(lonIndex) / float(kSubDivision),1.0f - float(latIndex) / kSubDivision };
 
 			vertexData_[start + 1].position = { cos(lat + kLatEvery) * cos(lon),sin(lat + kLatEvery),cos(lat + kLatEvery) * sin(lon),1.0f };

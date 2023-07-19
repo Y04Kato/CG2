@@ -3,7 +3,7 @@
 #include "Vector.h"
 #include "CJEngine.h"
 
-class Sprite{
+class CreateSprite{
 public:
 	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
 

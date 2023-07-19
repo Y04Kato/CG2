@@ -9,7 +9,8 @@ class GameScene{
 public:
 	void Initialize(CitrusJunosEngine* engine, DirectXCommon* direct);
 	void Update();
-	void Draw();
+	void Draw2D();
+	void Draw3D();
 	void Finalize();
 
 private:
@@ -24,7 +25,7 @@ private:
 	Transform transform_;
 	Matrix4x4 worldMatrix_;
 
-	Sprite* sprite_[2];
+	CreateSprite* sprite_[2];
 	Vector4 spriteDataLeftTop_[2];
 	Vector4 spriteDataRightDown_[2];
 	Transform spriteTransform_[1];
