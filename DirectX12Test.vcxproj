@@ -46,9 +46,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

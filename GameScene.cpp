@@ -23,9 +23,8 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
-	sphereTransform_ = { {0.2f,0.35f,0.2f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	sphereTransform_ = { {0.4f,0.4f,0.4f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	sphereMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
-	sphereMatrix_ = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 
 	for (int i = 0; i < 2; i++) {
 		triangle_[i] = new CreateTriangle();
@@ -41,6 +40,8 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	sphere_->Initialize(dxCommon_, CJEngine_);
 
 	CJEngine_->SettingTexture("resources/uvChecker.png");
+
+	cameraTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 }
 
 void GameScene::Update() {
@@ -50,7 +51,17 @@ void GameScene::Update() {
 	sphereTransform_.rotate.num[1] += 0.02f;
 	sphereMatrix_ = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 
+	Matrix4x4 sphereAffine = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
+	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform_.scale, cameraTransform_.rotate, cameraTransform_.translate);
+	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
+	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(dxCommon_->GetWin()->kClientWidth) / float(dxCommon_->GetWin()->kClientHeight), 0.1f, 100.0f);
+	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix_, Multiply(viewMatrix, projectionMatrix));
+	
+	worldMatrix_ = worldViewProjectionMatrix;
+	sphereMatrix_ = Multiply(sphereAffine, Multiply(viewMatrix, projectionMatrix));
+
 	ImGui::Begin("test");
+	ImGui::DragFloat3("CameraTranslate", cameraTransform_.translate.num, 0.01f);
 	ImGui::DragFloat3("SpriteTranslate", spriteTransform_.translate.num, 0.5f);
 	ImGui::DragFloat3("SphereTranslate", sphereTransform_.translate.num, 0.5f);
 	ImGui::DragFloat3("SphereRotate", sphereTransform_.rotate.num, 0.5f);

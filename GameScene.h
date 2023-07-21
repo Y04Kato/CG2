@@ -36,4 +36,5 @@ private:
 	Vector4 sphereMaterial_;
 	Matrix4x4 sphereMatrix_;
 
+	Transform cameraTransform_;
 };
