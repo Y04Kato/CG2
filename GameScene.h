@@ -28,7 +28,7 @@ private:
 	CreateSprite* sprite_[2];
 	Vector4 spriteDataLeftTop_[2];
 	Vector4 spriteDataRightDown_[2];
-	Transform spriteTransform_[1];
+	Transform spriteTransform_;
 	Vector4 spriteMaterial_[2];
 	
 	CreateSphere* sphere_;

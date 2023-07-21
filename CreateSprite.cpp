@@ -8,12 +8,6 @@ void CreateSprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine
 	TransformMatrix();
 }
 
-void CreateSprite::SettingColor() {
-	materialResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
-
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-}
-
 void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material){
 	//座標の設定
 	vertexData_[0].position = { a.num[0],b.num[1],0.0f,1.0f};
@@ -40,7 +34,7 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionmatrix));
 	*transformationMatrixdata_ = worldViewProjectionMatrix;
 	
-	//Spriteの描画
+	//描画
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
@@ -78,4 +72,10 @@ void CreateSprite::TransformMatrix(){
 	transformationMatrixResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixdata_));
 	//単位行列を書き込んでおく
 	*transformationMatrixdata_ = MakeIdentity4x4();
+}
+
+void CreateSprite::SettingColor() {
+	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
+
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }

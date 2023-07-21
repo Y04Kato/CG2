@@ -1,6 +1,6 @@
 #include "CreateTriangle.h"
-#include <assert.h>
 #include "CJEngine.h"
+#include <assert.h>
 
 void CreateTriangle::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine) {
 	dxCommon_ = dxCommon;

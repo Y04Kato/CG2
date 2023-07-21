@@ -17,14 +17,15 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	spriteDataLeftTop_[0] = { 0.0f,0.0f,0.0f,1.0f };
-	spriteDataRightDown_[0] = { 320.0f,180.0f,0.0f,1.0f };
-	spriteDataLeftTop_[1] = { 960.0f,540.0f,0.0f,1.0f };
-	spriteDataRightDown_[1] = { 1280.0f,720.0f,0.0f,1.0f };
+	spriteDataRightDown_[0] = { 640.0f,360.0f,0.0f,1.0f };
+	spriteDataLeftTop_[1] = { 0.0f,0.0f,0.0f,1.0f };
+	spriteDataRightDown_[1] = { 640.0f,360.0f,0.0f,1.0f };
 	spriteMaterial_[0] = { 1.0f,1.0f,1.0f,1.0f };
-	spriteTransform_[0] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	sphereTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	sphereMaterial_ = { 0.0f,0.0f,1.0f,1.0f };
+	sphereMatrix_ = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 
 	for (int i = 0; i < 2; i++) {
 		triangle_[i] = new CreateTriangle();
@@ -50,10 +51,10 @@ void GameScene::Update() {
 	Matrix4x4 sphereAffine = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 
 	ImGui::Begin("test");
-	ImGui::DragFloat3("TransformSprite", spriteTransform_[0].translate.num, 0.5f);
-	ImGui::DragFloat3("spheretranslate", sphereTransform_.translate.num, 0.5f);
-	ImGui::DragFloat3("sphererotate", sphereTransform_.rotate.num, 0.5f);
-	ImGui::DragFloat3("spherescale", sphereTransform_.scale.num, 0.5f);
+	ImGui::DragFloat3("SpriteTranslate", spriteTransform_.translate.num, 0.5f);
+	ImGui::DragFloat3("SphereTranslate", sphereTransform_.translate.num, 0.5f);
+	ImGui::DragFloat3("SphereRotate", sphereTransform_.rotate.num, 0.5f);
+	ImGui::DragFloat3("SphereScale", sphereTransform_.scale.num, 0.5f);
 	ImGui::End();
 }
 
@@ -67,7 +68,7 @@ void GameScene::Draw3D() {
 
 void GameScene::Draw2D() {
 	for (int i = 0; i < 1; i++) {//Sprite描画
-		sprite_[i]->Draw(spriteDataLeftTop_[i], spriteDataRightDown_[i], spriteTransform_[i], spriteMaterial_[0]);
+		sprite_[i]->Draw(spriteDataLeftTop_[i], spriteDataRightDown_[i], spriteTransform_, spriteMaterial_[0]);
 	}
 }
 void GameScene::Finalize() {

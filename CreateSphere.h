@@ -1,13 +1,16 @@
 #pragma once
 #include "DirectXCommon.h"
 #include "Vector.h"
-#include "CJEngine.h"
+#include "MatrixCalculation.h"
+
+class CitrusJunosEngine;
 
 class CreateSphere{
 public:
 	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
 
 	void Draw(const Vector4& material, const Matrix4x4& wvpdata);
+	
 	void Finalize();
 
 private:

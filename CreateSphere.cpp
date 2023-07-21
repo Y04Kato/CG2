@@ -1,4 +1,5 @@
 #include "CreateSphere.h"
+#include "CJEngine.h"
 #include<cmath>
 
 void CreateSphere::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine) {
@@ -48,7 +49,7 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata) {
 			//VBVを設定
 			dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
 			
-			//形状を設定。PS0にせっていしているものとはまた別。同じものを設定すると考えておけばいい
+			//形状を設定。PS0に設定しているものとはまた別。同じものを設定する
 			dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			
 			//マテリアルCBufferの場所を設定
@@ -72,7 +73,7 @@ void CreateSphere::Finalize() {
 
 void CreateSphere::SettingVertex() {
 	vertexResource = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * vertexCount);
-
+	//リソースの先頭のアドレスから使う
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
 
 	vertexBufferView.SizeInBytes = sizeof(VertexData) * vertexCount;
@@ -83,13 +84,13 @@ void CreateSphere::SettingVertex() {
 }
 
 void CreateSphere::TransformMatrix(){
-	wvpResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
 	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
 	*wvpData_ = MakeIdentity4x4();
 }
 
 void CreateSphere::SettingColor() {
-	materialResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
+	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
 
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }

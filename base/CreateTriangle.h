@@ -1,6 +1,6 @@
 #pragma once
-#include"DirectXCommon.h"
-#include"Vector.h"
+#include "DirectXCommon.h"
+#include "Vector.h"
 #include "MatrixCalculation.h"
 
 class CitrusJunosEngine;
@@ -37,7 +37,6 @@ private:
 
 	//WVP用のリソース
 	ID3D12Resource* wvpResource_;
-
 	Matrix4x4* wvpData_;
 
 };
