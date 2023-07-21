@@ -7,12 +7,12 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	data1_[0] = { -0.5f,-0.5f,0.5f,1.0f };
 	data2_[0] = { 0.0f,0.0f,0.0f,1.0f };
 	data3_[0] = { 0.5f,-0.5f,-0.5f,1.0f };
-	material_[0] = { 1.0f,0.0f,0.0f,1.0f };
+	material_[0] = { 1.0f,1.0f,1.0f,1.0f };
 
 	data1_[1] = { -0.5f,-0.5f,0.0f,1.0f };
 	data2_[1] = { 0.0f,0.5f,0.0f,1.0f };
 	data3_[1] = { 0.5f,-0.5f,0.0f,1.0f };
-	material_[1] = { 0.0f,1.0f,0.0f,1.0f };
+	material_[1] = { 1.0f,1.0f,1.0f,1.0f };
 
 	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
@@ -20,11 +20,11 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	spriteDataRightDown_[0] = { 640.0f,360.0f,0.0f,1.0f };
 	spriteDataLeftTop_[1] = { 0.0f,0.0f,0.0f,1.0f };
 	spriteDataRightDown_[1] = { 640.0f,360.0f,0.0f,1.0f };
-	spriteMaterial_[0] = { 1.0f,1.0f,1.0f,1.0f };
+	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
-	sphereTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	sphereMaterial_ = { 0.0f,0.0f,1.0f,1.0f };
+	sphereTransform_ = { {0.2f,0.35f,0.2f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	sphereMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	sphereMatrix_ = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 
 	for (int i = 0; i < 2; i++) {
@@ -47,8 +47,8 @@ void GameScene::Update() {
 	transform_.rotate.num[1] += 0.01f;
 	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	
-	sphereTransform_.rotate.num[1] += 0.05f;
-	Matrix4x4 sphereAffine = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
+	sphereTransform_.rotate.num[1] += 0.02f;
+	sphereMatrix_ = MakeAffineMatrix(sphereTransform_.scale, sphereTransform_.rotate, sphereTransform_.translate);
 
 	ImGui::Begin("test");
 	ImGui::DragFloat3("SpriteTranslate", spriteTransform_.translate.num, 0.5f);
@@ -68,7 +68,7 @@ void GameScene::Draw3D() {
 
 void GameScene::Draw2D() {
 	for (int i = 0; i < 1; i++) {//Sprite描画
-		sprite_[i]->Draw(spriteDataLeftTop_[i], spriteDataRightDown_[i], spriteTransform_, spriteMaterial_[0]);
+		sprite_[i]->Draw(spriteDataLeftTop_[i], spriteDataRightDown_[i], spriteTransform_, spriteMaterial_);
 	}
 }
 void GameScene::Finalize() {

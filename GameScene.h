@@ -29,7 +29,7 @@ private:
 	Vector4 spriteDataLeftTop_[2];
 	Vector4 spriteDataRightDown_[2];
 	Transform spriteTransform_;
-	Vector4 spriteMaterial_[2];
+	Vector4 spriteMaterial_;
 	
 	CreateSphere* sphere_;
 	Transform sphereTransform_;
