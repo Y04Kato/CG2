@@ -28,6 +28,12 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{cfedf8cc-6219-4b5b-b6e1-9bd08bb07fb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\gameScene">
+      <UniqueIdentifier>{0c6fa2b3-e624-4453-873c-15111b409575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\gameScene">
+      <UniqueIdentifier>{3b921b08-b4f3-4e2e-867e-15fb6448dc62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,11 +81,11 @@
     <ClCompile Include="base\CreateSprite.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="base\CreateSphere.cpp">
       <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene\GameScene.cpp">
+      <Filter>ソース ファイル\gameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,11 +144,11 @@
     <ClInclude Include="base\CreateSprite.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="base\CreateSphere.h">
       <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="gameScene\GameScene.h">
+      <Filter>ヘッダー ファイル\gameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

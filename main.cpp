@@ -1,5 +1,5 @@
 #include "CJEngine.h"
-#include "GameScene.h"
+#include "gameScene/GameScene.h"
 
 const wchar_t kWindowTitle[] = { L"CG2_カトウ" };
 
