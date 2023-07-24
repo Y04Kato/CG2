@@ -18,18 +18,13 @@ private:
 	DirectXCommon* dxCommon_;
 
 	CreateTriangle* triangle_[2];
-	Vector4 data1_[2];
-	Vector4 data2_[2];
-	Vector4 data3_[2];
-	Vector4 material_[2];
+	TriangleData triangleData_[2];
 	Transform transform_;
 	Matrix4x4 worldMatrix_;
 
 	CreateSprite* sprite_[2];
-	Vector4 spriteDataLeftTop_[2];
-	Vector4 spriteDataRightDown_[2];
+	SpriteData spriteData_;
 	Transform spriteTransform_;
-	Vector4 spriteMaterial_;
 	
 	CreateSphere* sphere_;
 	Transform sphereTransform_;
