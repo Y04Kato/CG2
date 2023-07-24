@@ -70,20 +70,29 @@ void GameScene::Update() {
 }
 
 void GameScene::Draw() {
+#pragma region 3Dオブジェクト描画
 	for (int i = 0; i < 2; i++) {//Triangle描画
 		triangle_[i]->Draw(triangleData_[i].position[0], triangleData_[i].position[1], triangleData_[i].position[2], triangleData_[i].material, worldMatrix_);
 	}
 
 	sphere_->Draw(sphereMaterial_, sphereMatrix_);
+#pragma endregion
 
+#pragma region 前景スプライト描画
 	for (int i = 0; i < 1; i++) {//Sprite描画
 		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material);
 	}
-
+#pragma endregion
 }
 
 void GameScene::Finalize() {
 	for (int i = 0; i < 2; i++) {
 		triangle_[i]->Finalize();
 	}
+
+	for (int i = 0; i < 2; i++) {
+		sprite_[i]->Finalize();
+	}
+
+	sphere_->Finalize();
 }
