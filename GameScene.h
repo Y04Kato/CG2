@@ -17,8 +17,8 @@ private:
 	CitrusJunosEngine* CJEngine_;
 	DirectXCommon* dxCommon_;
 
-	CreateTriangle* triangle_[2];
-	TriangleData triangleData_[2];
+	CreateTriangle* triangle_[3];
+	TriangleData triangleData_[3];
 	Transform transform_;
 	Matrix4x4 worldMatrix_;
 

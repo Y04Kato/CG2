@@ -72,13 +72,13 @@
     <ClCompile Include="externals\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="CreateSprite.cpp">
+    <ClCompile Include="base\CreateSprite.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CreateSphere.cpp">
+    <ClCompile Include="base\CreateSphere.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,13 +135,13 @@
     <ClInclude Include="externals\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="CreateSprite.h">
+    <ClInclude Include="base\CreateSprite.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CreateSphere.h">
+    <ClInclude Include="base\CreateSphere.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
   </ItemGroup>

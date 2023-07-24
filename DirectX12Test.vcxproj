@@ -96,8 +96,8 @@
     <ClCompile Include="base\ConvertString.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\CreateTriangle.cpp" />
-    <ClCompile Include="CreateSphere.cpp" />
-    <ClCompile Include="CreateSprite.cpp" />
+    <ClCompile Include="base\CreateSphere.cpp" />
+    <ClCompile Include="base\CreateSprite.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -129,8 +129,8 @@
     <ClInclude Include="base\ConvertString.h" />
     <ClInclude Include="base\DirectXCommon.h" />
     <ClInclude Include="base\CreateTriangle.h" />
-    <ClInclude Include="CreateSphere.h" />
-    <ClInclude Include="CreateSprite.h" />
+    <ClInclude Include="base\CreateSphere.h" />
+    <ClInclude Include="base\CreateSprite.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
