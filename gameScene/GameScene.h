@@ -9,16 +9,15 @@ class GameScene{
 public:
 	void Initialize(CitrusJunosEngine* engine, DirectXCommon* direct);
 	void Update();
-	void Draw2D();
-	void Draw3D();
+	void Draw();
 	void Finalize();
 
 private:
 	CitrusJunosEngine* CJEngine_;
 	DirectXCommon* dxCommon_;
 
-	CreateTriangle* triangle_[3];
-	TriangleData triangleData_[3];
+	CreateTriangle* triangle_[2];
+	TriangleData triangleData_[2];
 	Transform transform_;
 	Matrix4x4 worldMatrix_;
 

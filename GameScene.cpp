@@ -4,23 +4,23 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	CJEngine_ = engine;
 	dxCommon_ = dxCommon;
 
-	triangleData_[0].position[0] = { -0.5f,-0.5f,0.5f,1.0f };
-	triangleData_[0].position[1] = { 0.0f,0.0f,0.0f,1.0f };
-	triangleData_[0].position[2] = { 0.5f,-0.5f,-0.5f,1.0f };
-	triangleData_[0].material = { 1.0f,1.0f,1.0f,1.0f };
+	data1_[0] = { -0.5f,-0.5f,0.5f,1.0f };
+	data2_[0] = { 0.0f,0.0f,0.0f,1.0f };
+	data3_[0] = { 0.5f,-0.5f,-0.5f,1.0f };
+	material_[0] = { 1.0f,1.0f,1.0f,1.0f };
 
-	triangleData_[1].position[0] = { -0.5f,-0.5f,0.0f,1.0f };
-	triangleData_[1].position[1] = { 0.0f,0.5f,0.0f,1.0f };
-	triangleData_[1].position[2] = { 0.5f,-0.5f,0.0f,1.0f };
-	triangleData_[1].material = { 1.0f,1.0f,1.0f,1.0f };
+	data1_[1] = { -0.5f,-0.5f,0.0f,1.0f };
+	data2_[1] = { 0.0f,0.5f,0.0f,1.0f };
+	data3_[1] = { 0.5f,-0.5f,0.0f,1.0f };
+	material_[1] = { 1.0f,1.0f,1.0f,1.0f };
 
 	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
-	spriteData_.positionLeftTop[0] = { 0.0f,0.0f,0.0f,1.0f };
-	spriteData_.positionRightDown[0] = { 640.0f,360.0f,0.0f,1.0f };
-	spriteData_.positionLeftTop[1] = { 0.0f,0.0f,0.0f,1.0f };
-	spriteData_.positionRightDown[1] = { 640.0f,360.0f,0.0f,1.0f };
-	spriteData_.material = { 1.0f,1.0f,1.0f,1.0f };
+	spriteDataLeftTop_[0] = { 0.0f,0.0f,0.0f,1.0f };
+	spriteDataRightDown_[0] = { 640.0f,360.0f,0.0f,1.0f };
+	spriteDataLeftTop_[1] = { 0.0f,0.0f,0.0f,1.0f };
+	spriteDataRightDown_[1] = { 640.0f,360.0f,0.0f,1.0f };
+	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	sphereTransform_ = { {0.4f,0.4f,0.4f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
@@ -69,21 +69,27 @@ void GameScene::Update() {
 	ImGui::End();
 }
 
-void GameScene::Draw() {
+void GameScene::Draw3D() {
 	for (int i = 0; i < 2; i++) {//Triangle描画
-		triangle_[i]->Draw(triangleData_[i].position[0], triangleData_[i].position[1], triangleData_[i].position[2], triangleData_[i].material, worldMatrix_);
+		triangle_[i]->Draw(data1_[i], data2_[i], data3_[i], material_[i], worldMatrix_);
 	}
 
 	sphere_->Draw(sphereMaterial_, sphereMatrix_);
-
-	for (int i = 0; i < 1; i++) {//Sprite描画
-		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material);
-	}
-
 }
 
+void GameScene::Draw2D() {
+	for (int i = 0; i < 1; i++) {//Sprite描画
+		sprite_[i]->Draw(spriteDataLeftTop_[i], spriteDataRightDown_[i], spriteTransform_, spriteMaterial_);
+	}
+}
 void GameScene::Finalize() {
+	sphere_->Finalize();
+
 	for (int i = 0; i < 2; i++) {
 		triangle_[i]->Finalize();
+	}
+
+	for (int i = 0; i < 2; i++) {
+		sprite_[i]->Finalize();
 	}
 }
