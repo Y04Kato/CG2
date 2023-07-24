@@ -223,7 +223,7 @@ void CitrusJunosEngine::Initialize(WinApp* win, const wchar_t* title, int32_t wi
 	win_ = win;
 	win_ = new WinApp();
 	dxCommon_ = new DirectXCommon();
-	dxCommon_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
+	dxCommon_->Initialize(win, title, win->kClientWidth, win->kClientHeight);
 
 	InitializeDxcCompiler();
 

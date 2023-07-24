@@ -10,7 +10,7 @@
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "Winmm.lib")
 
-void DirectXCommon::Initialization(WinApp* win, const wchar_t* title, int32_t backBufferWidth, int32_t backBufferHeight) {
+void DirectXCommon::Initialize(WinApp* win, const wchar_t* title, int32_t backBufferWidth, int32_t backBufferHeight) {
 
 	winApp_ = win;
 	backBufferWidth_ = backBufferWidth;

@@ -45,7 +45,7 @@ void GameScene::Update() {
 void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	for (int i = 0; i < 3; i++) {//Triangle描画
-		triangle_[i]->Draw(triangleData_[i].position[0], triangleData_[i].position[1], triangleData_[i].position[2], triangleData_[i].material, worldMatrix_);
+		triangle_[i]->Draw(triangleData_[i], worldMatrix_);
 	}
 #pragma endregion
 

@@ -10,21 +10,21 @@ void CreateTriangle::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engi
 	TransformMatrix();
 }
 
-void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata) {
+void CreateTriangle::Draw(const TriangleData& data, const Matrix4x4& wvpdata) {
 	
 	//左下
-	vertexData_[0].position = a;
+	vertexData_[0].position = data.position[0];
 	vertexData_[0].texcoord = { 0.0f,1.0f };
 
 	//上
-	vertexData_[1].position = b;
+	vertexData_[1].position = data.position[1];
 	vertexData_[1].texcoord = { 0.5f,0.0f };
 
 	//右下
-	vertexData_[2].position = c;
+	vertexData_[2].position = data.position[2];
 	vertexData_[2].texcoord = { 1.0f,1.0f };
 
-	*materialData_ = material;
+	*materialData_ = data.material;
 	*wvpData_ = wvpdata;
 
 	//VBVを設定
