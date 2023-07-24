@@ -23,7 +23,7 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 
 	for (int i = 0; i < 3; i++) {
 		triangle_[i] = new CreateTriangle();
-		triangle_[i]->Initialize(dxCommon_, CJEngine_);
+		triangle_[i]->Initialize(dxCommon_, CJEngine_, triangleData_[i]);
 	}
 
 	CJEngine_->SettingTexture("resources/uvChecker.png");
@@ -45,7 +45,7 @@ void GameScene::Update() {
 void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	for (int i = 0; i < 3; i++) {//Triangle描画
-		triangle_[i]->Draw(triangleData_[i], worldMatrix_);
+		triangle_[i]->Draw(worldMatrix_);
 	}
 #pragma endregion
 

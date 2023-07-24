@@ -7,9 +7,9 @@ class CitrusJunosEngine;
 
 class CreateTriangle {
 public:
-	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
+	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine, const TriangleData& data);
 
-	void Draw(const TriangleData& data, const Matrix4x4& wvpdata);
+	void Draw(const Matrix4x4& wvpdata);
 
 	void Finalize();
 

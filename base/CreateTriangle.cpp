@@ -2,29 +2,29 @@
 #include "CJEngine.h"
 #include <assert.h>
 
-void CreateTriangle::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine) {
+void CreateTriangle::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine, const TriangleData& data) {
 	dxCommon_ = dxCommon;
 	CJEngine_ =  engine;
+
 	SettingVertex();
 	SettingColor();
 	TransformMatrix();
-}
 
-void CreateTriangle::Draw(const TriangleData& data, const Matrix4x4& wvpdata) {
-	
 	//左下
 	vertexData_[0].position = data.position[0];
 	vertexData_[0].texcoord = { 0.0f,1.0f };
-
 	//上
 	vertexData_[1].position = data.position[1];
 	vertexData_[1].texcoord = { 0.5f,0.0f };
-
 	//右下
 	vertexData_[2].position = data.position[2];
 	vertexData_[2].texcoord = { 1.0f,1.0f };
 
 	*materialData_ = data.material;
+}
+
+void CreateTriangle::Draw(const Matrix4x4& wvpdata) {
+
 	*wvpData_ = wvpdata;
 
 	//VBVを設定
