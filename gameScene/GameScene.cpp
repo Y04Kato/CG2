@@ -61,11 +61,11 @@ void GameScene::Update() {
 	sphereMatrix_ = Multiply(sphereAffine, Multiply(viewMatrix, projectionMatrix));
 
 	ImGui::Begin("test");
-	ImGui::DragFloat3("CameraTranslate", cameraTransform_.translate.num, 0.01f);
-	ImGui::DragFloat3("SpriteTranslate", spriteTransform_.translate.num, 0.5f);
-	ImGui::DragFloat3("SphereTranslate", sphereTransform_.translate.num, 0.5f);
-	ImGui::DragFloat3("SphereRotate", sphereTransform_.rotate.num, 0.5f);
-	ImGui::DragFloat3("SphereScale", sphereTransform_.scale.num, 0.5f);
+	ImGui::DragFloat3("CameraTranslate", cameraTransform_.translate.num, 0.05f);
+	ImGui::DragFloat3("SpriteTranslate", spriteTransform_.translate.num, 0.05f);
+	ImGui::DragFloat3("SphereTranslate", sphereTransform_.translate.num, 0.05f);
+	ImGui::DragFloat3("SphereRotate", sphereTransform_.rotate.num, 0.05f);
+	ImGui::DragFloat3("SphereScale", sphereTransform_.scale.num, 0.05f);
 	ImGui::End();
 }
 
