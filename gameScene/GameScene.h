@@ -34,4 +34,6 @@ private:
 
 	uint32_t uvResourceNum;
 	uint32_t monsterBallResourceNum;
+
+	int texture;
 };

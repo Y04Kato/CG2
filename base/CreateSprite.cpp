@@ -40,7 +40,7 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 	
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResource_->GetGPUVirtualAddress());
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[texIndex]);
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
 	
 	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 

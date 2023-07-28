@@ -26,6 +26,13 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	sphereTransform_ = { {0.4f,0.4f,0.4f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	sphereMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 
+	texture = 0;
+	uvResourceNum = 0;
+	CJEngine_->SettingTexture("resources/uvChecker.png", uvResourceNum);
+	
+	monsterBallResourceNum = 1;
+	CJEngine_->SettingTexture("resources/monsterBall.png", monsterBallResourceNum);
+
 	for (int i = 0; i < 2; i++) {
 		triangle_[i] = new CreateTriangle();
 		triangle_[i]->Initialize(dxCommon_, CJEngine_);
@@ -38,12 +45,6 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 
 	sphere_ = new CreateSphere();
 	sphere_->Initialize(dxCommon_, CJEngine_);
-
-	uvResourceNum = 0;
-	CJEngine_->SettingTexture("resources/uvChecker.png", uvResourceNum);
-	
-	monsterBallResourceNum = 1;
-	CJEngine_->SettingTexture("resource/monsterBall.png", monsterBallResourceNum);
 
 	cameraTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 }
@@ -70,21 +71,22 @@ void GameScene::Update() {
 	ImGui::DragFloat3("SphereTranslate", sphereTransform_.translate.num, 0.05f);
 	ImGui::DragFloat3("SphereRotate", sphereTransform_.rotate.num, 0.05f);
 	ImGui::DragFloat3("SphereScale", sphereTransform_.scale.num, 0.05f);
+	ImGui::SliderInt("TextureNum", &texture, 0, 1);
 	ImGui::End();
 }
 
 void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	for (int i = 0; i < 2; i++) {//Triangle描画
-		triangle_[i]->Draw(triangleData_[i].position[0], triangleData_[i].position[1], triangleData_[i].position[2], triangleData_[i].material, worldMatrix_);
+		triangle_[i]->Draw(triangleData_[i].position[0], triangleData_[i].position[1], triangleData_[i].position[2], triangleData_[i].material, worldMatrix_, uvResourceNum);
 	}
 
-	sphere_->Draw(sphereMaterial_, sphereMatrix_);
+	sphere_->Draw(sphereMaterial_, sphereMatrix_, texture);
 #pragma endregion
 
 #pragma region 前景スプライト描画
 	for (int i = 0; i < 1; i++) {//Sprite描画
-		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material, monsterBallResourceNum);
+		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material, uvResourceNum);
 	}
 #pragma endregion
 }

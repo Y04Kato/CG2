@@ -4,7 +4,9 @@
 #include "Vector.h"
 #include "CreateTriangle.h"
 #include "MatrixCalculation.h"
+#include "DirectXTex/d3dx12.h"
 #pragma comment(lib,"dxcompiler.lib")
+#include<vector>
 
 class CitrusJunosEngine {
 public:
@@ -67,6 +69,7 @@ private:
 
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc_{};
 
+	ID3D12Resource* intermediateResource_[2];
 	uint32_t descriptorSizeSRV;
 	uint32_t descriptorSizeRTV;
 	uint32_t descriptorSizeDSV;
@@ -94,5 +97,5 @@ private:
 
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
-	void UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
+	ID3D12Resource* UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, uint32_t index);
 };

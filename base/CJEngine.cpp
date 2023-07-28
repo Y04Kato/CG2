@@ -225,6 +225,10 @@ void CitrusJunosEngine::Initialize(WinApp* win, const wchar_t* title, int32_t wi
 	dxCommon_ = new DirectXCommon();
 	dxCommon_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
 
+	descriptorSizeDSV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+	descriptorSizeRTV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	descriptorSizeSRV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
 	InitializeDxcCompiler();
 
 	CreateRootSignature();
@@ -269,6 +273,7 @@ void CitrusJunosEngine::EndFrame() {
 void CitrusJunosEngine::Finalize() {
 	for (int i = 0; i < 2; i++) {
 		textureResource_[i]->Release();
+		intermediateResource_[i]->Release();
 	}
 	graphicsPipelineState_->Release();
 	signatureBlob_->Release();
@@ -324,7 +329,7 @@ ID3D12Resource* CitrusJunosEngine::CreateTextureResource(ID3D12Device* device, c
 		&heapProperties, 
 		D3D12_HEAP_FLAG_NONE, 
 		&resourceDesc, 
-		D3D12_RESOURCE_STATE_GENERIC_READ, 
+		D3D12_RESOURCE_STATE_COPY_DEST,
 		nullptr, 
 		IID_PPV_ARGS(&resource));
 
@@ -332,28 +337,31 @@ ID3D12Resource* CitrusJunosEngine::CreateTextureResource(ID3D12Device* device, c
 	return resource;
 }
 
-void CitrusJunosEngine::UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages) {
-	//meta情報を取得
-	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	for (size_t miplevel = 0; miplevel < metadata.mipLevels; ++miplevel) {
-		const DirectX::Image* img = mipImages.GetImage(miplevel, 0, 0);
-		HRESULT hr = texture->WriteToSubresource(
-			UINT(miplevel), 
-			nullptr, 
-			img->pixels, 
-			UINT(img->rowPitch), 
-			UINT(img->slicePitch)
-		);
 
-		assert(SUCCEEDED(hr));
-	}
+[[nodiscard]]
+ID3D12Resource* CitrusJunosEngine::UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, uint32_t index) {
+	std::vector<D3D12_SUBRESOURCE_DATA>subresource;
+	DirectX::PrepareUpload(dxCommon_->GetDevice(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresource);
+	uint64_t  intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresource.size()));
+	intermediateResource_[index] = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), intermediateSize);
+	UpdateSubresources(dxCommon_->GetCommandList(), texture, intermediateResource_[index], 0, 0, UINT(subresource.size()), subresource.data());
+
+	D3D12_RESOURCE_BARRIER barrier{};
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	barrier.Transition.pResource = texture;
+	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+	dxCommon_->GetCommandList()->ResourceBarrier(1, &barrier);
+	return intermediateResource_[index];
 }
 
 void CitrusJunosEngine::SettingTexture(const std::string& filePath, uint32_t index) {
 	DirectX::ScratchImage mipImage = LoadTexture(filePath);
 	const DirectX::TexMetadata& metadata = mipImage.GetMetadata();
 	textureResource_[index] = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-	UploadtextureData(textureResource_[index], mipImage);
+	intermediateResource_[index] = UploadtextureData(textureResource_[index], mipImage, index);
 
 	//metaDataを基にSRVの設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
@@ -363,8 +371,8 @@ void CitrusJunosEngine::SettingTexture(const std::string& filePath, uint32_t ind
 	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
 
 	//SRVを作成するDescripterHeapの場所を決める
-	textureSrvHandleGPU_[index] = GetGPUDescriptorHandle(dxCommon_->GetSrvDescriptiorHeap(), descriptorSizeSRV, index+1);
-	textureSrvHandleCPU_[index] = GetCPUDescriptorHandle(dxCommon_ -> GetSrvDescriptiorHeap(), descriptorSizeSRV, index + 1);
+	textureSrvHandleGPU_[index] = GetGPUDescriptorHandle(dxCommon_->GetSrvDescriptiorHeap(), descriptorSizeSRV, index);
+	textureSrvHandleCPU_[index] = GetCPUDescriptorHandle(dxCommon_ -> GetSrvDescriptiorHeap(), descriptorSizeSRV, index);
 	
 	//先頭はIMGUIが使ってるので、その次を使う
 	textureSrvHandleCPU_[index].ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
