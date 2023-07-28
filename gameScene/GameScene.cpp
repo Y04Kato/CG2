@@ -39,7 +39,11 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	sphere_ = new CreateSphere();
 	sphere_->Initialize(dxCommon_, CJEngine_);
 
-	CJEngine_->SettingTexture("resources/uvChecker.png");
+	uvResourceNum = 0;
+	CJEngine_->SettingTexture("resources/uvChecker.png", uvResourceNum);
+	
+	monsterBallResourceNum = 1;
+	CJEngine_->SettingTexture("resource/monsterBall.png", monsterBallResourceNum);
 
 	cameraTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 }
@@ -80,7 +84,7 @@ void GameScene::Draw() {
 
 #pragma region 前景スプライト描画
 	for (int i = 0; i < 1; i++) {//Sprite描画
-		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material);
+		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material, monsterBallResourceNum);
 	}
 #pragma endregion
 }

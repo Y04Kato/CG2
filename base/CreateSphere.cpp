@@ -12,7 +12,7 @@ void CreateSphere::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine
 	TransformMatrix();
 }
 
-void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata) {
+void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata, uint32_t index) {
 	//経度分割一つ分の角度
 	const float kLonEvery = pi * 2.0f / float(kSubDivision);
 	const float kLatEvery = pi / float(kSubDivision);
@@ -57,7 +57,7 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata) {
 			dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 			
 			//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]のこと
-			dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_);
+			dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
 			
 			//描画
 			dxCommon_->GetCommandList()->DrawInstanced(vertexCount, 1, 0, 0);

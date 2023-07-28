@@ -8,7 +8,7 @@ void CreateSprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine
 	TransformMatrix();
 }
 
-void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material){
+void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material, uint32_t index){
 	//座標の設定
 	vertexData_[0].position = { a.num[0],b.num[1],0.0f,1.0f};
 	vertexData_[1].position = { a.num[0],a.num[1],0.0f,1.0f };
@@ -36,7 +36,12 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 	
 	//描画
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
+	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResource_->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[texIndex]);
+	
 	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 
 }

@@ -31,4 +31,7 @@ private:
 	Matrix4x4 sphereMatrix_;
 
 	Transform cameraTransform_;
+
+	uint32_t uvResourceNum;
+	uint32_t monsterBallResourceNum;
 };

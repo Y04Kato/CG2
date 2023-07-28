@@ -26,7 +26,10 @@ public:
 	void SetHr(HRESULT a) { this->hr_ = a; }
 	ID3D12Device* GetDevice() { return device_; }
 	ID3D12GraphicsCommandList* GetCommandList() { return commandList_; }
+
 	ID3D12DescriptorHeap* GetSrvDescriptiorHeap() { return srvDescriptorHeap_; }
+	ID3D12DescriptorHeap* GetDsvDescriptiorHeap() { return dsvDescriptorHeap_; }
+	D3D12_RENDER_TARGET_VIEW_DESC getRtvDesc() { return rtvDesc_; }
 
 private:
 	WinApp* winApp_;

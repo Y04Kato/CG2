@@ -10,7 +10,7 @@ void CreateTriangle::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engi
 	TransformMatrix();
 }
 
-void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata) {
+void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, const Vector4& material, const Matrix4x4& wvpdata, uint32_t index) {
 	
 	//左下
 	vertexData_[0].position = a;
@@ -38,7 +38,7 @@ void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, 
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]のこと
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_);
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
 
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
