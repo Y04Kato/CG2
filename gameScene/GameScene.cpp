@@ -21,6 +21,7 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 
 	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
+
 	for (int i = 0; i < 3; i++) {
 		triangle_[i] = new CreateTriangle();
 		triangle_[i]->Initialize(dxCommon_, CJEngine_, triangleData_[i]);
