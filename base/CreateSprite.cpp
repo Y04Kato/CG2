@@ -25,6 +25,10 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 	vertexData_[4].texcoord = { 1.0f,0.0f };
 	vertexData_[5].texcoord = { 1.0f,1.0f };
 
+	for (int i = 0; i < 6; i++) {
+		vertexData_[i].normal = { 0.0f,0.0f,-1.0f };
+	}
+
 	*materialData_ = material;
 	
 	//Sprite用のworldViewProjectionMatrixを作る

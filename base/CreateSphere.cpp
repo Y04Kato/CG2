@@ -29,7 +29,7 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata, uint3
 			vertexData_[start].texcoord = { float(lonIndex) / float(kSubDivision),1.0f - float(latIndex) / kSubDivision };
 
 			vertexData_[start + 1].position = { cos(lat + kLatEvery) * cos(lon),sin(lat + kLatEvery),cos(lat + kLatEvery) * sin(lon),1.0f };
-			vertexData_[start + 1].texcoord = { vertexData_[start].texcoord.num[0],vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision)};
+			vertexData_[start + 1].texcoord = { vertexData_[start].texcoord.num[0],vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision) };
 
 			vertexData_[start + 2].position = { cos(lat) * cos(lon + kLonEvery),sin(lat),cos(lat) * sin(lon + kLonEvery),1.0f };
 			vertexData_[start + 2].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision),vertexData_[start].texcoord.num[1] };
@@ -42,23 +42,46 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata, uint3
 
 			vertexData_[start + 5].position = { cos(lat + kLatEvery) * cos(lon + kLonEvery),sin(lat + kLatEvery), cos(lat + kLatEvery) * sin(lon + kLonEvery),1.0f };
 			vertexData_[start + 5].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision),vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision) };
-			
+
+			vertexData_[start].normal.num[0] = vertexData_[start].position.num[0];
+			vertexData_[start].normal.num[1] = vertexData_[start].position.num[1];
+			vertexData_[start].normal.num[2] = vertexData_[start].position.num[2];
+
+			vertexData_[start + 1].normal.num[0] = vertexData_[start + 1].position.num[0];
+			vertexData_[start + 1].normal.num[1] = vertexData_[start + 1].position.num[1];
+			vertexData_[start + 1].normal.num[2] = vertexData_[start + 1].position.num[2];
+
+			vertexData_[start + 2].normal.num[0] = vertexData_[start + 2].position.num[0];
+			vertexData_[start + 2].normal.num[1] = vertexData_[start + 2].position.num[1];
+			vertexData_[start + 2].normal.num[2] = vertexData_[start + 2].position.num[2];
+
+			vertexData_[start + 3].normal.num[0] = vertexData_[start + 3].position.num[0];
+			vertexData_[start + 3].normal.num[1] = vertexData_[start + 3].position.num[1];
+			vertexData_[start + 3].normal.num[2] = vertexData_[start + 3].position.num[2];
+
+			vertexData_[start + 4].normal.num[0] = vertexData_[start + 4].position.num[0];
+			vertexData_[start + 4].normal.num[1] = vertexData_[start + 4].position.num[1];
+			vertexData_[start + 4].normal.num[2] = vertexData_[start + 4].position.num[2];
+
+			vertexData_[start + 5].normal.num[0] = vertexData_[start + 5].position.num[0];
+			vertexData_[start + 5].normal.num[1] = vertexData_[start + 5].position.num[1];
+			vertexData_[start + 5].normal.num[2] = vertexData_[start + 5].position.num[2];
 			*materialData_ = material;
 			*wvpData_ = wvpdata;
 
 			//VBVを設定
 			dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
-			
+
 			//形状を設定。PS0に設定しているものとはまた別。同じものを設定する
 			dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			
+
 			//マテリアルCBufferの場所を設定
 			dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 			dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
-			
+
 			//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]のこと
 			dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
-			
+
 			//描画
 			dxCommon_->GetCommandList()->DrawInstanced(vertexCount, 1, 0, 0);
 		}
@@ -83,7 +106,7 @@ void CreateSphere::SettingVertex() {
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
 
-void CreateSphere::TransformMatrix(){
+void CreateSphere::TransformMatrix() {
 	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
 	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
 	*wvpData_ = MakeIdentity4x4();
