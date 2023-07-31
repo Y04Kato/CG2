@@ -1,5 +1,22 @@
 #include "MatrixCalculation.h"
 
+Vector3 Normalise(const Vector3& v) {
+	float len = Length(v);
+	if (len != 0) {
+		return { v.num[0] / len,v.num[1] / len,v.num[2] / len };
+	}
+	return v;
+}
+
+float Length(const Vector3& v) {
+	return sqrtf(Dot(v, v));
+}
+
+float Dot(const Vector3& v1, const Vector3& v2) {
+	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+
+
 //X軸回転行列
 Matrix4x4 MakeRotateXmatrix(float radian) {
 	Matrix4x4 result;
