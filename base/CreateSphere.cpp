@@ -10,9 +10,17 @@ void CreateSphere::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine
 	SettingVertex();
 	SettingColor();
 	TransformMatrix();
+	SettingDictionalLight();
 }
 
-void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata, uint32_t index) {
+void CreateSphere::Draw(const Vector4& material, const Transform& transform, const Matrix4x4& wvpdata, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light) {
+	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
+	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
+	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
+	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(dxCommon_->GetWin()->kClientWidth) / float(dxCommon_->GetWin()->kClientHeight), 0.1f, 100.0f);
+
+	Matrix4x4 wvpMatrix_ = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
+	
 	//経度分割一つ分の角度
 	const float kLonEvery = pi * 2.0f / float(kSubDivision);
 	const float kLatEvery = pi / float(kSubDivision);
@@ -66,8 +74,9 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata, uint3
 			vertexData_[start + 5].normal.num[0] = vertexData_[start + 5].position.num[0];
 			vertexData_[start + 5].normal.num[1] = vertexData_[start + 5].position.num[1];
 			vertexData_[start + 5].normal.num[2] = vertexData_[start + 5].position.num[2];
-			*materialData_ = { material,false };
-			*wvpData_ = wvpdata;
+			*materialData_ = { material,true };
+			*wvpData_ = { wvpMatrix_,worldMatrix };
+			*directionalLight_ = light;
 
 			//VBVを設定
 			dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
@@ -78,6 +87,7 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata, uint3
 			//マテリアルCBufferの場所を設定
 			dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 			dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+			dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
 
 			//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]のこと
 			dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
@@ -109,11 +119,16 @@ void CreateSphere::SettingVertex() {
 void CreateSphere::TransformMatrix() {
 	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
 	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
-	*wvpData_ = MakeIdentity4x4();
+	wvpData_->WVP = MakeIdentity4x4();
 }
 
 void CreateSphere::SettingColor() {
 	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
 
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+}
+
+void CreateSphere::SettingDictionalLight(){
+	directionalLightResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(DirectionalLight));
+	directionalLightResource_->Map(0, NULL, reinterpret_cast<void**>(&directionalLight_));
 }

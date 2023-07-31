@@ -26,6 +26,8 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	sphereTransform_ = { {0.4f,0.4f,0.4f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	sphereMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 
+	directionalLight_ = { {1.0f,1.0f,1.0f,1.0f},{0.0f,-1.0f,0.0f},1.0f };
+
 	texture = 0;
 	uvResourceNum = 0;
 	CJEngine_->SettingTexture("resources/uvChecker.png", uvResourceNum);
@@ -72,21 +74,23 @@ void GameScene::Update() {
 	ImGui::DragFloat3("SphereRotate", sphereTransform_.rotate.num, 0.05f);
 	ImGui::DragFloat3("SphereScale", sphereTransform_.scale.num, 0.05f);
 	ImGui::SliderInt("TextureNum", &texture, 0, 1);
+	ImGui::DragFloat4("LightColor", directionalLight_.color.num, 1.0f);
+	ImGui::DragFloat3("lightDirection", directionalLight_.direction.num, 0.1f);
 	ImGui::End();
 }
 
 void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	for (int i = 0; i < 2; i++) {//Triangle描画
-		triangle_[i]->Draw(triangleData_[i].position[0], triangleData_[i].position[1], triangleData_[i].position[2], triangleData_[i].material, worldMatrix_, uvResourceNum);
+		triangle_[i]->Draw(triangleData_[i].position[0], triangleData_[i].position[1], triangleData_[i].position[2], triangleData_[i].material,transform_, cameraTransform_, uvResourceNum, directionalLight_);
 	}
 
-	sphere_->Draw(sphereMaterial_, sphereMatrix_, texture);
+	sphere_->Draw(sphereMaterial_,spriteTransform_, sphereMatrix_, texture,cameraTransform_, directionalLight_);
 #pragma endregion
 
 #pragma region 前景スプライト描画
 	for (int i = 0; i < 1; i++) {//Sprite描画
-		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material, uvResourceNum);
+		sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material, uvResourceNum, directionalLight_);
 	}
 #pragma endregion
 }

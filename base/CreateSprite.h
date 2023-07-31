@@ -7,7 +7,7 @@ class CreateSprite{
 public:
 	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
 
-	void Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material, uint32_t index);
+	void Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material, uint32_t index, const DirectionalLight& light);
 	void Finalize();
 
 private:
@@ -16,13 +16,16 @@ private:
 	ID3D12Resource* vertexResourceSprite_;
 	VertexData* vertexData_;
 	ID3D12Resource* transformationMatrixResource_;
-	Matrix4x4* transformationMatrixdata_;
+	TransformationMatrix* transformationMatrixdata_;
 	ID3D12Resource* materialResource_;
 	Material* materialData_;
 	CitrusJunosEngine* CJEngine_;
+	DirectionalLight* directionalLight_;
+	ID3D12Resource* directionalLightResource_;
 
 private:
 	void SettingVartex();
 	void TransformMatrix();
 	void SettingColor();
+	void SettingDictionalLight();
 };

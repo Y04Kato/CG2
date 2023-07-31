@@ -35,5 +35,7 @@ private:
 	uint32_t uvResourceNum;
 	uint32_t monsterBallResourceNum;
 
+	DirectionalLight directionalLight_;
+
 	int texture;
 };
