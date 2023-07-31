@@ -66,7 +66,7 @@ void CreateSphere::Draw(const Vector4& material, const Matrix4x4& wvpdata, uint3
 			vertexData_[start + 5].normal.num[0] = vertexData_[start + 5].position.num[0];
 			vertexData_[start + 5].normal.num[1] = vertexData_[start + 5].position.num[1];
 			vertexData_[start + 5].normal.num[2] = vertexData_[start + 5].position.num[2];
-			*materialData_ = material;
+			*materialData_ = { material,false };
 			*wvpData_ = wvpdata;
 
 			//VBVを設定

@@ -1,4 +1,6 @@
 #pragma once
+//#include"DirectXCommon.h"
+#include <stdint.h>
 
 struct Vector2 {
 	float num[2];
@@ -27,4 +29,9 @@ struct VertexData {
 	Vector4 position;
 	Vector2 texcoord;
 	Vector3 normal;
+};
+
+struct Material {
+	Vector4 color;
+	int32_t enableLighting;
 };

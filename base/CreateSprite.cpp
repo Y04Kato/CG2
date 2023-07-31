@@ -29,7 +29,7 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 		vertexData_[i].normal = { 0.0f,0.0f,-1.0f };
 	}
 
-	*materialData_ = material;
+	*materialData_ = { material,false };
 	
 	//Sprite用のworldViewProjectionMatrixを作る
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);

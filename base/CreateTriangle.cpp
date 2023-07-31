@@ -24,7 +24,7 @@ void CreateTriangle::Draw(const Vector4& a, const Vector4& b, const Vector4& c, 
 	vertexData_[2].position = c;
 	vertexData_[2].texcoord = { 1.0f,1.0f };
 
-	*materialData_ = material;
+	*materialData_ = { material,false };
 	*wvpData_ = wvpdata;
 
 	//VBVを設定

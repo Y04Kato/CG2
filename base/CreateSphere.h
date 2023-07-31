@@ -30,7 +30,7 @@ private:
 	Matrix4x4* wvpData_;
 
 	ID3D12Resource* materialResource_;
-	Vector4* materialData_;
+	Material* materialData_;
 
 	const float pi = 3.1415f;
 	uint32_t kSubDivision;

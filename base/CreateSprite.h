@@ -18,7 +18,7 @@ private:
 	ID3D12Resource* transformationMatrixResource_;
 	Matrix4x4* transformationMatrixdata_;
 	ID3D12Resource* materialResource_;
-	Vector4* materialData_;
+	Material* materialData_;
 	CitrusJunosEngine* CJEngine_;
 
 private:

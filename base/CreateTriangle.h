@@ -27,7 +27,7 @@ private:
 
 	VertexData* vertexData_;
 
-	Vector4* materialData_;
+	Material* materialData_;
 
 	ID3D12Resource* vertexResource_;
 
