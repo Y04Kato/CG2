@@ -1,5 +1,4 @@
 #pragma once
-//#include"DirectXCommon.h"
 #include <stdint.h>
 
 struct Vector2 {
