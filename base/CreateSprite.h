@@ -23,6 +23,10 @@ private:
 	DirectionalLight* directionalLight_;
 	ID3D12Resource* directionalLightResource_;
 
+	ID3D12Resource* indexResourceSprite_;
+	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite_{};
+	uint32_t* indexDataSprite_;
+
 private:
 	void SettingVartex();
 	void TransformMatrix();

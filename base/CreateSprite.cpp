@@ -42,15 +42,15 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 	
 	//描画
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
-	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCommon_->GetCommandList()->IASetIndexBuffer(&indexBufferViewSprite_);
 	
+	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
 
-	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
-
+	dxCommon_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
 void CreateSprite::Finalize(){
@@ -73,6 +73,24 @@ void CreateSprite::SettingVartex(){
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 
 	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
+
+	//
+	indexResourceSprite_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(uint32_t) * 6);
+
+	indexBufferViewSprite_.BufferLocation = indexResourceSprite_->GetGPUVirtualAddress();
+
+	indexBufferViewSprite_.SizeInBytes = sizeof(uint32_t) * 6;
+
+	indexBufferViewSprite_.Format = DXGI_FORMAT_R32_UINT;
+
+	indexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSprite_));
+
+	indexDataSprite_[0] = 0;
+	indexDataSprite_[1] = 1;
+	indexDataSprite_[2] = 2;
+	indexDataSprite_[3] = 3;
+	indexDataSprite_[4] = 4;
+	indexDataSprite_[5] = 5;
 }
 
 void CreateSprite::TransformMatrix(){
