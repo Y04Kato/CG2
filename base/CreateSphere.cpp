@@ -80,6 +80,7 @@ void CreateSphere::Draw(const Vector4& material, const Transform& transform, con
 
 			//VBVを設定
 			dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
+			dxCommon_->GetCommandList()->IASetIndexBuffer(&indexBufferViewSphere_);
 
 			//形状を設定。PS0に設定しているものとはまた別。同じものを設定する
 			dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -93,7 +94,7 @@ void CreateSphere::Draw(const Vector4& material, const Transform& transform, con
 			dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
 
 			//描画
-			dxCommon_->GetCommandList()->DrawInstanced(vertexCount, 1, 0, 0);
+			dxCommon_->GetCommandList()->DrawIndexedInstanced(vertexCount, 1, 0, 0, 0);
 		}
 	}
 }
@@ -114,6 +115,20 @@ void CreateSphere::SettingVertex() {
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
 
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
+
+	indexResourceSphere_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(uint32_t) * vertexCount);
+
+	indexBufferViewSphere_.BufferLocation = indexResourceSphere_->GetGPUVirtualAddress();
+
+	indexBufferViewSphere_.SizeInBytes = sizeof(uint32_t) * vertexCount;
+
+	indexBufferViewSphere_.Format = DXGI_FORMAT_R32_UINT;
+
+	indexResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSphere_));
+
+	for (uint32_t i = 0; i < vertexCount; i++) {
+		indexDataSphere_[i] = i;
+	}
 }
 
 void CreateSphere::TransformMatrix() {

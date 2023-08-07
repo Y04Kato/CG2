@@ -39,4 +39,8 @@ private:
 
 	DirectionalLight* directionalLight_;
 	ID3D12Resource* directionalLightResource_;
+
+	ID3D12Resource* indexResourceSphere_;
+	D3D12_INDEX_BUFFER_VIEW indexBufferViewSphere_{};
+	uint32_t* indexDataSphere_;
 };
