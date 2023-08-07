@@ -16,7 +16,6 @@ float Dot(const Vector3& v1, const Vector3& v2) {
 	return v1.num[0] * v2.num[0] + v1.num[1] * v2.num[1] + v1.num[2] * v2.num[2];
 }
 
-
 //X軸回転行列
 Matrix4x4 MakeRotateXmatrix(float radian) {
 	Matrix4x4 result;
