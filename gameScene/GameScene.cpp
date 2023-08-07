@@ -147,10 +147,10 @@ void GameScene::Update() {
 void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	if (isTriangleDraw1_) {//Triangle描画
-		triangle_[0]->Draw(triangleData_[0].position[0], triangleData_[0].position[1], triangleData_[0].position[2], triangleData_[0].material, transform_[0], cameraTransform_, uvResourceNum_, directionalLight_);
+		triangle_[0]->Draw(triangleData_[0], transform_[0], cameraTransform_, uvResourceNum_, directionalLight_);
 	}
 	if (isTriangleDraw2_) {//Triangle描画
-		triangle_[1]->Draw(triangleData_[1].position[0], triangleData_[1].position[1], triangleData_[1].position[2], triangleData_[1].material, transform_[1], cameraTransform_, uvResourceNum_, directionalLight_);
+		triangle_[1]->Draw(triangleData_[1], transform_[1], cameraTransform_, uvResourceNum_, directionalLight_);
 	}
 
 	if (isSphereDraw_) {
