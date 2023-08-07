@@ -26,6 +26,12 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	spriteData_.positionRightDown[1] = { 640.0f,360.0f,0.0f,1.0f };
 	spriteData_.material = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	SpriteuvTransform_ =
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
 
 	isSpriteDraw_ = false;
 
@@ -132,6 +138,9 @@ void GameScene::Update() {
 		ImGui::DragFloat3("Rotate", spriteTransform_.rotate.num, 0.05f);
 		ImGui::DragFloat3("Scale", spriteTransform_.scale.num, 0.05f);
 		ImGui::ColorEdit4("", spriteData_.material.num, 0);
+		ImGui::DragFloat2("uvScale", SpriteuvTransform_.scale.num, 0.1f);
+		ImGui::DragFloat3("uvTranslate", SpriteuvTransform_.translate.num, 0.1f);
+		ImGui::DragFloat("uvRotate", &SpriteuvTransform_.rotate.num[2], 0.1f);
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Camera")) {
@@ -161,7 +170,7 @@ void GameScene::Draw() {
 #pragma region 前景スプライト描画
 	if (isSpriteDraw_) {
 		for (int i = 0; i < 1; i++) {//Sprite描画
-			sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, spriteData_.material, uvResourceNum_, directionalLight_);
+			sprite_[i]->Draw(spriteData_.positionLeftTop[i], spriteData_.positionRightDown[i], spriteTransform_, SpriteuvTransform_, spriteData_.material, uvResourceNum_, directionalLight_);
 		}
 	}
 #pragma endregion

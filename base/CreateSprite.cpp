@@ -9,7 +9,12 @@ void CreateSprite::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine
 	SettingDictionalLight();
 }
 
-void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Vector4& material, uint32_t index, const DirectionalLight& light){
+void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& transform, const Transform& uvTransform, const Vector4& material, uint32_t index, const DirectionalLight& light){
+	
+	Matrix4x4 uvtransformMtrix = MakeScaleMatrix(uvTransform.scale);
+	uvtransformMtrix = Multiply(uvtransformMtrix, MakeRotateZMatrix(uvTransform.rotate.num[2]));
+	uvtransformMtrix = Multiply(uvtransformMtrix, MakeTranslateMatrix(uvTransform.translate));
+	
 	//座標の設定
 	vertexData_[0].position = { a.num[0],b.num[1],0.0f,1.0f};
 	vertexData_[1].position = { a.num[0],a.num[1],0.0f,1.0f };
@@ -31,6 +36,7 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 	}
 
 	*materialData_ = { material,false };
+	materialData_->uvTransform = uvtransformMtrix;
 	*directionalLight_ = light;
 	
 	//Sprite用のworldViewProjectionMatrixを作る
@@ -57,6 +63,8 @@ void CreateSprite::Finalize(){
 	vertexResourceSprite_->Release();
 	materialResource_->Release();
 	transformationMatrixResource_->Release();
+	directionalLightResource_->Release();
+	indexResourceSprite_->Release();
 }
 
 void CreateSprite::SettingVartex(){

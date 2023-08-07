@@ -140,7 +140,7 @@
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="gameScene\GameScene.h" />
-    <ClInclude Include="math\Matrix4x4.h" />
+    <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\MatrixCalculation.h">
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>

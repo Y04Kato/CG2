@@ -1,5 +1,5 @@
 #pragma once
-#include "Matrix4x4.h"
+#include "Matrix.h"
 #include "Vector.h"
 #include <assert.h>
 #include <cmath>
@@ -17,13 +17,13 @@ float Dot(const Vector3& v1, const Vector3& v2);
 Vector3 Normalise(const Vector3& v);
 
 //X軸回転行列
-Matrix4x4 MakeRotateXmatrix(float radian);
+Matrix4x4 MakeRotateXMatrix(float radian);
 
 //Y軸回転行列
-Matrix4x4 MakeRotateYmatrix(float radian);
+Matrix4x4 MakeRotateYMatrix(float radian);
 
 //Z軸回転行列
-Matrix4x4 MakeRotateZmatrix(float radian);
+Matrix4x4 MakeRotateZMatrix(float radian);
 
 //平行移動
 Matrix4x4 MakeTranslateMatrix(Vector3 translate);

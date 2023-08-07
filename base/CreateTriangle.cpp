@@ -19,6 +19,11 @@ void CreateTriangle::Draw(const TriangleData& data, const Transform& transform, 
 
 	Matrix4x4 wvpMatrix_ = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
 
+	Transform uvTransform = { { 1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
+	Matrix4x4 uvtransformMtrix = MakeScaleMatrix(uvTransform.scale);
+	uvtransformMtrix = Multiply(uvtransformMtrix, MakeRotateZMatrix(uvTransform.rotate.num[2]));
+	uvtransformMtrix = Multiply(uvtransformMtrix, MakeTranslateMatrix(uvTransform.translate));
+
 	//左下
 	vertexData_[0].position = data.position[0];
 	vertexData_[0].texcoord = { 0.0f,1.0f };
@@ -32,6 +37,7 @@ void CreateTriangle::Draw(const TriangleData& data, const Transform& transform, 
 	vertexData_[2].texcoord = { 1.0f,1.0f };
 
 	*materialData_ = { data.material,false };
+	materialData_->uvTransform = uvtransformMtrix;
 	*wvpData_ = { wvpMatrix_,worldMatrix };
 	*directionalLight_ = light;
 
@@ -57,6 +63,7 @@ void CreateTriangle::Finalize() {
 	materialResource_->Release();
 	vertexResource_->Release();
 	wvpResource_->Release();
+	directionalLightResource_->Release();
 }
 
 void CreateTriangle::SettingVertex() {

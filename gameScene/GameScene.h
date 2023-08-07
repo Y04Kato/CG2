@@ -24,6 +24,7 @@ private:
 	CreateSprite* sprite_[2];
 	SpriteData spriteData_;
 	Transform spriteTransform_;
+	Transform SpriteuvTransform_;
 	
 	CreateSphere* sphere_;
 	Transform sphereTransform_;
