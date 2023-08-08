@@ -56,7 +56,7 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	isSphereDraw_ = false;
 
 	//objモデル
-	modelTransform_ = { {1.0f,1.0f,1.0f},{0.0f,1.6f,0.0f},{0.0f,0.0f,0.0f} };
+	modelTransform_ = { {0.5f,0.5f,0.5f},{0.0f,2.5f,0.0f},{0.0f,0.0f,1.0f} };
 	modelMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	modelResourceNum_ = 2;
 	model_ = new Model();
