@@ -5,21 +5,21 @@
 void CreateSphere::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine) {
 	dxCommon_ = dxCommon;
 	CJEngine_ = engine;
-	kSubDivision = 16;
-	vertexCount = kSubDivision * kSubDivision * 6;
+	kSubDivision_ = 16;
+	vertexCount_ = kSubDivision_ * kSubDivision_ * 6;
 	SettingVertex();
 	SettingColor();
 	TransformMatrix();
 	SettingDictionalLight();
 }
 
-void CreateSphere::Draw(const Vector4& material, const Transform& transform, const Matrix4x4& wvpdata, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light) {
+void CreateSphere::Draw(const Vector4& material, const Transform& transform, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light) {
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(dxCommon_->GetWin()->kClientWidth) / float(dxCommon_->GetWin()->kClientHeight), 0.1f, 100.0f);
 
-	Matrix4x4 wvpMatrix_ = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
+	Matrix4x4 wvpMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
 
 	Transform uvTransform = { { 1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
 	Matrix4x4 uvtransformMtrix = MakeScaleMatrix(uvTransform.scale);
@@ -27,34 +27,34 @@ void CreateSphere::Draw(const Vector4& material, const Transform& transform, con
 	uvtransformMtrix = Multiply(uvtransformMtrix, MakeTranslateMatrix(uvTransform.translate));
 
 	//経度分割一つ分の角度
-	const float kLonEvery = pi * 2.0f / float(kSubDivision);
-	const float kLatEvery = pi / float(kSubDivision);
+	const float kLonEvery = pi * 2.0f / float(kSubDivision_);
+	const float kLatEvery = pi / float(kSubDivision_);
 
 	//緯度の方向に分割
-	for (uint32_t latIndex = 0; latIndex < kSubDivision; ++latIndex) {
+	for (uint32_t latIndex = 0; latIndex < kSubDivision_; ++latIndex) {
 		float lat = -pi / 2.0f + kLatEvery * latIndex;
 		//経度の方向に分割しながら線を描く
-		for (uint32_t lonIndex = 0; lonIndex < kSubDivision; ++lonIndex) {
-			uint32_t start = (latIndex * kSubDivision + lonIndex) * 6;
+		for (uint32_t lonIndex = 0; lonIndex < kSubDivision_; ++lonIndex) {
+			uint32_t start = (latIndex * kSubDivision_ + lonIndex) * 6;
 			float lon = lonIndex * kLonEvery;
 			//頂点にデータを入力する　基準点a
 			vertexData_[start].position = { cos(lat) * cos(lon),sin(lat),cos(lat) * sin(lon),1.0f };
-			vertexData_[start].texcoord = { float(lonIndex) / float(kSubDivision),1.0f - float(latIndex) / kSubDivision };
+			vertexData_[start].texcoord = { float(lonIndex) / float(kSubDivision_),1.0f - float(latIndex) / kSubDivision_ };
 
 			vertexData_[start + 1].position = { cos(lat + kLatEvery) * cos(lon),sin(lat + kLatEvery),cos(lat + kLatEvery) * sin(lon),1.0f };
-			vertexData_[start + 1].texcoord = { vertexData_[start].texcoord.num[0],vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision) };
+			vertexData_[start + 1].texcoord = { vertexData_[start].texcoord.num[0],vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision_) };
 
 			vertexData_[start + 2].position = { cos(lat) * cos(lon + kLonEvery),sin(lat),cos(lat) * sin(lon + kLonEvery),1.0f };
-			vertexData_[start + 2].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision),vertexData_[start].texcoord.num[1] };
+			vertexData_[start + 2].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision_),vertexData_[start].texcoord.num[1] };
 
 			vertexData_[start + 3].position = { cos(lat) * cos(lon + kLonEvery),sin(lat),cos(lat) * sin(lon + kLonEvery),1.0f };
-			vertexData_[start + 3].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision),vertexData_[start].texcoord.num[1] };
+			vertexData_[start + 3].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision_),vertexData_[start].texcoord.num[1] };
 
 			vertexData_[start + 4].position = { cos(lat + kLatEvery) * cos(lon),sin(lat + kLatEvery),cos(lat + kLatEvery) * sin(lon),1.0f };
-			vertexData_[start + 4].texcoord = { vertexData_[start].texcoord.num[0],vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision) };
+			vertexData_[start + 4].texcoord = { vertexData_[start].texcoord.num[0],vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision_) };
 
 			vertexData_[start + 5].position = { cos(lat + kLatEvery) * cos(lon + kLonEvery),sin(lat + kLatEvery), cos(lat + kLatEvery) * sin(lon + kLonEvery),1.0f };
-			vertexData_[start + 5].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision),vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision) };
+			vertexData_[start + 5].texcoord = { vertexData_[start].texcoord.num[0] + 1.0f / float(kSubDivision_),vertexData_[start].texcoord.num[1] - 1.0f / float(kSubDivision_) };
 
 			vertexData_[start].normal.num[0] = vertexData_[start].position.num[0];
 			vertexData_[start].normal.num[1] = vertexData_[start].position.num[1];
@@ -84,11 +84,11 @@ void CreateSphere::Draw(const Vector4& material, const Transform& transform, con
 
 	*materialData_ = { material,true };
 	materialData_->uvTransform = uvtransformMtrix;
-	*wvpData_ = { wvpMatrix_,worldMatrix };
+	*wvpData_ = { wvpMatrix,worldMatrix };
 	*directionalLight_ = light;
 
 	//VBVを設定
-	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);
+	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	dxCommon_->GetCommandList()->IASetIndexBuffer(&indexBufferViewSphere_);
 
 	//形状を設定。PS0に設定しているものとはまた別。同じものを設定する
@@ -103,12 +103,12 @@ void CreateSphere::Draw(const Vector4& material, const Transform& transform, con
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, CJEngine_->textureSrvHandleGPU_[index]);
 
 	//描画
-	dxCommon_->GetCommandList()->DrawIndexedInstanced(vertexCount, 1, 0, 0, 0);
+	dxCommon_->GetCommandList()->DrawIndexedInstanced(vertexCount_, 1, 0, 0, 0);
 
 }
 
 void CreateSphere::Finalize() {
-	vertexResource->Release();
+	vertexResource_->Release();
 	materialResource_->Release();
 	wvpResource_->Release();
 	indexResourceSphere_->Release();
@@ -116,27 +116,27 @@ void CreateSphere::Finalize() {
 }
 
 void CreateSphere::SettingVertex() {
-	vertexResource = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * vertexCount);
+	vertexResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData) * vertexCount_);
 	//リソースの先頭のアドレスから使う
-	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
+	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
 
-	vertexBufferView.SizeInBytes = sizeof(VertexData) * vertexCount;
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * vertexCount_;
 
-	vertexBufferView.StrideInBytes = sizeof(VertexData);
+	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
+	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 
-	indexResourceSphere_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(uint32_t) * vertexCount);
+	indexResourceSphere_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(uint32_t) * vertexCount_);
 
 	indexBufferViewSphere_.BufferLocation = indexResourceSphere_->GetGPUVirtualAddress();
 
-	indexBufferViewSphere_.SizeInBytes = sizeof(uint32_t) * vertexCount;
+	indexBufferViewSphere_.SizeInBytes = sizeof(uint32_t) * vertexCount_;
 
 	indexBufferViewSphere_.Format = DXGI_FORMAT_R32_UINT;
 
 	indexResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSphere_));
 
-	for (uint32_t i = 0; i < vertexCount; i++) {
+	for (uint32_t i = 0; i < vertexCount_; i++) {
 		indexDataSphere_[i] = i;
 	}
 }

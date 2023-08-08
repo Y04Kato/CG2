@@ -1,5 +1,8 @@
 #pragma once
 #include <stdint.h>
+#include <vector>
+#include <string>
+#include <math.h>
 #include "Matrix.h"
 
 struct Vector2 {
@@ -47,4 +50,13 @@ struct DirectionalLight {
 	Vector4 color;
 	Vector3 direction;
 	float intensity;
+};
+
+struct MaterialData {
+	std::string textureFilePath;
+};
+
+struct ModelData {
+	std::vector<VertexData> vertices;
+	MaterialData material;
 };

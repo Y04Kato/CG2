@@ -87,6 +87,9 @@
     <ClCompile Include="gameScene\GameScene.cpp">
       <Filter>ソース ファイル\gameScene</Filter>
     </ClCompile>
+    <ClCompile Include="base\Model.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.VS.hlsl" />
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="gameScene\GameScene.h">
       <Filter>ヘッダー ファイル\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Model.h">
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

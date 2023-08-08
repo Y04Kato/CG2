@@ -4,6 +4,7 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	CJEngine_ = engine;
 	dxCommon_ = dxCommon;
 
+	//三角形
 	triangleData_[0].position[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData_[0].position[1] = { 0.0f,0.5f,0.0f,1.0f };
 	triangleData_[0].position[2] = { 0.5f,-0.5f,0.0f,1.0f };
@@ -15,53 +16,64 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	triangleData_[1].material = { 1.0f,1.0f,1.0f,1.0f };
 
 	for (int i = 0; i < 2; i++) {
-		transform_[i] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+		triangle_[i] = new CreateTriangle();
+		triangle_[i]->Initialize(dxCommon_, CJEngine_);
+	}
+
+	for (int i = 0; i < 2; i++) {
+		triangleTransform_[i] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	}
 	isTriangleDraw1_ = false;
 	isTriangleDraw2_ = false;
 
+	//スプライト
 	spriteData_.positionLeftTop[0] = { 0.0f,0.0f,0.0f,1.0f };
 	spriteData_.positionRightDown[0] = { 640.0f,360.0f,0.0f,1.0f };
 	spriteData_.positionLeftTop[1] = { 0.0f,0.0f,0.0f,1.0f };
 	spriteData_.positionRightDown[1] = { 640.0f,360.0f,0.0f,1.0f };
 	spriteData_.material = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	SpriteuvTransform_ =
-	{
+	SpriteuvTransform_ = {
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
 	};
-
-	isSpriteDraw_ = false;
-
-	sphereTransform_ = { {0.4f,0.4f,0.4f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	sphereMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
-
-	isSphereDraw_ = false;
-
-	directionalLight_ = { {1.0f,1.0f,1.0f,1.0f},{0.0f,-1.0f,0.0f},1.0f };
-
-	texture_ = 0;
-	uvResourceNum_ = 0;
-	CJEngine_->SettingTexture("resources/uvChecker.png", uvResourceNum_);
-	
-	monsterBallResourceNum_ = 1;
-	CJEngine_->SettingTexture("resources/monsterBall.png", monsterBallResourceNum_);
-
-	for (int i = 0; i < 2; i++) {
-		triangle_[i] = new CreateTriangle();
-		triangle_[i]->Initialize(dxCommon_, CJEngine_);
-	}
 
 	for (int i = 0; i < 2; i++) {
 		sprite_[i] = new CreateSprite();
 		sprite_[i]->Initialize(dxCommon_, CJEngine_);
 	}
 
+	isSpriteDraw_ = false;
+
+	//球体
+	sphereTransform_ = { {0.4f,0.4f,0.4f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	sphereMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
+
 	sphere_ = new CreateSphere();
 	sphere_->Initialize(dxCommon_, CJEngine_);
 
+	isSphereDraw_ = false;
+
+	//objモデル
+	modelTransform_ = { {1.0f,1.0f,1.0f},{0.0f,1.6f,0.0f},{0.0f,0.0f,0.0f} };
+	modelMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
+	modelResourceNum_ = 2;
+	model_ = new Model();
+	model_->Initialize(dxCommon_, CJEngine_, "resources/axis", "axis.obj", modelResourceNum_);
+
+	//ライト
+	directionalLight_ = { {1.0f,1.0f,1.0f,1.0f},{0.0f,-1.0f,0.0f},1.0f };
+
+	//テクスチャ
+	texture_ = 0;
+	uvResourceNum_ = 0;
+	CJEngine_->SettingTexture("resources/uvChecker.png", uvResourceNum_);
+
+	monsterBallResourceNum_ = 1;
+	CJEngine_->SettingTexture("resources/monsterBall.png", monsterBallResourceNum_);
+
+	//カメラ
 	cameraTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 }
 
@@ -70,7 +82,7 @@ void GameScene::Update() {
 	directionalLight_.direction = Normalise(directionalLight_.direction);
 
 	ImGui::Begin("Settings");
-	if (ImGui::TreeNode("Triangle")) {
+	if (ImGui::TreeNode("Triangle")) {//三角形
 		if (ImGui::Button("DrawTriangle1")) {
 			if (isTriangleDraw1_ == false) {
 				isTriangleDraw1_ = true;
@@ -89,25 +101,25 @@ void GameScene::Update() {
 		}
 		if (isTriangleDraw1_ == true) {
 			if (ImGui::TreeNode("Triangle1")) {
-				ImGui::DragFloat3("Translate", transform_[0].translate.num, 0.05f);
-				ImGui::DragFloat3("Rotate", transform_[0].rotate.num, 0.05f);
-				ImGui::DragFloat3("Scale", transform_[0].scale.num, 0.05f);
+				ImGui::DragFloat3("Translate", triangleTransform_[0].translate.num, 0.05f);
+				ImGui::DragFloat3("Rotate", triangleTransform_[0].rotate.num, 0.05f);
+				ImGui::DragFloat3("Scale", triangleTransform_[0].scale.num, 0.05f);
 				ImGui::ColorEdit4("", triangleData_[0].material.num, 0);
 				ImGui::TreePop();
 			}
 		}
 		if (isTriangleDraw2_ == true) {
 			if (ImGui::TreeNode("Triangle2")) {
-				ImGui::DragFloat3("Translate2", transform_[1].translate.num, 0.05f);
-				ImGui::DragFloat3("Rotate2", transform_[1].rotate.num, 0.05f);
-				ImGui::DragFloat3("Scale2", transform_[1].scale.num, 0.05f);
+				ImGui::DragFloat3("Translate2", triangleTransform_[1].translate.num, 0.05f);
+				ImGui::DragFloat3("Rotate2", triangleTransform_[1].rotate.num, 0.05f);
+				ImGui::DragFloat3("Scale2", triangleTransform_[1].scale.num, 0.05f);
 				ImGui::ColorEdit4("", triangleData_[1].material.num, 0);
 				ImGui::TreePop();
 			}
 		}
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Sphere")) {
+	if (ImGui::TreeNode("Sphere")) {//球体
 		if (ImGui::Button("DrawSphere")) {
 			if (isSphereDraw_ == false) {
 				isSphereDraw_ = true;
@@ -125,7 +137,7 @@ void GameScene::Update() {
 		ImGui::DragFloat3("lightDirection", directionalLight_.direction.num, 0.1f);
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Sprite")) {
+	if (ImGui::TreeNode("Sprite")) {//スプライト
 		if (ImGui::Button("DrawSprite")) {
 			if (isSpriteDraw_ == false) {
 				isSpriteDraw_ = true;
@@ -143,7 +155,21 @@ void GameScene::Update() {
 		ImGui::DragFloat("uvRotate", &SpriteuvTransform_.rotate.num[2], 0.1f);
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Camera")) {
+	if (ImGui::TreeNode("Model")) {//objモデル
+		if (ImGui::Button("DrawModel")) {
+			if (isModelDraw_ == false) {
+				isModelDraw_ = true;
+			}
+			else {
+				isModelDraw_ = false;
+			}
+		}
+		ImGui::DragFloat3("Translate", modelTransform_.translate.num, 0.05f);
+		ImGui::DragFloat3("Rotate", modelTransform_.rotate.num, 0.05f);
+		ImGui::DragFloat3("Scale", modelTransform_.scale.num, 0.05f);
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Camera")) {//カメラ
 		ImGui::DragFloat3("Translate", cameraTransform_.translate.num, 0.05f);
 		ImGui::DragFloat3("Rotate", cameraTransform_.rotate.num, 0.05f);
 		ImGui::DragFloat3("Scale", cameraTransform_.scale.num, 0.05f);
@@ -156,14 +182,18 @@ void GameScene::Update() {
 void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	if (isTriangleDraw1_) {//Triangle描画
-		triangle_[0]->Draw(triangleData_[0], transform_[0], cameraTransform_, uvResourceNum_, directionalLight_);
+		triangle_[0]->Draw(triangleData_[0], triangleTransform_[0], cameraTransform_, uvResourceNum_, directionalLight_);
 	}
 	if (isTriangleDraw2_) {//Triangle描画
-		triangle_[1]->Draw(triangleData_[1], transform_[1], cameraTransform_, uvResourceNum_, directionalLight_);
+		triangle_[1]->Draw(triangleData_[1], triangleTransform_[1], cameraTransform_, uvResourceNum_, directionalLight_);
 	}
 
 	if (isSphereDraw_) {
-		sphere_->Draw(sphereMaterial_, spriteTransform_, sphereMatrix_, texture_, cameraTransform_, directionalLight_);
+		sphere_->Draw(sphereMaterial_, sphereTransform_, texture_, cameraTransform_, directionalLight_);
+	}
+
+	if (isModelDraw_) {
+		model_->Draw(modelMaterial_, modelTransform_, modelResourceNum_, cameraTransform_, directionalLight_);
 	}
 #pragma endregion
 

@@ -4,6 +4,7 @@
 #include "CreateSprite.h"
 #include "CreateSphere.h"
 #include "CJEngine.h"
+#include "Model.h"
 
 class GameScene{
 public:
@@ -18,8 +19,7 @@ private:
 
 	CreateTriangle* triangle_[2];
 	TriangleData triangleData_[2];
-	Transform transform_[2];
-	Matrix4x4 worldMatrix_[2];
+	Transform triangleTransform_[2];
 
 	CreateSprite* sprite_[2];
 	SpriteData spriteData_;
@@ -29,14 +29,18 @@ private:
 	CreateSphere* sphere_;
 	Transform sphereTransform_;
 	Vector4 sphereMaterial_;
-	Matrix4x4 sphereMatrix_;
+
+	Model* model_;
+	Transform modelTransform_;
+	Vector4 modelMaterial_;
 
 	Transform cameraTransform_;
 
+	DirectionalLight directionalLight_;
+
 	uint32_t uvResourceNum_;
 	uint32_t monsterBallResourceNum_;
-
-	DirectionalLight directionalLight_;
+	uint32_t modelResourceNum_;
 
 	int texture_;
 
@@ -44,4 +48,5 @@ private:
 	bool isTriangleDraw2_;
 	int isSphereDraw_;
 	int isSpriteDraw_;
+	int isModelDraw_;
 };

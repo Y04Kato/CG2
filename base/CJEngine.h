@@ -65,11 +65,11 @@ private:
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
 
-	ID3D12Resource* textureResource_[2];
+	ID3D12Resource* textureResource_[3];
 
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc_{};
 
-	ID3D12Resource* intermediateResource_[2];
+	ID3D12Resource* intermediateResource_[3];
 	uint32_t descriptorSizeSRV;
 	uint32_t descriptorSizeRTV;
 	uint32_t descriptorSizeDSV;

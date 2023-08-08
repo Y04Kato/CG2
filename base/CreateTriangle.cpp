@@ -17,7 +17,7 @@ void CreateTriangle::Draw(const TriangleData& data, const Transform& transform, 
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(dxCommon_->GetWin()->kClientWidth) / float(dxCommon_->GetWin()->kClientHeight), 0.1f, 100.0f);
 
-	Matrix4x4 wvpMatrix_ = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
+	Matrix4x4 wvpMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
 
 	Transform uvTransform = { { 1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
 	Matrix4x4 uvtransformMtrix = MakeScaleMatrix(uvTransform.scale);
@@ -38,7 +38,7 @@ void CreateTriangle::Draw(const TriangleData& data, const Transform& transform, 
 
 	*materialData_ = { data.material,false };
 	materialData_->uvTransform = uvtransformMtrix;
-	*wvpData_ = { wvpMatrix_,worldMatrix };
+	*wvpData_ = { wvpMatrix,worldMatrix };
 	*directionalLight_ = light;
 
 	//VBVを設定
