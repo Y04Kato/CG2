@@ -232,7 +232,7 @@ void CitrusJunosEngine::Initialize(WinApp* win, const wchar_t* title, int32_t wi
 	win_ = win;
 	win_ = new WinApp();
 	dxCommon_ = new DirectXCommon();
-	dxCommon_->Initialization(win, title, win->kClientWidth, win->kClientHeight);
+	dxCommon_->Initialization(win_, title, win_->kClientWidth, win_->kClientHeight);
 
 	descriptorSizeDSV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	descriptorSizeRTV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
