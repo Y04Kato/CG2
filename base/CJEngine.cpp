@@ -228,11 +228,9 @@ void CitrusJunosEngine::SettingDepth(){
 	depthStencilDesc_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;//比較関数、近ければ描画される
 }
 
-void CitrusJunosEngine::Initialize(WinApp* win, const wchar_t* title, int32_t width, int32_t height) {
-	win_ = win;
-	win_ = new WinApp();
+void CitrusJunosEngine::Initialize(const wchar_t* title, int32_t width, int32_t height) {
 	dxCommon_ = new DirectXCommon();
-	dxCommon_->Initialization(win_, title, win_->kClientWidth, win_->kClientHeight);
+	dxCommon_->Initialization(title, WinApp::GetInstance()->kClientWidth, WinApp::GetInstance()->kClientHeight);
 
 	descriptorSizeDSV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	descriptorSizeRTV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
@@ -403,5 +401,4 @@ D3D12_GPU_DESCRIPTOR_HANDLE CitrusJunosEngine::GetGPUDescriptorHandle(ID3D12Desc
 	return handleGPU;
 }
 
-WinApp* CitrusJunosEngine::win_;
 DirectXCommon* CitrusJunosEngine::dxCommon_;

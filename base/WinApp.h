@@ -10,7 +10,7 @@
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
-class WinApp {
+class WinApp final {
 public:
 	//クライアント領域サイズ
 	static const int32_t kClientWidth = 1280;
@@ -27,6 +27,21 @@ public:
 
 	void CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight);
 
+	/// <summary>
+	/// desable copy constructor
+	/// </summary>
+
+	WinApp(const WinApp& obj) = delete;
+	/// <summary>
+	///  disable operator overload
+	/// </summary>	
+	WinApp& operator=(const WinApp& obj) = delete;
+
+	/// <summary>
+	/// GetInstance
+	/// </summary>
+	static WinApp* GetInstance();
+
 private:
 	UINT windowStyle_;
 
@@ -35,4 +50,15 @@ private:
 	static inline WNDCLASS wc_{};//ウィンドウクラス
 
 	static HWND hwnd_;
+
+	/// <summary>
+	/// constructor
+	/// </summary>
+	WinApp() = default;
+
+	/// <summary>
+	/// destructor
+	/// </summary>
+	~WinApp() = default;
+
 };
