@@ -1,4 +1,4 @@
-#include "object3d.hlsli"
+#include "Object3d.hlsli"
 
 ConstantBuffer<TransformationMatrix> gTransformationMatrix : register(b0);
 
