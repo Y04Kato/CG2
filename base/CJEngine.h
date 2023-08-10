@@ -31,6 +31,7 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
 
 private:
+	static WinApp* win_;
 	static	DirectXCommon* dxCommon_;
 
 	IDxcUtils* dxcUtils_;
