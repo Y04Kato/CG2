@@ -54,7 +54,7 @@ private:
 
 	//スワップチェーン
 	IDXGISwapChain4* swapChain_;
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_;
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_{};
 
 	//ディスクリプタヒープの生成
 	ID3D12DescriptorHeap* rtvDescriptorHeap_;//rtv用

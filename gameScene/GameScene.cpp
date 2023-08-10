@@ -153,9 +153,9 @@ void GameScene::Draw() {
 		triangle_[1]->Draw(triangleData_[1], transform_[1], cameraTransform_, uvResourceNum_, directionalLight_);
 	}
 
-	if (isSphereDraw_) {
+	//if (isSphereDraw_) {
 		sphere_->Draw(sphereMaterial_, spriteTransform_, sphereMatrix_, texture_, cameraTransform_, directionalLight_);
-	}
+	//}
 #pragma endregion
 
 #pragma region 前景スプライト描画
