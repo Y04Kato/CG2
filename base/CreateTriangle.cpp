@@ -57,6 +57,7 @@ void CreateTriangle::Finalize() {
 	materialResource_->Release();
 	vertexResource_->Release();
 	wvpResource_->Release();
+	directionalLightResource_->Release();
 }
 
 void CreateTriangle::SettingVertex() {
@@ -72,14 +73,14 @@ void CreateTriangle::SettingVertex() {
 }
 
 void CreateTriangle::TransformMatrix() {
-	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(TransformationMatrix));
 	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
 	wvpData_->WVP = MakeIdentity4x4();
 }
 
 void CreateTriangle::SettingColor() {
 	//マテリアル用のリソースを作る　今回はcolor1つ分
-	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Vector4));
+	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
 	//書き込むためのアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }

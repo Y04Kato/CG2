@@ -103,6 +103,8 @@ void CreateSphere::Finalize() {
 	vertexResource->Release();
 	materialResource_->Release();
 	wvpResource_->Release();
+	directionalLightResource_->Release();
+	indexResourceSphere_->Release();
 }
 
 void CreateSphere::SettingVertex() {
@@ -132,7 +134,7 @@ void CreateSphere::SettingVertex() {
 }
 
 void CreateSphere::TransformMatrix() {
-	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(TransformationMatrix));
 	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
 	wvpData_->WVP = MakeIdentity4x4();
 }
