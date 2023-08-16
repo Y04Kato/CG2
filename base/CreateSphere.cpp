@@ -102,6 +102,7 @@ void CreateSphere::Finalize() {
 	vertexResource->Release();
 	materialResource_->Release();
 	wvpResource_->Release();
+	directionalLightResource_->Release();
 }
 
 void CreateSphere::SettingVertex() {

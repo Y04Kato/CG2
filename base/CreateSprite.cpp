@@ -57,6 +57,7 @@ void CreateSprite::Finalize(){
 	vertexResourceSprite_->Release();
 	materialResource_->Release();
 	transformationMatrixResource_->Release();
+	directionalLightResource_->Release();
 }
 
 void CreateSprite::SettingVartex(){
@@ -77,7 +78,7 @@ void CreateSprite::SettingVartex(){
 
 void CreateSprite::TransformMatrix(){
 	//Sprite用のTransformationMatrix用のリソースを作る Matrix4x41つ分を用意する
-	transformationMatrixResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
+	transformationMatrixResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(TransformationMatrix));
 	transformationMatrixdata_ = nullptr;//書き込む
 
 	//書き込むアドレスを取得
