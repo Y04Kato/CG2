@@ -8,7 +8,7 @@
 
 class DirectXCommon {
 public:
-	void Initialization(WinApp* win, const wchar_t* title, int32_t backBufferWidth = WinApp::kClientWidth, int32_t backBufferHeight = WinApp::kClientHeight);
+	void Initialization(const wchar_t* title, int32_t backBufferWidth = WinApp::kClientWidth, int32_t backBufferHeight = WinApp::kClientHeight);
 
 	void ImGuiInitialize();
 
@@ -20,7 +20,7 @@ public:
 
 	static ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
 
-	WinApp* GetWin() { return winApp_; }
+	WinApp* GetWin() { return WinApp::GetInstance(); }
 
 	HRESULT GetHr() { return  hr_; }
 	void SetHr(HRESULT a) { this->hr_ = a; }
@@ -32,8 +32,6 @@ public:
 	D3D12_RENDER_TARGET_VIEW_DESC getRtvDesc() { return rtvDesc_; }
 
 private:
-	WinApp* winApp_;
-
 	//DXGIファクトリーの生成
 	IDXGIFactory7* dxgiFactory_;
 

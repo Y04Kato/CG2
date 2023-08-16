@@ -10,7 +10,7 @@
 
 class CitrusJunosEngine {
 public:
-	void Initialize(WinApp* win, const wchar_t* title, int32_t width, int32_t height);
+	void Initialize(const wchar_t* title, int32_t width, int32_t height);
 
 	void BeginFrame();
 
@@ -31,7 +31,6 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
 
 private:
-	static WinApp* win_;
 	static	DirectXCommon* dxCommon_;
 
 	IDxcUtils* dxcUtils_;

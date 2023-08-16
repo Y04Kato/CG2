@@ -9,15 +9,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	//初期化
-	WinApp* win_ = nullptr;
 	CitrusJunosEngine* CJEngine = new CitrusJunosEngine;
-	CJEngine->Initialize(win_, kWindowTitle, 1280, 720);
+	CJEngine->Initialize(kWindowTitle, 1280, 720);
 
 	GameScene* gameScene = new GameScene();
 	gameScene->Initialize(CJEngine, CJEngine->GetDirectXCommon());
 	while (true) {
 		//windowのメッセージを最優先で処理させる
-		if (win_->Procesmessage()) {
+		if (WinApp::GetInstance()->Procesmessage()) {
 			break;
 		}
 			//ゲームの処理
