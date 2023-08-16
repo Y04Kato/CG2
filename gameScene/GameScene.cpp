@@ -216,4 +216,6 @@ void GameScene::Finalize() {
 	}
 
 	sphere_->Finalize();
+
+	model_->Finalize();
 }
