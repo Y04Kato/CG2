@@ -103,7 +103,7 @@ void CreateSprite::SettingVartex(){
 
 void CreateSprite::TransformMatrix(){
 	//Sprite用のTransformationMatrix用のリソースを作る Matrix4x41つ分を用意する
-	transformationMatrixResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
+	transformationMatrixResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(TransformationMatrix));
 	transformationMatrixdata_ = nullptr;//書き込む
 
 	//書き込むアドレスを取得
@@ -113,7 +113,7 @@ void CreateSprite::TransformMatrix(){
 }
 
 void CreateSprite::SettingColor() {
-	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(VertexData));
+	materialResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Material));
 
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }
