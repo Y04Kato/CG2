@@ -34,7 +34,9 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 
 	isSphereDraw_ = false;
 
-	directionalLight_ = { {1.0f,1.0f,1.0f,1.0f},{0.0f,-1.0f,0.0f},1.0f };
+	directionalLight_.color = { 1.0f,1.0f,1.0f,1.0f };
+	directionalLight_.direction = { 0.0f,-1.0f,0.0f };
+	directionalLight_.intensity = 1.0f;
 
 	texture_ = 0;
 	uvResourceNum_ = 0;
@@ -154,7 +156,7 @@ void GameScene::Draw() {
 	}
 
 	//	if (isSphereDraw_) {
-	sphere_->Draw(sphereMaterial_, spriteTransform_, sphereMatrix_, texture_, cameraTransform_, directionalLight_);
+	sphere_->Draw(sphereMaterial_, spriteTransform_, texture_, cameraTransform_, directionalLight_);
 	//}
 #pragma endregion
 

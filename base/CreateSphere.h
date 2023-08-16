@@ -9,7 +9,7 @@ class CreateSphere{
 public:
 	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
 
-	void Draw(const Vector4& material, const Transform& transform, const Matrix4x4& wvpdata, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light);
+	void Draw(const Vector4& material, const Transform& transform, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light);
 	
 	void Finalize();
 

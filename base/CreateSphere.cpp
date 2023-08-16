@@ -13,7 +13,7 @@ void CreateSphere::Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine
 	SettingDictionalLight();
 }
 
-void CreateSphere::Draw(const Vector4& material, const Transform& transform, const Matrix4x4& wvpdata, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light) {
+void CreateSphere::Draw(const Vector4& material, const Transform& transform, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light) {
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
@@ -117,7 +117,7 @@ void CreateSphere::SettingVertex() {
 }
 
 void CreateSphere::TransformMatrix() {
-	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), sizeof(TransformationMatrix));
 	wvpResource_->Map(0, NULL, reinterpret_cast<void**>(&wvpData_));
 	wvpData_->WVP = MakeIdentity4x4();
 }
@@ -130,5 +130,5 @@ void CreateSphere::SettingColor() {
 
 void CreateSphere::SettingDictionalLight(){
 	directionalLightResource_ = DirectXCommon::CreateBufferResource(dxCommon_->GetDevice(), sizeof(DirectionalLight));
-	directionalLightResource_->Map(0, NULL, reinterpret_cast<void**>(&directionalLight_));
+	directionalLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&directionalLight_));
 }

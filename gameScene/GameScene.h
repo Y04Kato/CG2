@@ -19,7 +19,6 @@ private:
 	CreateTriangle* triangle_[2];
 	TriangleData triangleData_[2];
 	Transform transform_[2];
-	Matrix4x4 worldMatrix_[2];
 
 	CreateSprite* sprite_[2];
 	SpriteData spriteData_;
@@ -28,7 +27,6 @@ private:
 	CreateSphere* sphere_;
 	Transform sphereTransform_;
 	Vector4 sphereMaterial_;
-	Matrix4x4 sphereMatrix_;
 
 	Transform cameraTransform_;
 
