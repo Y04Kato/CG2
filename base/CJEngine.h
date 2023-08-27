@@ -7,6 +7,7 @@
 #include "DirectXTex/d3dx12.h"
 #pragma comment(lib,"dxcompiler.lib")
 #include<vector>
+#include<wrl.h>
 
 class CitrusJunosEngine {
 public:
@@ -27,8 +28,8 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_[2];
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_[2];
 
-	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
+	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> descriptorheap, uint32_t descriptorSize, uint32_t index);
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> descriptorheap, uint32_t descriptorSize, uint32_t index);
 
 private:
 	static	DirectXCommon* dxCommon_;
@@ -38,21 +39,21 @@ private:
 
 	IDxcIncludeHandler* includeHandler_;
 
-	ID3DBlob* signatureBlob_;
-	ID3DBlob* errorBlob_;
-	ID3D12RootSignature* rootSignature_;
+	Microsoft::WRL::ComPtr <ID3DBlob> signatureBlob_;
+	Microsoft::WRL::ComPtr <ID3DBlob> errorBlob_;
+	Microsoft::WRL::ComPtr <ID3D12RootSignature> rootSignature_;
 
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
 
 	D3D12_BLEND_DESC blendDesc_{};
 
-	IDxcBlob* vertexShaderBlob_;
+	Microsoft::WRL::ComPtr <IDxcBlob> vertexShaderBlob_;
 
-	IDxcBlob* pixelShaderBlob_;
+	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlob_;
 
 	D3D12_RASTERIZER_DESC rasterizerDesc_{};
 
-	ID3D12PipelineState* graphicsPipelineState_;
+	Microsoft::WRL::ComPtr <ID3D12PipelineState> graphicsPipelineState_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 
@@ -64,11 +65,11 @@ private:
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
 
-	ID3D12Resource* textureResource_[3];
+	Microsoft::WRL::ComPtr <ID3D12Resource> textureResource_[3];
 
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc_{};
 
-	ID3D12Resource* intermediateResource_[3];
+	Microsoft::WRL::ComPtr <ID3D12Resource> intermediateResource_[3];
 	uint32_t descriptorSizeSRV;
 	uint32_t descriptorSizeRTV;
 	uint32_t descriptorSizeDSV;
@@ -95,6 +96,6 @@ private:
 	void SettingDepth();
 
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
-	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
-	ID3D12Resource* UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, uint32_t index);
+	Microsoft::WRL::ComPtr <ID3D12Resource> CreateTextureResource(Microsoft::WRL::ComPtr <ID3D12Device> device, const DirectX::TexMetadata& metadata);
+	Microsoft::WRL::ComPtr <ID3D12Resource> UploadtextureData(Microsoft::WRL::ComPtr <ID3D12Resource> texture, const DirectX::ScratchImage& mipImages, uint32_t index);
 };

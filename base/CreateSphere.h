@@ -2,6 +2,7 @@
 #include "DirectXCommon.h"
 #include "Vector.h"
 #include "MatrixCalculation.h"
+#include<wrl.h>
 
 class CitrusJunosEngine;
 
@@ -24,13 +25,13 @@ private:
 	CitrusJunosEngine* CJEngine_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
-	ID3D12Resource* vertexResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> vertexResource_;
 	VertexData* vertexData_;
 
-	ID3D12Resource* wvpResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> wvpResource_;
 	TransformationMatrix* wvpData_;
 
-	ID3D12Resource* materialResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> materialResource_;
 	Material* materialData_;
 
 	const float pi = 3.1415f;
@@ -38,9 +39,9 @@ private:
 	uint32_t vertexCount_;
 
 	DirectionalLight* directionalLight_;
-	ID3D12Resource* directionalLightResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> directionalLightResource_;
 
-	ID3D12Resource* indexResourceSphere_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> indexResourceSphere_;
 	D3D12_INDEX_BUFFER_VIEW indexBufferViewSphere_{};
 	uint32_t* indexDataSphere_;
 };

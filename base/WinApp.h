@@ -7,6 +7,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_dx12.h>
 #include <imgui/imgui_impl_win32.h>
+#include<wrl.h>
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
@@ -21,7 +22,7 @@ public:
 
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	ID3D12Debug1* GetdebugController() { return debugController_; }
+	Microsoft::WRL::ComPtr <ID3D12Debug1> GetdebugController() { return debugController_; }
 
 	inline HWND GetHwnd() { return hwnd_; }
 
@@ -45,7 +46,7 @@ public:
 private:
 	UINT windowStyle_;
 
-	static ID3D12Debug1* debugController_;
+	Microsoft::WRL::ComPtr <ID3D12Debug1> debugController_;
 
 	static inline WNDCLASS wc_{};//ウィンドウクラス
 

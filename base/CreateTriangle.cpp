@@ -60,10 +60,7 @@ void CreateTriangle::Draw(const TriangleData& data, const Transform& transform, 
 }
 
 void CreateTriangle::Finalize() {
-	materialResource_->Release();
-	vertexResource_->Release();
-	wvpResource_->Release();
-	directionalLightResource_->Release();
+
 }
 
 void CreateTriangle::SettingVertex() {

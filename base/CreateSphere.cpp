@@ -108,11 +108,7 @@ void CreateSphere::Draw(const Vector4& material, const Transform& transform, uin
 }
 
 void CreateSphere::Finalize() {
-	vertexResource_->Release();
-	materialResource_->Release();
-	wvpResource_->Release();
-	indexResourceSphere_->Release();
-	directionalLightResource_->Release();
+
 }
 
 void CreateSphere::SettingVertex() {

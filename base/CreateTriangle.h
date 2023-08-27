@@ -2,6 +2,7 @@
 #include "DirectXCommon.h"
 #include "Vector.h"
 #include "MatrixCalculation.h"
+#include<wrl.h>
 
 class CitrusJunosEngine;
 
@@ -31,16 +32,16 @@ private:
 
 	Material* materialData_;
 
-	ID3D12Resource* vertexResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> vertexResource_;
 
-	ID3D12Resource* materialResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> materialResource_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 
 	//WVP用のリソース
-	ID3D12Resource* wvpResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> wvpResource_;
 	TransformationMatrix* wvpData_;
 
 	DirectionalLight* directionalLight_;
-	ID3D12Resource* directionalLightResource_;
+	Microsoft::WRL::ComPtr <ID3D12Resource> directionalLightResource_;
 };

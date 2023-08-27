@@ -177,7 +177,7 @@ void CitrusJunosEngine::RasterizerState() {
 
 void CitrusJunosEngine::InitializePSO() {
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
-	graphicsPipelineStateDesc.pRootSignature = rootSignature_;//RootSignature
+	graphicsPipelineStateDesc.pRootSignature = rootSignature_.Get();//RootSignature
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc_;//Inputlayout
 	graphicsPipelineStateDesc.VS = { vertexShaderBlob_->GetBufferPointer(),
 		vertexShaderBlob_->GetBufferSize() };//vertexShader
@@ -263,9 +263,9 @@ void CitrusJunosEngine::BeginFrame() {
 	//scirssorを設定
 	dxCommon_->GetCommandList()->RSSetScissorRects(1, &scissorRect_);
 	//RootSignatureを設定。PS0とは別途設定が必要
-	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
+	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_.Get());
 	//PS0を設定
-	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_);
+	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_.Get());
 	//開発用UIの処理
 	ImGui::ShowDemoWindow();
 }
@@ -278,19 +278,8 @@ void CitrusJunosEngine::EndFrame() {
 }
 
 void CitrusJunosEngine::Finalize() {
-	for (int i = 0; i < 3; i++) {
-		textureResource_[i]->Release();
-		intermediateResource_[i]->Release();
-	}
-	graphicsPipelineState_->Release();
-	signatureBlob_->Release();
-	if (errorBlob_) {
-		errorBlob_->Release();
-	}
-	rootSignature_->Release();
-	pixelShaderBlob_->Release();
-	vertexShaderBlob_->Release();
 	dxCommon_->Finalize();
+	delete dxCommon_;
 }
 
 void CitrusJunosEngine::Update() {
@@ -313,7 +302,7 @@ DirectX::ScratchImage CitrusJunosEngine::LoadTexture(const std::string& filePath
 	return mipImages;
 }
 
-ID3D12Resource* CitrusJunosEngine::CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata){
+Microsoft::WRL::ComPtr <ID3D12Resource> CitrusJunosEngine::CreateTextureResource(Microsoft::WRL::ComPtr <ID3D12Device> device, const DirectX::TexMetadata& metadata){
 	//metadataをもとにResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = UINT(metadata.width);//texturの幅
@@ -331,7 +320,7 @@ ID3D12Resource* CitrusJunosEngine::CreateTextureResource(ID3D12Device* device, c
 	heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;//プロセッサの近くに配置
 	
 	//Resourceを生成する
-	ID3D12Resource* resource = nullptr;
+	Microsoft::WRL::ComPtr <ID3D12Resource> resource = nullptr;
 	HRESULT hr = device->CreateCommittedResource(
 		&heapProperties, 
 		D3D12_HEAP_FLAG_NONE, 
@@ -346,17 +335,17 @@ ID3D12Resource* CitrusJunosEngine::CreateTextureResource(ID3D12Device* device, c
 
 
 [[nodiscard]]
-ID3D12Resource* CitrusJunosEngine::UploadtextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, uint32_t index) {
+Microsoft::WRL::ComPtr <ID3D12Resource> CitrusJunosEngine::UploadtextureData(Microsoft::WRL::ComPtr <ID3D12Resource> texture, const DirectX::ScratchImage& mipImages, uint32_t index) {
 	std::vector<D3D12_SUBRESOURCE_DATA>subresource;
-	DirectX::PrepareUpload(dxCommon_->GetDevice(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresource);
-	uint64_t  intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresource.size()));
+	DirectX::PrepareUpload(dxCommon_->GetDevice().Get(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresource);
+	uint64_t  intermediateSize = GetRequiredIntermediateSize(texture.Get(), 0, UINT(subresource.size()));
 	intermediateResource_[index] = dxCommon_->CreateBufferResource(dxCommon_->GetDevice(), intermediateSize);
-	UpdateSubresources(dxCommon_->GetCommandList(), texture, intermediateResource_[index], 0, 0, UINT(subresource.size()), subresource.data());
+	UpdateSubresources(dxCommon_->GetCommandList().Get(), texture.Get(), intermediateResource_[index].Get(), 0, 0, UINT(subresource.size()), subresource.data());
 
 	D3D12_RESOURCE_BARRIER barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	barrier.Transition.pResource = texture;
+	barrier.Transition.pResource = texture.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
@@ -386,16 +375,16 @@ void CitrusJunosEngine::SettingTexture(const std::string& filePath, uint32_t ind
 	textureSrvHandleGPU_[index].ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	
 	//SRVの生成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_[index], &srvDesc, textureSrvHandleCPU_[index]);
+	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_[index].Get(), &srvDesc, textureSrvHandleCPU_[index]);
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE CitrusJunosEngine::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index){
+D3D12_CPU_DESCRIPTOR_HANDLE CitrusJunosEngine::GetCPUDescriptorHandle(Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> descriptorheap, uint32_t descriptorSize, uint32_t index){
 	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorheap->GetCPUDescriptorHandleForHeapStart();
 	handleCPU.ptr += (descriptorSize * index);
 	return handleCPU;
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE CitrusJunosEngine::GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index){
+D3D12_GPU_DESCRIPTOR_HANDLE CitrusJunosEngine::GetGPUDescriptorHandle(Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> descriptorheap, uint32_t descriptorSize, uint32_t index){
 	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorheap->GetGPUDescriptorHandleForHeapStart();
 	handleGPU.ptr += (descriptorSize * index);
 	return handleGPU;

@@ -60,11 +60,7 @@ void CreateSprite::Draw(const Vector4& a, const Vector4& b, const Transform& tra
 }
 
 void CreateSprite::Finalize(){
-	vertexResourceSprite_->Release();
-	materialResource_->Release();
-	transformationMatrixResource_->Release();
-	directionalLightResource_->Release();
-	indexResourceSprite_->Release();
+
 }
 
 void CreateSprite::SettingVartex(){

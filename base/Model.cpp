@@ -46,10 +46,7 @@ void Model::Draw(const Vector4& material, const Transform& transform, uint32_t t
 }
 
 void Model::Finalize(){
-    vertexResource_->Release();
-    materialResource_->Release();
-    wvpResource_->Release();
-    directionalLightResource_->Release();
+
 }
 
 ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename){

@@ -5,6 +5,7 @@ const wchar_t kWindowTitle[] = { L"CG2_カトウ" };
 
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+	D3DResourceLeakChecker leakCheck;
 	//COM初期化
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
@@ -31,7 +32,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//解放処理
 	gameScene->Finalize();
+	delete gameScene;
 	CJEngine->Finalize();
+	delete CJEngine;
 	CoUninitialize();
 	return 0;
 }
