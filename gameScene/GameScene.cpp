@@ -73,6 +73,10 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	monsterBallResourceNum_ = 1;
 	CJEngine_->SettingTexture("resources/monsterBall.png", monsterBallResourceNum_);
 
+	//Input
+	input_ = Input::GetInstance();
+	input_->Initialize();
+
 	//Audio
 	audio_ = Audio::GetInstance();
 	audio_->Initialize();
@@ -85,6 +89,10 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 }
 
 void GameScene::Update() {
+
+	if (input_->PressKey(DIK_A)) {
+		OutputDebugStringA("Hit A\n");
+	}
 
 	directionalLight_.direction = Normalise(directionalLight_.direction);
 
@@ -184,6 +192,7 @@ void GameScene::Update() {
 	}
 	ImGui::End();
 
+	input_->Update();
 }
 
 void GameScene::Draw() {

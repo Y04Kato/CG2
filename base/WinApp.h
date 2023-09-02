@@ -25,6 +25,7 @@ public:
 	Microsoft::WRL::ComPtr <ID3D12Debug1> GetdebugController() { return debugController_; }
 
 	inline HWND GetHwnd() { return hwnd_; }
+	HINSTANCE GetWc() { return wc_.hInstance; }
 
 	void CreateWindowView(const wchar_t* title, int32_t clientWidth, int32_t clientheight);
 

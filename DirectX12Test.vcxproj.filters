@@ -40,6 +40,12 @@
     <Filter Include="ヘッダー ファイル\audio">
       <UniqueIdentifier>{f1e0e753-2967-4e85-8041-bbe8426fb83b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\input">
+      <UniqueIdentifier>{ce96a55f-d465-4223-92a8-d2742485dc05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\input">
+      <UniqueIdentifier>{cb8b256a-1492-4612-b57a-dd295c86f020}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="audio\Audio.cpp">
       <Filter>ソース ファイル\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="input\Input.cpp">
+      <Filter>ソース ファイル\input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="audio\Audio.h">
       <Filter>ヘッダー ファイル\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="input\Input.h">
+      <Filter>ヘッダー ファイル\input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

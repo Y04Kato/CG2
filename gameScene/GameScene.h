@@ -6,6 +6,7 @@
 #include "CJEngine.h"
 #include "Model.h"
 #include "Audio.h"
+#include "Input.h"
 
 class GameScene{
 public:
@@ -45,6 +46,8 @@ private:
 
 	Audio* audio_;
 	SoundData soundData1_;
+
+	Input* input_;
 
 	int texture_;
 
