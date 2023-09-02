@@ -7,6 +7,7 @@
 #include "Model.h"
 #include "Audio.h"
 #include "Input.h"
+#include "DebugCamera.h"
 
 class GameScene{
 public:
@@ -36,8 +37,6 @@ private:
 	Transform modelTransform_;
 	Vector4 modelMaterial_;
 
-	Transform cameraTransform_;
-
 	DirectionalLight directionalLight_;
 
 	uint32_t uvResourceNum_;
@@ -48,6 +47,9 @@ private:
 	SoundData soundData1_;
 
 	Input* input_;
+
+	DebugCamera* debugCamera_;
+
 
 	int texture_;
 

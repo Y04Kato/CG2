@@ -426,3 +426,21 @@ Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float botto
 	result.m[3][3] = 1;
 	return result;
 }
+
+// TransformNormal
+Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m) {
+	Vector3 result{
+		v.num[0] * m.m[0][0] + v.num[1] * m.m[1][0] + v.num[2] * m.m[2][0],
+		v.num[0] * m.m[0][1] + v.num[1] * m.m[1][1] + v.num[2] * m.m[2][1],
+		v.num[0] * m.m[0][2] + v.num[1] * m.m[1][2] + v.num[2] * m.m[2][2],
+	};
+	return result;
+}
+
+Vector3 Add(const Vector3& translation, const Vector3& move) {
+	Vector3 result;
+	result.num[0] = translation.num[0] + move.num[0];
+	result.num[1] = translation.num[1] + move.num[1];
+	result.num[2] = translation.num[2] + move.num[2];
+	return result;
+}

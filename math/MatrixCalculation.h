@@ -57,3 +57,9 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRadio, float nearClip
 
 // 正射影行列
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip);
+
+// TransformNormal
+Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
+
+//Vector3同士の足し算
+Vector3 Add(const Vector3& translation, const Vector3& move);

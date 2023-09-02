@@ -81,11 +81,12 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	audio_ = Audio::GetInstance();
 	audio_->Initialize();
 	soundData1_ = audio_->SoundLoadWave("resources/fanfare.wav");
-	// 音声再生
+	//音声再生
 	audio_->SoundPlayWave(soundData1_);
 
-	//カメラ
-	cameraTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
+	// デバッグカメラの初期化
+	debugCamera_ = DebugCamera::GetInstance();
+	debugCamera_->initialize();
 }
 
 void GameScene::Update() {
@@ -184,32 +185,28 @@ void GameScene::Update() {
 		ImGui::DragFloat3("Scale", modelTransform_.scale.num, 0.05f);
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Camera")) {//カメラ
-		ImGui::DragFloat3("Translate", cameraTransform_.translate.num, 0.05f);
-		ImGui::DragFloat3("Rotate", cameraTransform_.rotate.num, 0.05f);
-		ImGui::DragFloat3("Scale", cameraTransform_.scale.num, 0.05f);
-		ImGui::TreePop();
-	}
+
 	ImGui::End();
 
 	input_->Update();
+	debugCamera_->Update();
 }
 
 void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	if (isTriangleDraw1_) {//Triangle描画
-		triangle_[0]->Draw(triangleData_[0], triangleTransform_[0], cameraTransform_, uvResourceNum_, directionalLight_);
+		triangle_[0]->Draw(triangleData_[0], triangleTransform_[0], debugCamera_->GetViewMatrix(), uvResourceNum_, directionalLight_);
 	}
 	if (isTriangleDraw2_) {//Triangle描画
-		triangle_[1]->Draw(triangleData_[1], triangleTransform_[1], cameraTransform_, uvResourceNum_, directionalLight_);
+		triangle_[1]->Draw(triangleData_[1], triangleTransform_[1], debugCamera_->GetViewMatrix(), uvResourceNum_, directionalLight_);
 	}
 
 	if (isSphereDraw_) {
-		sphere_->Draw(sphereMaterial_, sphereTransform_, texture_, cameraTransform_, directionalLight_);
+		sphere_->Draw(sphereMaterial_, sphereTransform_, texture_, debugCamera_->GetViewMatrix(), directionalLight_);
 	}
 
 	if (isModelDraw_) {
-		model_->Draw(modelMaterial_, modelTransform_, modelResourceNum_, cameraTransform_, directionalLight_);
+		model_->Draw(modelMaterial_, modelTransform_, modelResourceNum_, debugCamera_->GetViewMatrix(), directionalLight_);
 	}
 #pragma endregion
 
@@ -241,4 +238,6 @@ void GameScene::Finalize() {
 
 	audio_->Finalize();
 	audio_->SoundUnload(&soundData1_);
+
+
 }

@@ -46,6 +46,12 @@
     <Filter Include="ソース ファイル\input">
       <UniqueIdentifier>{cb8b256a-1492-4612-b57a-dd295c86f020}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\debugCamera">
+      <UniqueIdentifier>{dffbe361-e9ab-43cf-a1df-35be82273a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\debugCamera">
+      <UniqueIdentifier>{b5103cab-ddc6-4bb3-ac17-9993b66743f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -107,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="input\Input.cpp">
       <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="debugCamera\DebugCamera.cpp">
+      <Filter>ソース ファイル\debugCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="input\Input.h">
       <Filter>ヘッダー ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="debugCamera\DebugCamera.h">
+      <Filter>ヘッダー ファイル\debugCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

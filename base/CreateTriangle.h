@@ -10,7 +10,7 @@ class CreateTriangle {
 public:
 	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine);
 
-	void Draw(const TriangleData& data,const Transform& transform, const Transform& cameraTransform, uint32_t index, const DirectionalLight& light);
+	void Draw(const TriangleData& data,const Transform& transform, const Matrix4x4 viewMatrix, uint32_t index, const DirectionalLight& light);
 
 	void Finalize();
 

@@ -11,7 +11,7 @@ class Model {
 public:
 	void Initialize(DirectXCommon* dxCommon, CitrusJunosEngine* engine, const std::string& directoryPath, const std::string& filename, uint32_t index);
 
-	void Draw(const Vector4& material, const Transform& transform, uint32_t index, const Transform& cameraTransform, const DirectionalLight& light);
+	void Draw(const Vector4& material, const Transform& transform, uint32_t index, const Matrix4x4 viewMatrix, const DirectionalLight& light);
 	
 	void Finalize();
 
