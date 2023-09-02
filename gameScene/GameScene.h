@@ -5,6 +5,7 @@
 #include "CreateSphere.h"
 #include "CJEngine.h"
 #include "Model.h"
+#include "Audio.h"
 
 class GameScene{
 public:
@@ -41,6 +42,9 @@ private:
 	uint32_t uvResourceNum_;
 	uint32_t monsterBallResourceNum_;
 	uint32_t modelResourceNum_;
+
+	Audio* audio_;
+	SoundData soundData1_;
 
 	int texture_;
 

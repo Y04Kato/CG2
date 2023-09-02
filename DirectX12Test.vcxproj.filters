@@ -34,6 +34,12 @@
     <Filter Include="ヘッダー ファイル\gameScene">
       <UniqueIdentifier>{3b921b08-b4f3-4e2e-867e-15fb6448dc62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\audio">
+      <UniqueIdentifier>{80998b5e-e9ca-4037-ab67-31d7cee05813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\audio">
+      <UniqueIdentifier>{f1e0e753-2967-4e85-8041-bbe8426fb83b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="base\Model.cpp">
       <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="audio\Audio.cpp">
+      <Filter>ソース ファイル\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="base\Model.h">
       <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="audio\Audio.h">
+      <Filter>ヘッダー ファイル\audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

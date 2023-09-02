@@ -73,6 +73,13 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	monsterBallResourceNum_ = 1;
 	CJEngine_->SettingTexture("resources/monsterBall.png", monsterBallResourceNum_);
 
+	//Audio
+	audio_ = Audio::GetInstance();
+	audio_->Initialize();
+	soundData1_ = audio_->SoundLoadWave("resources/fanfare.wav");
+	// 音声再生
+	audio_->SoundPlayWave(soundData1_);
+
 	//カメラ
 	cameraTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 }
@@ -222,4 +229,7 @@ void GameScene::Finalize() {
 
 	model_->Finalize();
 	delete model_;
+
+	audio_->Finalize();
+	audio_->SoundUnload(&soundData1_);
 }
