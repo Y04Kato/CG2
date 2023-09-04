@@ -61,7 +61,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -81,7 +81,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -108,12 +108,15 @@
     <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="gameScene\GameScene.cpp" />
     <ClCompile Include="input\Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\MatrixCalculation.cpp" />
     <ClCompile Include="base\CJEngine.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="scenes\GameClearScene.cpp" />
+    <ClCompile Include="scenes\GamePlayScene.cpp" />
+    <ClCompile Include="scenes\GameTitleScene.cpp" />
+    <ClCompile Include="scenes\manager\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -146,7 +149,6 @@
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="gameScene\GameScene.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\MatrixCalculation.h">
@@ -157,6 +159,11 @@
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="scenes\GameClearScene.h" />
+    <ClInclude Include="scenes\GamePlayScene.h" />
+    <ClInclude Include="scenes\GameTitleScene.h" />
+    <ClInclude Include="scenes\Iscene.h" />
+    <ClInclude Include="scenes\manager\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

@@ -28,12 +28,6 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{cfedf8cc-6219-4b5b-b6e1-9bd08bb07fb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\gameScene">
-      <UniqueIdentifier>{0c6fa2b3-e624-4453-873c-15111b409575}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\gameScene">
-      <UniqueIdentifier>{3b921b08-b4f3-4e2e-867e-15fb6448dc62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\audio">
       <UniqueIdentifier>{80998b5e-e9ca-4037-ab67-31d7cee05813}</UniqueIdentifier>
     </Filter>
@@ -51,6 +45,18 @@
     </Filter>
     <Filter Include="ソース ファイル\debugCamera">
       <UniqueIdentifier>{b5103cab-ddc6-4bb3-ac17-9993b66743f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scenes">
+      <UniqueIdentifier>{6a3e4c5e-ad5d-4c1f-b02c-6f8003125898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scenes\mamager">
+      <UniqueIdentifier>{3ba3c56a-3b83-46b2-a80f-7801fb19c4a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scenes">
+      <UniqueIdentifier>{a154a03e-faec-4bcc-a609-a62fd6dfe101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scenes\manager">
+      <UniqueIdentifier>{335a5342-62c1-416f-93e6-afde6755786f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +108,6 @@
     <ClCompile Include="base\CreateSphere.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="gameScene\GameScene.cpp">
-      <Filter>ソース ファイル\gameScene</Filter>
-    </ClCompile>
     <ClCompile Include="base\Model.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
@@ -116,6 +119,18 @@
     </ClCompile>
     <ClCompile Include="debugCamera\DebugCamera.cpp">
       <Filter>ソース ファイル\debugCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="scenes\manager\SceneManager.cpp">
+      <Filter>ソース ファイル\scenes\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="scenes\GameTitleScene.cpp">
+      <Filter>ソース ファイル\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="scenes\GamePlayScene.cpp">
+      <Filter>ソース ファイル\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="scenes\GameClearScene.cpp">
+      <Filter>ソース ファイル\scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +192,6 @@
     <ClInclude Include="base\CreateSphere.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
-    <ClInclude Include="gameScene\GameScene.h">
-      <Filter>ヘッダー ファイル\gameScene</Filter>
-    </ClInclude>
     <ClInclude Include="base\Model.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
@@ -191,6 +203,21 @@
     </ClInclude>
     <ClInclude Include="debugCamera\DebugCamera.h">
       <Filter>ヘッダー ファイル\debugCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes\manager\SceneManager.h">
+      <Filter>ヘッダー ファイル\scenes\mamager</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes\GameTitleScene.h">
+      <Filter>ヘッダー ファイル\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes\GamePlayScene.h">
+      <Filter>ヘッダー ファイル\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes\GameClearScene.h">
+      <Filter>ヘッダー ファイル\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes\Iscene.h">
+      <Filter>ヘッダー ファイル\scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

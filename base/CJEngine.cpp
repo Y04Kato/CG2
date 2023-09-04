@@ -229,7 +229,7 @@ void CitrusJunosEngine::SettingDepth(){
 }
 
 void CitrusJunosEngine::Initialize(const wchar_t* title, int32_t width, int32_t height) {
-	dxCommon_ = new DirectXCommon();
+	dxCommon_ = DirectXCommon::GetInstance();
 	dxCommon_->Initialization(title, WinApp::GetInstance()->kClientWidth, WinApp::GetInstance()->kClientHeight);
 
 	descriptorSizeDSV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
@@ -279,7 +279,6 @@ void CitrusJunosEngine::EndFrame() {
 
 void CitrusJunosEngine::Finalize() {
 	dxCommon_->Finalize();
-	delete dxCommon_;
 }
 
 void CitrusJunosEngine::Update() {
@@ -388,6 +387,11 @@ D3D12_GPU_DESCRIPTOR_HANDLE CitrusJunosEngine::GetGPUDescriptorHandle(Microsoft:
 	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorheap->GetGPUDescriptorHandleForHeapStart();
 	handleGPU.ptr += (descriptorSize * index);
 	return handleGPU;
+}
+
+CitrusJunosEngine* CitrusJunosEngine::GetInstance(){
+	static CitrusJunosEngine instance;
+	return &instance;
 }
 
 DirectXCommon* CitrusJunosEngine::dxCommon_;

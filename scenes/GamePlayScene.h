@@ -1,17 +1,17 @@
 #pragma once
+#include "Iscene.h"
 #include "Vector.h"
 #include "CreateTriangle.h"
 #include "CreateSprite.h"
 #include "CreateSphere.h"
-#include "CJEngine.h"
 #include "Model.h"
 #include "Audio.h"
 #include "Input.h"
 #include "DebugCamera.h"
 
-class GameScene{
+class GamePlayScene :public Iscene {
 public:
-	void Initialize(CitrusJunosEngine* engine, DirectXCommon* direct);
+	void Initialize();
 	void Update();
 	void Draw();
 	void Finalize();
@@ -28,7 +28,7 @@ private:
 	SpriteData spriteData_;
 	Transform spriteTransform_;
 	Transform SpriteuvTransform_;
-	
+
 	CreateSphere* sphere_;
 	Transform sphereTransform_;
 	Vector4 sphereMaterial_;

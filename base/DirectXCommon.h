@@ -10,6 +10,8 @@
 
 class DirectXCommon {
 public:
+	static DirectXCommon* GetInstance();
+
 	void Initialization(const wchar_t* title, int32_t backBufferWidth = WinApp::kClientWidth, int32_t backBufferHeight = WinApp::kClientHeight);
 
 	void ImGuiInitialize();

@@ -1,8 +1,8 @@
-#include "gameScene.h"
+#include"GamePlayScene.h"
 
-void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
-	CJEngine_ = engine;
-	dxCommon_ = dxCommon;
+void GamePlayScene::Initialize() {
+	CJEngine_ = CitrusJunosEngine::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
 
 	//三角形
 	triangleData_[0].position[0] = { -0.5f,-0.5f,0.0f,1.0f };
@@ -75,11 +75,9 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 
 	//Input
 	input_ = Input::GetInstance();
-	input_->Initialize();
 
 	//Audio
 	audio_ = Audio::GetInstance();
-	audio_->Initialize();
 	soundData1_ = audio_->SoundLoadWave("resources/fanfare.wav");
 	//音声再生
 	audio_->SoundPlayWave(soundData1_);
@@ -89,8 +87,7 @@ void GameScene::Initialize(CitrusJunosEngine* engine, DirectXCommon* dxCommon) {
 	debugCamera_->initialize();
 }
 
-void GameScene::Update() {
-
+void GamePlayScene::Update() {
 	if (input_->PressKey(DIK_A)) {
 		OutputDebugStringA("Hit A\n");
 	}
@@ -192,7 +189,7 @@ void GameScene::Update() {
 	debugCamera_->Update();
 }
 
-void GameScene::Draw() {
+void GamePlayScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	if (isTriangleDraw1_) {//Triangle描画
 		triangle_[0]->Draw(triangleData_[0], triangleTransform_[0], debugCamera_->GetViewMatrix(), uvResourceNum_, directionalLight_);
@@ -219,7 +216,7 @@ void GameScene::Draw() {
 #pragma endregion
 }
 
-void GameScene::Finalize() {
+void GamePlayScene::Finalize() {
 	for (int i = 0; i < 2; i++) {
 		triangle_[i]->Finalize();
 		delete triangle_[i];
@@ -236,8 +233,5 @@ void GameScene::Finalize() {
 	model_->Finalize();
 	delete model_;
 
-	audio_->Finalize();
 	audio_->SoundUnload(&soundData1_);
-
-
 }
