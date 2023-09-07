@@ -46,17 +46,35 @@
     <Filter Include="ソース ファイル\debugCamera">
       <UniqueIdentifier>{b5103cab-ddc6-4bb3-ac17-9993b66743f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\scenes">
-      <UniqueIdentifier>{6a3e4c5e-ad5d-4c1f-b02c-6f8003125898}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scenes\mamager">
-      <UniqueIdentifier>{3ba3c56a-3b83-46b2-a80f-7801fb19c4a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\scenes">
       <UniqueIdentifier>{a154a03e-faec-4bcc-a609-a62fd6dfe101}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\scenes\manager">
       <UniqueIdentifier>{335a5342-62c1-416f-93e6-afde6755786f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\utilities">
+      <UniqueIdentifier>{4cda22dc-f5c3-46c2-8ab2-ef605e06fc28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\utilities\collisionManager">
+      <UniqueIdentifier>{b97c784b-0644-4756-b36a-18d1f6b64648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\utilities">
+      <UniqueIdentifier>{83c76349-a7a9-4454-86ce-4cf1ccddb0c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\utilities\collisionManager">
+      <UniqueIdentifier>{31740d80-bf27-4132-a868-5242ec0fd5ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\utilities\globalVariables">
+      <UniqueIdentifier>{828ff179-8a2b-47c9-b4da-3335baaba556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\utilities\globalVariables">
+      <UniqueIdentifier>{f32de917-5c81-4b42-9957-528e45c43a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scenes">
+      <UniqueIdentifier>{6a3e4c5e-ad5d-4c1f-b02c-6f8003125898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scenes\mamager">
+      <UniqueIdentifier>{3ba3c56a-3b83-46b2-a80f-7801fb19c4a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="scenes\GameClearScene.cpp">
       <Filter>ソース ファイル\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\collisionManager\CollisionManager.cpp">
+      <Filter>ソース ファイル\utilities\collisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\globalVariables\GlobalVariables.cpp">
+      <Filter>ソース ファイル\utilities\globalVariables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +242,18 @@
     </ClInclude>
     <ClInclude Include="scenes\Iscene.h">
       <Filter>ヘッダー ファイル\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\collisionManager\Collider.h">
+      <Filter>ヘッダー ファイル\utilities\collisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\collisionManager\CollisionManager.h">
+      <Filter>ヘッダー ファイル\utilities\collisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\collisionManager\CollisionConfig.h">
+      <Filter>ヘッダー ファイル\utilities\collisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\globalVariables\GlobalVariables.h">
+      <Filter>ヘッダー ファイル\utilities\globalVariables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

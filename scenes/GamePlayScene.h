@@ -8,6 +8,8 @@
 #include "Audio.h"
 #include "Input.h"
 #include "DebugCamera.h"
+#include "collisionManager/CollisionManager.h"
+#include "collisionManager/CollisionConfig.h"
 
 class GamePlayScene :public Iscene {
 public:
@@ -15,6 +17,8 @@ public:
 	void Update();
 	void Draw();
 	void Finalize();
+
+	void ApplyGlobalVariables();
 
 private:
 	CitrusJunosEngine* CJEngine_;
@@ -50,6 +54,7 @@ private:
 
 	DebugCamera* debugCamera_;
 
+	CollisionManager* collisionManager_;
 
 	int texture_;
 

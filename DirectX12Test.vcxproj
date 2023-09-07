@@ -45,11 +45,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals\nlohmann;C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals\nlohmann;C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -61,7 +61,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)utilities;$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -81,7 +81,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)utilities;$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -117,6 +117,8 @@
     <ClCompile Include="scenes\GamePlayScene.cpp" />
     <ClCompile Include="scenes\GameTitleScene.cpp" />
     <ClCompile Include="scenes\manager\SceneManager.cpp" />
+    <ClCompile Include="utilities\collisionManager\CollisionManager.cpp" />
+    <ClCompile Include="utilities\globalVariables\GlobalVariables.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -164,6 +166,10 @@
     <ClInclude Include="scenes\GameTitleScene.h" />
     <ClInclude Include="scenes\Iscene.h" />
     <ClInclude Include="scenes\manager\SceneManager.h" />
+    <ClInclude Include="utilities\collisionManager\Collider.h" />
+    <ClInclude Include="utilities\collisionManager\CollisionConfig.h" />
+    <ClInclude Include="utilities\collisionManager\CollisionManager.h" />
+    <ClInclude Include="utilities\globalVariables\GlobalVariables.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

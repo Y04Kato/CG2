@@ -6,6 +6,7 @@
 #include "GameClearScene.h"
 #include "Input.h"
 #include "Audio.h"
+#include "GlobalVariables/GlobalVariables.h"
 
 class SceneManager {
 public:

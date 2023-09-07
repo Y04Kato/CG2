@@ -23,6 +23,9 @@ void SceneManager::Initialize() {
 	input_ = Input::GetInstance();
 	input_->Initialize();
 
+	//CSV
+	GlobalVariables::GetInstance()->LoadFiles();
+
 	//Scene
 	scene_[TITLE_SCENE] = std::make_unique<GameTitleScene>();
 	scene_[GAME_SCENE] = std::make_unique<GamePlayScene>();
@@ -43,6 +46,7 @@ void SceneManager::Update(){
 
 		CJEngine_->BeginFrame();
 		input_->Update();
+		GlobalVariables::GetInstance()->Update();
 		scene_[Iscene::sceneNo]->Update();
 		scene_[Iscene::sceneNo]->Draw();
 		CJEngine_->EndFrame();

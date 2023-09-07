@@ -1,4 +1,5 @@
-#include"GamePlayScene.h"
+#include "GamePlayScene.h"
+#include "globalVariables/GlobalVariables.h"
 
 void GamePlayScene::Initialize() {
 	CJEngine_ = CitrusJunosEngine::GetInstance();
@@ -85,9 +86,25 @@ void GamePlayScene::Initialize() {
 	// デバッグカメラの初期化
 	debugCamera_ = DebugCamera::GetInstance();
 	debugCamera_->initialize();
+
+	//CollisionManager
+	collisionManager_ = CollisionManager::GetInstance();
+
+	GlobalVariables* globalVariables{};
+	globalVariables = GlobalVariables::GetInstance();
+
+	const char* groupName = "GamePlayScene";
+	GlobalVariables::GetInstance()->CreateGroup(groupName);
+	globalVariables->AddItem(groupName, "Test", 90);
 }
 
 void GamePlayScene::Update() {
+
+	ApplyGlobalVariables();
+
+	collisionManager_->ClearColliders();
+	collisionManager_->CheckAllCollision();
+
 	if (input_->PressKey(DIK_A)) {
 		OutputDebugStringA("Hit A\n");
 	}
@@ -234,4 +251,9 @@ void GamePlayScene::Finalize() {
 	delete model_;
 
 	audio_->SoundUnload(&soundData1_);
+}
+
+void GamePlayScene::ApplyGlobalVariables() {
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	const char* groupName = "GamePlayScene";
 }
