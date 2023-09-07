@@ -24,8 +24,6 @@ private:
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 
-	MSG msg{};
-
 	std::unique_ptr<Iscene>scene_[SCENE_MAX];
 
 	void Initialize();

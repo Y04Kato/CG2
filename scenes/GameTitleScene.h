@@ -10,6 +10,5 @@ public:
 	void Finalize();
 
 private:
-
-	Input* input_;
+	Input* input_ = nullptr;
 };
