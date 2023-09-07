@@ -1,6 +1,7 @@
 #pragma once
 #include "Iscene.h"
-#include "Input.h"
+#include "input/Input.h"
+#include "CJEngine.h"
 
 class GameTitleScene :public Iscene{
 public:
@@ -10,5 +11,7 @@ public:
 	void Finalize();
 
 private:
+	CitrusJunosEngine* CJEngine_;
+
 	Input* input_ = nullptr;
 };

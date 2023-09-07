@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectXCommon.h"
-#include "Vector.h"
-#include "MatrixCalculation.h"
+#include "math/Vector.h"
+#include "math/MatrixCalculation.h"
 #include<wrl.h>
 
 class CitrusJunosEngine;

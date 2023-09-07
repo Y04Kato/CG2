@@ -1,6 +1,6 @@
 #pragma once
 #include "DirectXCommon.h"
-#include "Vector.h"
+#include "math/Vector.h"
 #include "CJEngine.h"
 #include<wrl.h>
 

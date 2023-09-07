@@ -1,5 +1,5 @@
 #include "DebugCamera.h"
-#include "Input.h"
+#include "input/Input.h"
 
 DebugCamera* DebugCamera::GetInstance() {
 	static DebugCamera instance;
@@ -10,7 +10,7 @@ void DebugCamera::initialize() {
 	//x,y,z軸周りのローカル回転角
 	rotation_ = { 0,0,0 };
 	//ローカル座標
-	translation_ = { 0,0,-50 };
+	translation_ = { 0,0,-10 };
 	matRot_ = MakeIdentity4x4();
 }
 

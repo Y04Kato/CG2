@@ -4,9 +4,9 @@
 #include "GameTitleScene.h"
 #include "GamePlayScene.h"
 #include "GameClearScene.h"
-#include "Input.h"
-#include "Audio.h"
-#include "GlobalVariables/GlobalVariables.h"
+#include "input/Input.h"
+#include "audio/Audio.h"
+#include "utilities/GlobalVariables/GlobalVariables.h"
 
 class SceneManager {
 public:

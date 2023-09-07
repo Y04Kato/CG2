@@ -1,5 +1,5 @@
 #include "GamePlayScene.h"
-#include "globalVariables/GlobalVariables.h"
+#include "utilities/globalVariables/GlobalVariables.h"
 
 void GamePlayScene::Initialize() {
 	CJEngine_ = CitrusJunosEngine::GetInstance();
@@ -111,7 +111,10 @@ void GamePlayScene::Update() {
 
 	directionalLight_.direction = Normalise(directionalLight_.direction);
 
-	ImGui::Begin("Settings");
+	ImGui::Begin("debug");
+	ImGui::Text("GamePlayScene");
+	ImGui::Text("DebugCameraTranslate:ArrowKey");
+	ImGui::Text("DebugCameraRotate:WASD");
 	if (ImGui::TreeNode("Triangle")) {//三角形
 		if (ImGui::Button("DrawTriangle1")) {
 			if (isTriangleDraw1_ == false) {
