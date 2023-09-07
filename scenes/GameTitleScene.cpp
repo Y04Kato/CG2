@@ -17,5 +17,5 @@ void GameTitleScene::Draw(){
 }
 
 void GameTitleScene::Finalize() {
-
+	
 }

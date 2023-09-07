@@ -20,9 +20,15 @@ public:
 
 	bool ReleaseKey(BYTE keyNumber)const;
 
+	Input(const Input& obj) = delete;
+	Input& operator=(const Input& obj) = delete;
+
 private:
-	IDirectInput8* directInput_ = nullptr;
-	IDirectInputDevice8* keyboard_ = nullptr;
+	Input() = default;
+	~Input() = default;
+
+	Microsoft::WRL::ComPtr <IDirectInput8> directInput_ = nullptr;
+	Microsoft::WRL::ComPtr <IDirectInputDevice8> keyboard_ = nullptr;
 	std::array<BYTE, 256> key_;
 	std::array<BYTE, 256> preKey_;
 };

@@ -25,9 +25,10 @@ void SceneManager::Initialize() {
 
 	//Scene
 	scene_[TITLE_SCENE] = std::make_unique<GameTitleScene>();
-	scene_[TITLE_SCENE]->Initialize();
 	scene_[GAME_SCENE] = std::make_unique<GamePlayScene>();
-	scene_[GAME_SCENE]->Initialize();
+	for (int i = 0; i < SCENE_MAX; i++) {
+		scene_[i]->Initialize();
+	}
 
 	Iscene::sceneNo = TITLE_SCENE;
 }
@@ -51,6 +52,8 @@ void SceneManager::Update(){
 void SceneManager::Finalize(){
 	CJEngine_->Finalize();
 	audio_->Finalize();
-	scene_[Iscene::sceneNo]->Finalize();
+	for (int i = 0; i < SCENE_MAX; i++) {
+		scene_[i]->Finalize();
+	}
 	CoUninitialize();
 }

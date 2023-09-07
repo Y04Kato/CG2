@@ -27,6 +27,9 @@ void Input::Initialize() {
 	result = keyboard_->SetCooperativeLevel(
 		WinApp::GetInstance()->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY
 	);
+
+	key_ = {};
+	preKey_ = {};
 }
 
 void Input::Update() {

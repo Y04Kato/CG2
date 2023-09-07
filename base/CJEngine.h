@@ -33,7 +33,13 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> descriptorheap, uint32_t descriptorSize, uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> descriptorheap, uint32_t descriptorSize, uint32_t index);
 
+	CitrusJunosEngine(const CitrusJunosEngine& obj) = delete;
+	CitrusJunosEngine& operator=(const CitrusJunosEngine& obj) = delete;
+
 private:
+	CitrusJunosEngine() = default;
+	~CitrusJunosEngine() = default;
+
 	static	DirectXCommon* dxCommon_;
 
 	IDxcUtils* dxcUtils_;

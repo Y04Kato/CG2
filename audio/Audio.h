@@ -45,8 +45,13 @@ public:
 
 	void Finalize();
 
+	Audio(const Audio& obj) = delete;
+	Audio& operator=(const Audio& obj) = delete;
 
 private:
+	Audio() = default;
+	~Audio() = default;
+
 	Microsoft::WRL::ComPtr<IXAudio2> xAudio2_;
 	IXAudio2MasteringVoice* masterVoice_;
 };

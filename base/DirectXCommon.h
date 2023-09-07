@@ -35,7 +35,13 @@ public:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDsvDescriptiorHeap() { return dsvDescriptorHeap_; }
 	D3D12_RENDER_TARGET_VIEW_DESC getRtvDesc() { return rtvDesc_; }
 
+	DirectXCommon(const DirectXCommon& obj) = delete;
+	DirectXCommon& operator=(const DirectXCommon& obj) = delete;
+
 private:
+	DirectXCommon() = default;
+	~DirectXCommon() = default;
+
 	//DXGIファクトリーの生成
 	Microsoft::WRL::ComPtr <IDXGIFactory7> dxgiFactory_;
 
