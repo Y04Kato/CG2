@@ -45,11 +45,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals\nlohmann;C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\project;C:\Users\Yuzu\source\repos\DirectX12Test\externals\nlohmann;C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;$(IncludePath)</IncludePath>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\externals\nlohmann;C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;C:\Users\Yuzu\source\repos\DirectX12Test\math;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Yuzu\source\repos\DirectX12Test\project;C:\Users\Yuzu\source\repos\DirectX12Test\externals\nlohmann;C:\Users\Yuzu\source\repos\DirectX12Test\externals;C:\Users\Yuzu\source\repos\DirectX12Test\base;$(IncludePath)</IncludePath>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -61,7 +61,6 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)utilities;$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -81,7 +80,6 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)utilities;$(ProjectDir)scenes;$(ProjectDir)debugCamera;$(ProjectDir)input;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)math;$(ProjectDir)externals;$(ProjectDir)resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -93,14 +91,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="base\audio\Audio.cpp" />
-    <ClCompile Include="base\utilities\convertString\ConvertString.cpp" />
+    <ClCompile Include="base\components\audio\Audio.cpp" />
+    <ClCompile Include="base\components\utilities\convertString\ConvertString.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
-    <ClCompile Include="base\2d\CreateTriangle.cpp" />
-    <ClCompile Include="base\3d\CreateSphere.cpp" />
-    <ClCompile Include="base\2d\CreateSprite.cpp" />
-    <ClCompile Include="base\3d\Model.cpp" />
-    <ClCompile Include="base\debugCamera\DebugCamera.cpp" />
+    <ClCompile Include="base\components\2d\CreateTriangle.cpp" />
+    <ClCompile Include="base\components\3d\CreateSphere.cpp" />
+    <ClCompile Include="base\components\2d\CreateSprite.cpp" />
+    <ClCompile Include="base\components\3d\Model.cpp" />
+    <ClCompile Include="base\components\debugCamera\DebugCamera.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -108,26 +106,26 @@
     <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="base\input\Input.cpp" />
+    <ClCompile Include="base\components\input\Input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="base\math\MatrixCalculation.cpp" />
+    <ClCompile Include="base\components\math\MatrixCalculation.cpp" />
     <ClCompile Include="base\CJEngine.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
-    <ClCompile Include="scenes\GameClearScene.cpp" />
-    <ClCompile Include="scenes\GamePlayScene.cpp" />
-    <ClCompile Include="scenes\GameTitleScene.cpp" />
-    <ClCompile Include="scenes\manager\SceneManager.cpp" />
-    <ClCompile Include="base\utilities\collisionManager\CollisionManager.cpp" />
-    <ClCompile Include="base\utilities\globalVariables\GlobalVariables.cpp" />
+    <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\GameTitleScene.cpp" />
+    <ClCompile Include="base\components\manager\SceneManager.cpp" />
+    <ClCompile Include="base\components\utilities\collisionManager\CollisionManager.cpp" />
+    <ClCompile Include="base\components\utilities\globalVariables\GlobalVariables.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Object3d.PS.hlsl">
+    <FxCompile Include="project\gamedata\resources\shaders\Object3d.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Object3d.VS.hlsl">
+    <FxCompile Include="project\gamedata\resources\shaders\Object3d.VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -135,14 +133,14 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base\audio\Audio.h" />
-    <ClInclude Include="base\utilities\convertString\ConvertString.h" />
+    <ClInclude Include="base\components\audio\Audio.h" />
+    <ClInclude Include="base\components\utilities\convertString\ConvertString.h" />
     <ClInclude Include="base\DirectXCommon.h" />
-    <ClInclude Include="base\2d\CreateTriangle.h" />
-    <ClInclude Include="base\3d\CreateSphere.h" />
-    <ClInclude Include="base\2d\CreateSprite.h" />
-    <ClInclude Include="base\3d\Model.h" />
-    <ClInclude Include="base\debugCamera\DebugCamera.h" />
+    <ClInclude Include="base\components\2d\CreateTriangle.h" />
+    <ClInclude Include="base\components\3d\CreateSphere.h" />
+    <ClInclude Include="base\components\2d\CreateSprite.h" />
+    <ClInclude Include="base\components\3d\Model.h" />
+    <ClInclude Include="base\components\debugCamera\DebugCamera.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
@@ -151,25 +149,25 @@
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="base\input\Input.h" />
-    <ClInclude Include="base\math\Matrix.h" />
-    <ClInclude Include="base\math\MatrixCalculation.h">
+    <ClInclude Include="base\components\input\Input.h" />
+    <ClInclude Include="base\components\math\Matrix.h" />
+    <ClInclude Include="base\components\math\MatrixCalculation.h">
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="base\CJEngine.h" />
-    <ClInclude Include="base\math\Vector.h">
+    <ClInclude Include="base\components\math\Vector.h">
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="base\WinApp.h" />
-    <ClInclude Include="scenes\GameClearScene.h" />
-    <ClInclude Include="scenes\GamePlayScene.h" />
-    <ClInclude Include="scenes\GameTitleScene.h" />
-    <ClInclude Include="scenes\Iscene.h" />
-    <ClInclude Include="scenes\manager\SceneManager.h" />
-    <ClInclude Include="base\utilities\collisionManager\Collider.h" />
-    <ClInclude Include="base\utilities\collisionManager\CollisionConfig.h" />
-    <ClInclude Include="base\utilities\collisionManager\CollisionManager.h" />
-    <ClInclude Include="base\utilities\globalVariables\GlobalVariables.h" />
+    <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
+    <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
+    <ClInclude Include="project\gamedata\scenes\GameTitleScene.h" />
+    <ClInclude Include="base\components\manager\Iscene.h" />
+    <ClInclude Include="base\components\manager\SceneManager.h" />
+    <ClInclude Include="base\components\utilities\collisionManager\Collider.h" />
+    <ClInclude Include="base\components\utilities\collisionManager\CollisionConfig.h" />
+    <ClInclude Include="base\components\utilities\collisionManager\CollisionManager.h" />
+    <ClInclude Include="base\components\utilities\globalVariables\GlobalVariables.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
@@ -180,7 +178,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Object3d.hlsli" />
+    <None Include="project\gamedata\resources\shaders\Object3d.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

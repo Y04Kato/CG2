@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <dxgi1_6.h>
 #include "WinApp.h"
-#include "utilities/convertString/ConvertString.h"
+#include "components/utilities/convertString/ConvertString.h"
 #include <DirectXTex/DirectXTex.h>
 #include <dxgidebug.h>
 #include<wrl.h>

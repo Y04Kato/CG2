@@ -1,5 +1,5 @@
 #pragma once
-#include "math/Vector.h"
+#include "components/math/Vector.h"
 #include <json.hpp>
 #include <map>
 #include <string>
@@ -46,5 +46,5 @@ public:
 	std::map<std::string, Group> datas_;
 
 	using json = nlohmann::json;
-	const std::string kDirectoryPath = "Resources/GlobalVariables/";
+	const std::string kDirectoryPath = "project/gamedata/levels/";
 };

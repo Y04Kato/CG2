@@ -1,5 +1,4 @@
 #include "DebugCamera.h"
-#include "input/Input.h"
 
 DebugCamera* DebugCamera::GetInstance() {
 	static DebugCamera instance;

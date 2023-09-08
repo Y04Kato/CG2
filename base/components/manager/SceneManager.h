@@ -1,12 +1,12 @@
 #pragma once
 #include "Iscene.h"
 #include "CJEngine.h"
-#include "GameTitleScene.h"
-#include "GamePlayScene.h"
-#include "GameClearScene.h"
-#include "input/Input.h"
-#include "audio/Audio.h"
-#include "utilities/GlobalVariables/GlobalVariables.h"
+#include "gamedata/scenes/GameTitleScene.h"
+#include "gamedata/scenes/GamePlayScene.h"
+#include "gamedata/scenes/GameClearScene.h"
+#include "components/input/Input.h"
+#include "components/audio/Audio.h"
+#include "components/utilities/GlobalVariables/GlobalVariables.h"
 
 class SceneManager {
 public:

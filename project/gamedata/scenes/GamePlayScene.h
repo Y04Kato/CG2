@@ -1,15 +1,15 @@
 #pragma once
-#include "Iscene.h"
-#include "math/Vector.h"
-#include "2d/CreateTriangle.h"
-#include "2d/CreateSprite.h"
-#include "3d/CreateSphere.h"
-#include "3d/Model.h"
-#include "audio/Audio.h"
-#include "input/Input.h"
-#include "debugcamera/DebugCamera.h"
-#include "utilities/collisionManager/CollisionManager.h"
-#include "utilities/collisionManager/CollisionConfig.h"
+#include "components/manager/Iscene.h"
+#include "components/math/Vector.h"
+#include "components/2d/CreateTriangle.h"
+#include "components/2d/CreateSprite.h"
+#include "components/3d/CreateSphere.h"
+#include "components/3d/Model.h"
+#include "components/audio/Audio.h"
+#include "components/input/Input.h"
+#include "components/debugcamera/DebugCamera.h"
+#include "components/utilities/collisionManager/CollisionManager.h"
+#include "components/utilities/collisionManager/CollisionConfig.h"
 
 class GamePlayScene :public Iscene {
 public:

@@ -1,9 +1,9 @@
 #pragma once
 #include "DirectXCommon.h"
 #include <dxcapi.h>
-#include "math/Vector.h"
-#include "2d/CreateTriangle.h"
-#include "math/MatrixCalculation.h"
+#include "components/math/Vector.h"
+#include "components/2d/CreateTriangle.h"
+#include "components/math/MatrixCalculation.h"
 #include "DirectXTex/d3dx12.h"
 #pragma comment(lib,"dxcompiler.lib")
 #include<vector>

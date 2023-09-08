@@ -1,5 +1,5 @@
 #pragma once
-#include "math/Vector.h"
+#include "components/math/Vector.h"
 #include <cstdint>
 
 class Collider {

@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectXCommon.h"
 #include "CJEngine.h"
-#include "math/Vector.h"
+#include "components/math/Vector.h"
 #include <string>
 #include <fstream>
 #include <sstream>

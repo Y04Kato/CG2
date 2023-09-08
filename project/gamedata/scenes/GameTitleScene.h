@@ -1,7 +1,7 @@
 #pragma once
-#include "Iscene.h"
-#include "input/Input.h"
+#include "components/manager/Iscene.h"
 #include "CJEngine.h"
+#include "components/input/Input.h"
 
 class GameTitleScene :public Iscene{
 public:

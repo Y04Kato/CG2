@@ -1,5 +1,5 @@
 #include "GamePlayScene.h"
-#include "utilities/globalVariables/GlobalVariables.h"
+#include "components/utilities/globalVariables/GlobalVariables.h"
 
 void GamePlayScene::Initialize() {
 	CJEngine_ = CitrusJunosEngine::GetInstance();
@@ -61,7 +61,7 @@ void GamePlayScene::Initialize() {
 	modelMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	modelResourceNum_ = 2;
 	model_ = new Model();
-	model_->Initialize(dxCommon_, CJEngine_, "resources/axis", "axis.obj", modelResourceNum_);
+	model_->Initialize(dxCommon_, CJEngine_, "project/gamedata/resources/axis", "axis.obj", modelResourceNum_);
 
 	//ライト
 	directionalLight_ = { {1.0f,1.0f,1.0f,1.0f},{0.0f,-1.0f,0.0f},1.0f };
@@ -69,17 +69,17 @@ void GamePlayScene::Initialize() {
 	//テクスチャ
 	texture_ = 0;
 	uvResourceNum_ = 0;
-	CJEngine_->SettingTexture("resources/uvChecker.png", uvResourceNum_);
+	CJEngine_->SettingTexture("project/gamedata/resources/uvChecker.png", uvResourceNum_);
 
 	monsterBallResourceNum_ = 1;
-	CJEngine_->SettingTexture("resources/monsterBall.png", monsterBallResourceNum_);
+	CJEngine_->SettingTexture("project/gamedata/resources/monsterBall.png", monsterBallResourceNum_);
 
 	//Input
 	input_ = Input::GetInstance();
 
 	//Audio
 	audio_ = Audio::GetInstance();
-	soundData1_ = audio_->SoundLoadWave("resources/fanfare.wav");
+	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/fanfare.wav");
 	//音声再生
 	audio_->SoundPlayWave(soundData1_);
 
