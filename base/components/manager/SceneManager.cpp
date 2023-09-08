@@ -1,12 +1,13 @@
 #include"SceneManager.h"
 
-void SceneManager::Run(){
+void SceneManager::Run() {
 	Initialize();
 	Update();
 	Finalize();
 }
 
 void SceneManager::Initialize() {
+	//WindowTitle
 	const wchar_t kWindowTitle[] = { L"CG2_カトウ" };
 	//COMの初期化
 	CoInitializeEx(0, COINIT_MULTITHREADED);
@@ -33,11 +34,12 @@ void SceneManager::Initialize() {
 		scene_[i]->Initialize();
 	}
 
+	//タイトルシーンから開始
 	Iscene::sceneNo = TITLE_SCENE;
 }
 
 
-void SceneManager::Update(){
+void SceneManager::Update() {
 	while (true) {
 		//windowのメッセージを最優先で処理させる
 		if (WinApp::GetInstance()->Procesmessage()) {
@@ -53,7 +55,11 @@ void SceneManager::Update(){
 	}
 }
 
-void SceneManager::Finalize(){
+//void SceneManager::Draw() {
+//
+//}
+
+void SceneManager::Finalize() {
 	CJEngine_->Finalize();
 	audio_->Finalize();
 	for (int i = 0; i < SCENE_MAX; i++) {

@@ -1,9 +1,9 @@
 #pragma once
+#include "Matrix.h"
 #include <stdint.h>
 #include <vector>
 #include <string>
 #include <math.h>
-#include "Matrix.h"
 
 struct Vector2 {
 	float num[2];

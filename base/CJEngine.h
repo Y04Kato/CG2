@@ -1,10 +1,11 @@
 #pragma once
 #include "DirectXCommon.h"
-#include <dxcapi.h>
 #include "components/math/Vector.h"
 #include "components/2d/CreateTriangle.h"
 #include "components/math/MatrixCalculation.h"
+
 #include "DirectXTex/d3dx12.h"
+#include <dxcapi.h>
 #pragma comment(lib,"dxcompiler.lib")
 #include<vector>
 #include<wrl.h>
