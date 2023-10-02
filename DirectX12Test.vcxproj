@@ -45,11 +45,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)..\project;$(ProjectDir)..\externals\nlohmann;$(ProjectDir)..\externals;$(ProjectDir)..\base;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\project;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals;$(ProjectDir)\base;$(IncludePath)</IncludePath>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)..\project;$(ProjectDir)..\externals\nlohmann;$(ProjectDir)..\externals;$(ProjectDir)..\base;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\project;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals;$(ProjectDir)\base;$(IncludePath)</IncludePath>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
